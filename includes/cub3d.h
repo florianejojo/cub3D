@@ -6,6 +6,12 @@
 # define CUB3D_H
 //https://github.com/hbrulin/Cub3D/blob/master/cub.h exemple de structure
 
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h> //read
+#include <stdio.h> //printf
+
+#include "../libft/libft.h"
 
 typedef struct              s_check
 {
@@ -39,7 +45,7 @@ typedef enum                s_error
 	//WRONG_TEX
 }						    t_error;
 
-typedef struct				s_elements_id
+typedef struct				s_elements
 {
 	char					*r;
 	char					*n;
@@ -52,7 +58,7 @@ typedef struct				s_elements_id
 	char					*se;
 	char					*f;
 	char					*c;
-}							t_elements_id;
+}							t_elements;
 
 typedef struct				s_colors
 {
@@ -63,18 +69,17 @@ typedef struct				s_colors
 
 typedef struct              s_map
 {
-    char					**tab_map;
+    char					**map;
 	int						nb_line;
 	int						nb_char;
-
 }                           t_map;
 
-typedef	struct				s_visu
+typedef	struct				s_visu // déifnie par "env"
 {
-    t_elements_id           elements;
-	t_map					map;
-	t_colors				floor_color;
-	t_colors				ceiling_color;
+    t_elements              t_elements;
+	t_map					t_map; // (élements + map)
+	t_colors				t_floor_color;
+	t_colors				t_ceiling_color;
 
 }							t_visu;
 

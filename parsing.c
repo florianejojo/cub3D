@@ -33,21 +33,36 @@
 //              si open = 0 alors fin de fichier
 // --> Parcourir la map pour voir si elle est bien fermée et si elle commence bien par un 1
 
-ft_pars_elem(t_visu env)
-{
-    
-}
+// ft_recup_tab (t_visu env)
+// {
+//     int ret;
+//     while (ret > 0)
+//     {
+//         read
+//     }
+// }
 
-ft_pars_map(t_visu env)
-{
 
-}
+// ft_pars_elem(t_visu env)
+// {
+//     char *line;
 
-void    ft_parsing(t_visu env)
-{
-    if (ft_pars_elem(env) != 1)
-        return ("ERROR_INVALID_ELEMENTS");
+// }
+
+// ft_pars_map(t_visu env)
+// {
+
+// }
+
+// void    ft_tmap_parsing()
+// {
+//     t_visu env;
+//     ft_bzero(env);
+//     t_tmap->tmap = ft_recup_tmap(env);
+
+    //if (ft_pars_elem(env) != 1)
+    //    return ("ERROR_INVALID_ELEMENTS");
    // if (ft_pars_map(env) != 1)
    //     return ("ERROR_MAP");
     
-}
+//}
