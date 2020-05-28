@@ -1,7 +1,3 @@
-
-
-
-
 #ifndef CUB3D_H
 # define CUB3D_H
 //https://github.com/hbrulin/Cub3D/blob/master/cub.h exemple de structure
@@ -12,6 +8,8 @@
 #include <stdio.h> //printf
 
 #include "../libft/libft.h"
+
+
 
 typedef struct              s_check
 {
@@ -26,7 +24,6 @@ typedef struct              s_check
     short                   f;
     short                   c;
 }                           t_check;
-
 
 typedef enum                s_error
 {
@@ -74,13 +71,17 @@ typedef struct              s_map
 	int						nb_char;
 }                           t_map;
 
-typedef	struct				s_visu // déifnie par "env"
+typedef	struct				s_env // déifnie par "env"
 {
     t_elements              t_elements;
 	t_map					t_map; // (élements + map)
 	t_colors				t_floor_color;
 	t_colors				t_ceiling_color;
+	t_check					t_check;
 
-}							t_visu;
+}							t_env;
+
+
+void    ft_make_tab(t_env *env);
 
 #endif

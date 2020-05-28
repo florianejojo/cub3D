@@ -10,33 +10,26 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	libftprintf.a
+NAME		=	cub3d.a
 
-LIBFT_PATH	=	srcs/libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
+LIBFT_PATH	=	libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
 
 CC			=	gcc
 
-SRCS		=	srcs/ft_printf.c \
-				srcs/ft_print_c.c \
-				srcs/ft_print_s.c \
-				srcs/ft_print_d.c \
-				srcs/ft_print_p.c \
-				srcs/ft_init_stru.c \
-				srcs/ft_itoa_base.c \
-				srcs/ft_printf_utils.c \
-				srcs/ft_print_per.c \
+SRCS		=	srcs/ft_parsing.c
+
 
 OBJS		=	$(SRCS:.c=.o)
 
-FLAGS		=	-c -Wall -Wextra -Werror
+FLAGS		=	-c -Wall -Wextra -Werror 
 
-HEADER		=	includes/ft_printf.h
+HEADER		=	includes/cub3d.h
 
 all			:	$(NAME)
 
 $(NAME) 	:	$(HEADER) $(OBJS)
 				make -C $(LIBFT_PATH)
-				cp $(LIBFT_PATH)/libft.a $(NAME)
+				cp ./libft/libft.a $(NAME)
 				$(CC) $(FLAGS) $(SRCS)
 				ar -rcs $(NAME) $(OBJS)
 				ranlib $(NAME)
