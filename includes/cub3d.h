@@ -69,7 +69,15 @@ typedef struct              s_map
     char					**map;
 	int						nb_line;
 	int						nb_char;
+	int						index;
+	char					tab_index[9]; // A voir combien d'index
+	void					(*tab_fct[8])(t_env*, int); // a voir combien de fonctions en fonctions de l'index
 }                           t_map;
+
+typedef	struct				s_res
+{
+	int						h
+}							t_res;
 
 typedef	struct				s_env // déifnie par "env"
 {
@@ -77,6 +85,7 @@ typedef	struct				s_env // déifnie par "env"
 	t_map					t_map; // (élements + map)
 	t_colors				t_floor_color;
 	t_colors				t_ceiling_color;
+	t_res 					t_res;
 	t_check					t_check;
 
 }							t_env;

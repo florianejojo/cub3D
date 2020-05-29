@@ -10,17 +10,17 @@
 
 
 // --> 1 - ranger le fichier text dans un double tableau.
-// --> 2 - Ranger les éléments dans la structure 
+// --> 2 - Ranger les éléments dans la envcture 
 //              "FULL_ELEMENTS_DETECTED" != 1 ou que 
 //              "TAB_ELEMENTS OK" != 1 (quand j'ai toutes les lettres et que je renconte un "\n")
 //               si la lettre fait partie du charset, envoyer la lettre dans une fonction + mettre la lettre à 1
 //--> Parcourir la ligne à chaque fois pour mettre à jour les stuctures
-//--> A chaque nouvelle lettre je mets la lettre de la structure éléments à 1, et je check si FULL_ELEMENTS _DETECTED = 1. 
+//--> A chaque nouvelle lettre je mets la lettre de la envcture éléments à 1, et je check si FULL_ELEMENTS _DETECTED = 1. 
 //       
 //              Si l'élément est déjà à 1 : Je renvoi error
 //
 // --> Lire tant que c'est un \n
-// --> Si c'est plus un \n, utiliser GNL et stocker la ligne à chaque fois dans un tableau de la structure.
+// --> Si c'est plus un \n, utiliser GNL et stocker la ligne à chaque fois dans un tableau de la envcture.
 
 // 
 
@@ -57,10 +57,95 @@ void    ft_make_tab(t_env *env)
      }
     str[i] = '\0';
     env->t_map.map = ft_split(str, '\n');                           // pour créer un double tableau
+    close (fd);
     free (str);
 }
 
-//ft_pars_elem(t_env env)
-// {
-//     while (env->full_elements_detected )
-// }
+void	ft_init_tab_index(t_env *env)
+{
+	env->tab_index[0] = 'R'; // pour Résolution
+	env->tab_index[1] = 'N'; // pour NO North
+	env->tab_index[2] = 'S'; // pour SO South
+	env->tab_index[3] = 'W'; // pour WE West
+	env->tab_index[4] = 'E'; // pour EA East
+	env->tab_index[5] = 'P'; // pour S Sprite
+	env->tab_index[6] = 'F'; // Floor
+	env->tab_index[7] = 'C'; // Ceiling 
+	env->tab_index[8] = '\0';
+}
+
+void    ft_pars_R(t_env *env, int i)
+{
+    int j;
+
+    j = 1;
+    while (env->t_map.map[i][j] == ' ')
+        j++;
+    while (env->t_map.map[i][j] >= 0 && env->t_map.map[i][j] <= 9)
+        env->t_map.map[i][j] = env->t_map.map[i][j]
+}
+
+void	ft_init_tab_fct(t_env *env)
+{
+	env->tab_fct[0] = &ft_pars_R;
+// 	env->tab_fct[1] = &ft_pars_N;
+// 	env->tab_fct[2] = &ft_pars_S;
+// 	env->tab_fct[3] = &ft_pars_W;
+// 	env->tab_fct[4] = &ft_pars_E;
+// 	env->tab_fct[5] = &ft_pars_P;
+// 	env->tab_fct[6] = &ft_pars_F;
+// 	env->tab_fct[7] = &ft_pars_C;
+ }
+int		ft_charset(char c)
+{
+	char	*charset;
+	int		i;
+
+	i = 0;
+	charset = "RNSWEPFC";
+	while (charset[i])
+	{
+		if (charset[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int		ft_find_index(t_env *env, char elem)
+{
+	int i;
+
+	i = 0;
+	while (env->t_map.tab_index[i])
+	{
+		if (env->t_map.tab_index[i] == elem)
+		{
+			return (i);
+		}
+		i++;
+	}
+	return (-1);
+}
+
+void    ft_pars_elem(t_env *env)
+{
+    int i;
+
+    i = 0;
+    while ((ft_charset(env->t_map.map[i][0]) == 1) || (env->t_check.full_elements_detected != 1)) // tant qu'on a pas détecté toutes les lettres ou qu'on est dans le charset
+    {
+        if (ft_charset(env->t_map.map[i][0]) == 1)
+        {
+            env->t_map.index = ft_find_index(env, env->t_map.map[i][0]);
+            (*env->t_map.tab_fct[env->t_map.index])(env, i);
+        }
+        i++;
+    }
+}
+
+ft_parsing(t_env env)
+{
+  ft_pars_elem(env);
+}
+
