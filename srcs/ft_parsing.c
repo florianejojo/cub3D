@@ -35,7 +35,7 @@
 
 #include "../includes/cub3d.h"
 
-void    ft_make_tab(t_env *env)
+void    ft_make_tab(char *file, t_env *env)
 {
     int     fd;
     int     ret;
@@ -43,66 +43,54 @@ void    ft_make_tab(t_env *env)
     char    *str;
     int     i;
     i = 0;
-    ft_bzero(env, sizeof(t_env));
-    fd = open("maps/sujet.cub", O_RDONLY);
+            
+
+    if ((fd = open(file, O_RDONLY)) < 0)
+        printf("fd = %d\n", fd);
     while ((ret = read(fd, buf, 1)) > 0)                            // pour compter les chars
          env->t_map.nb_char++;
     str = (char*)malloc(sizeof(char)*(env->t_map.nb_char + 1 ));    // malloc de la chaine
     close (fd);
-    fd = open("maps/sujet.cub", O_RDONLY);
+    fd = open(file, O_RDONLY);
     while ((ret = read(fd, buf, 1)) > 0)                            // pour remplir la chaine
-     {
          str[i++] = buf[0];
-       //  i++;
-     }
     str[i] = '\0';
     env->t_map.map = ft_split(str, '\n');                           // pour créer un double tableau
     close (fd);
-    free (str);
+    free (str);                                                     // maintenant il y a 2 trucs mallocs: env + double tableau **map
 }
 
-void	ft_init_tab_index(t_env *env)
+void    ft_pars_resolution(t_env *env, int i, int j)
 {
-	env->tab_index[0] = 'R'; // pour Résolution
-	env->tab_index[1] = 'N'; // pour NO North
-	env->tab_index[2] = 'S'; // pour SO South
-	env->tab_index[3] = 'W'; // pour WE West
-	env->tab_index[4] = 'E'; // pour EA East
-	env->tab_index[5] = 'P'; // pour S Sprite
-	env->tab_index[6] = 'F'; // Floor
-	env->tab_index[7] = 'C'; // Ceiling 
-	env->tab_index[8] = '\0';
-}
-
-void    ft_pars_R(t_env *env, int i)
-{
-    int j;
-
-    j = 1;
     while (env->t_map.map[i][j] == ' ')
         j++;
-    while (env->t_map.map[i][j] >= 0 && env->t_map.map[i][j] <= 9)
-        env->t_map.map[i][j] = env->t_map.map[i][j]
+    while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
+    {
+        env->t_res.width = env->t_res.width * 10 + env->t_map.map[i][j] - 48; 
+        j++;
+    }
+    while (env->t_map.map[i][j] == ' ')
+        j++;
+    while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
+    {
+        env->t_res.height = env->t_res.height * 10 + env->t_map.map[i][j] - 48; 
+        j++;
+    }
+    while (env->t_map.map[i][j] == ' ')
+        j++;
+    if (env->t_map.map[i][j] == '\0' && env->t_res.width > 0 && env->t_res.height > 0)
+        env->t_check.R = 1;
+    // else
+    //     return(ERROR_INVALID_ELEMENTS);
 }
 
-void	ft_init_tab_fct(t_env *env)
+int		ft_charset(char c) // a mettre dans ma libft ?
 {
-	env->tab_fct[0] = &ft_pars_R;
-// 	env->tab_fct[1] = &ft_pars_N;
-// 	env->tab_fct[2] = &ft_pars_S;
-// 	env->tab_fct[3] = &ft_pars_W;
-// 	env->tab_fct[4] = &ft_pars_E;
-// 	env->tab_fct[5] = &ft_pars_P;
-// 	env->tab_fct[6] = &ft_pars_F;
-// 	env->tab_fct[7] = &ft_pars_C;
- }
-int		ft_charset(char c)
-{
-	char	*charset;
 	int		i;
+    char    *charset;
 
 	i = 0;
-	charset = "RNSWEPFC";
+    charset = "RNSWEFC";
 	while (charset[i])
 	{
 		if (charset[i] == c)
@@ -112,40 +100,48 @@ int		ft_charset(char c)
 	return (0);
 }
 
-int		ft_find_index(t_env *env, char elem)
-{
-	int i;
-
-	i = 0;
-	while (env->t_map.tab_index[i])
-	{
-		if (env->t_map.tab_index[i] == elem)
-		{
-			return (i);
-		}
-		i++;
-	}
-	return (-1);
-}
-
 void    ft_pars_elem(t_env *env)
 {
     int i;
 
     i = 0;
-    while ((ft_charset(env->t_map.map[i][0]) == 1) || (env->t_check.full_elements_detected != 1)) // tant qu'on a pas détecté toutes les lettres ou qu'on est dans le charset
+    while ((ft_charset(env->t_map.map[i][0]) == 1)) //|| (env->t_check.full_elements_detected != 1)) // tant qu'on a pas détecté toutes les lettres ou qu'on est dans le charset
     {
         if (ft_charset(env->t_map.map[i][0]) == 1)
-        {
-            env->t_map.index = ft_find_index(env, env->t_map.map[i][0]);
-            (*env->t_map.tab_fct[env->t_map.index])(env, i);
+        { 
+            if (env->t_map.map[i][0] == 'R')
+            {
+                ft_pars_resolution(env, i, 1);
+            }
+            else if ((env->t_map.map[i][0] == 'F' || env->t_map.map[i][0] == 'C'))
+            {
+                
+                 ft_pars_colors(env, i, 1);
+            }
+            else
+            {
+                ft_pars_textures(env, i, 2);
+            }
         }
         i++;
     }
 }
 
-ft_parsing(t_env env)
-{
-  ft_pars_elem(env);
-}
+// void    ft_parsing()
+// {
+// // int i;
+
+// //     i = 0;
+//     t_env  *env;
+//     env = malloc(sizeof(t_env));
+//     ft_bzero(env, sizeof(t_env));
+//     //void	(*tab_fct[8])(t_env*, int);
+//     //ft_init_tab_fct(env);
+//     ft_make_tab(env);
+//     ft_pars_elem(env);
+//     printf("env->t_res.width= %d, env->t_res.height= %d\n",env->t_res.width, env->t_res.height);
+//    // free(env->t_elements.NO);
+//     free(env);
+    
+// }
 

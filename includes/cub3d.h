@@ -11,23 +11,23 @@
 
 
 
-typedef struct              s_check
+typedef struct              s_check  			
 {
     short                   full_elements_detected;
     short                   tab_elements_ok;
-    short                   r;              //pour mettre à 1 les lettres quand je les trouve
-    short                   no;
-    short                   se;
-    short                   we;
-    short                   ea;
-    short                   s;
-    short                   f;
-    short                   c;
+    short                   R;              //pour savoir que la fonction parsing de la lettre a bien fonctionné
+    short                   NO;
+    short                   SE;
+    short                   WE;
+    short                   EA;
+    short                   S;
+    short                   F;
+    short                   C;
 }                           t_check;
 
 typedef enum                s_error
 {
-	SUCCESS,
+	SUCCESS,					//Si tous les éléments de t_check sont à 1
 	ERROR_INVALID_ELEMENTS,
 	MAP_ERROR_NOT_CLOSED,
     MAP_ERROR_WRONG_CHAR,
@@ -42,55 +42,78 @@ typedef enum                s_error
 	//WRONG_TEX
 }						    t_error;
 
-typedef struct				s_elements
+// typedef struct				s_elements
+// {
+// //	char					*r;
+// 	char					*n;
+// 	char					*s;
+// 	char					*w;
+// 	char					*e;
+// 	char					*nw;
+// 	char					*ne;
+// 	char					*sw;
+// 	char					*se;
+// 	char					*f;
+// 	char					*c;
+// }							t_elements;
+
+typedef struct				s_rgb
 {
-	char					*r;
-	char					*n;
-	char					*s;
-	char					*w;
-	char					*e;
-	char					*nw;
-	char					*ne;
-	char					*sw;
-	char					*se;
-	char					*f;
-	char					*c;
-}							t_elements;
+	unsigned int			r;
+	unsigned int			g;
+	unsigned int			b;
+}							t_rgb;
 
 typedef struct				s_colors
 {
-	unsigned char			r;
-	unsigned char			g;
-	unsigned char			b;
+
+	t_rgb				t_rgb_C;
+	t_rgb				t_rgb_F;
+
 }							t_colors;
+
+                        
+
+typedef	struct				s_res
+{
+	int						width;
+	int						height;
+
+}							t_res;
+
+typedef	struct				s_textures_path
+{
+	char					*NO;
+	char					*SO;
+	char					*WE;
+	char					*EA;
+	char					*S;
+}							t_textures_path;
 
 typedef struct              s_map
 {
     char					**map;
 	int						nb_line;
 	int						nb_char;
-	int						index;
-	char					tab_index[9]; // A voir combien d'index
-	void					(*tab_fct[8])(t_env*, int); // a voir combien de fonctions en fonctions de l'index
-}                           t_map;
+}							t_map;
 
-typedef	struct				s_res
+typedef	struct				s_env // définie par "env"
 {
-	int						h
-}							t_res;
-
-typedef	struct				s_env // déifnie par "env"
-{
-    t_elements              t_elements;
-	t_map					t_map; // (élements + map)
-	t_colors				t_floor_color;
-	t_colors				t_ceiling_color;
+    t_textures_path         t_textures_path;
+	t_map					t_map;
+	t_colors				t_colors;
 	t_res 					t_res;
-	t_check					t_check;
+	t_check					t_check; 
+	
 
 }							t_env;
 
-
-void    ft_make_tab(t_env *env);
+void    ft_make_tab(char *file, t_env *env);
+void    ft_pars_textures(t_env *env, int i, int j);
+void    ft_pars_resolution(t_env *env, int i, int j);
+void    ft_pars_colors(t_env *env, int i, int j);
+void    ft_parsing();
+void    ft_pars_elem(t_env *env);
+void  ft_pars_colors(t_env *env, int i, int j);
 
 #endif
