@@ -118,4 +118,5 @@ void    pars_elem(t_env *env);
 void  	pars_colors(t_env *env, int i, int j);
 void	check_map(t_env *env);
 void    check_first_line(t_env *env);
+//void	find_start_end_lines(t_env *env, int i);
 #endif

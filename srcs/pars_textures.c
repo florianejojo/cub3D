@@ -14,19 +14,18 @@ void pars_textures(t_env *env, int i, int j) // Tester avec toutes les lettres v
   while (env->t_map.map[i][j] && env->t_map.map[i][j] != ' ')
     j++;
   if (env->t_map.map[i][0] == 'S' && env->t_map.map[i][1] != 'O' && env->t_textures_path.S == NULL) // si on est sur un sprite
-    env->t_textures_path.S = substr(env->t_map.map[i], k, j - k);
+    env->t_textures_path.S = ft_substr(env->t_map.map[i], k, j - k);
   else if (env->t_map.map[i][0] == 'N'&& env->t_textures_path.NO == NULL)
-    env->t_textures_path.NO = substr(env->t_map.map[i], k, j - k);
+    env->t_textures_path.NO = ft_substr(env->t_map.map[i], k, j - k);
   else if (env->t_map.map[i][0] == 'S' && env->t_textures_path.SO == NULL)
-    env->t_textures_path.SO = substr(env->t_map.map[i], k, j - k);
+    env->t_textures_path.SO = ft_substr(env->t_map.map[i], k, j - k);
   else if (env->t_map.map[i][0] == 'W' && env->t_textures_path.WE == NULL)
-    env->t_textures_path.WE = substr(env->t_map.map[i], k, j - k);
+    env->t_textures_path.WE = ft_substr(env->t_map.map[i], k, j - k);
   else if (env->t_map.map[i][0] == 'E' && env->t_textures_path.EA == NULL)
-    env->t_textures_path.EA = substr(env->t_map.map[i], k, j - k);
+    env->t_textures_path.EA = ft_substr(env->t_map.map[i], k, j - k);
   else 
     env->t_error = ERROR_INVALID_ELEMENTS; 
-  if (env->t_textures_path.S == NULL || env->t_textures_path.NO == NULL || env->t_textures_path.SO == NULL || env->t_textures_path.WE == NULL || env->t_textures_path.EA == NULL)
-    env->t_error = ERROR_INVALID_ELEMENTS;
+  
 }
 
 void  pars_colors_rgb(t_env *env, int i, int j, int k)
@@ -58,6 +57,7 @@ void pars_colors(t_env *env, int i, int j)
 {
   while (env->t_map.map[i][j] == ' ')
     j++;
+  
   while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
     {
       pars_colors_rgb(env, i, j, 'r');
@@ -76,6 +76,8 @@ void pars_colors(t_env *env, int i, int j)
       pars_colors_rgb(env, i, j, 'b');
     j++;
     }
-  if (env->t_colors.t_rgb_F.r > 255 || env->t_colors.t_rgb_F.g > 255 || env->t_colors.t_rgb_F.b > 255 || env->t_colors.t_rgb_C.r > 255 || env->t_colors.t_rgb_C.g > 255 || env->t_colors.t_rgb_C.b > 255)
-    env->t_error = ERROR_INVALID_ELEMENTS; 
+    
+  // if (env->t_colors.t_rgb_F.r > 255 || env->t_colors.t_rgb_F.g > 255 || env->t_colors.t_rgb_F.b > 255 || env->t_colors.t_rgb_C.r > 255 || env->t_colors.t_rgb_C.g > 255 || env->t_colors.t_rgb_C.b > 255)
+  //   env->t_error = ERROR_INVALID_ELEMENTS; 
+  
 }
