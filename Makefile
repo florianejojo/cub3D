@@ -19,6 +19,7 @@ CC			=	gcc
 SRCS		=	srcs/parsing.c \
 				srcs/pars_textures.c \
 				srcs/check_map.c \
+				srcs/print_error.c \
 
 
 OBJS		=	$(SRCS:.c=.o)
