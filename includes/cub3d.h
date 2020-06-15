@@ -6,25 +6,26 @@
 #include <stdlib.h>
 #include <unistd.h> //read
 #include <stdio.h> //printf
+#include "minilibx_mms_20200219/mlx.h"
 
 #include "../libft/libft.h"
 
 
 
-typedef struct              s_check  			
-{
-    short                   full_elements_detected;
-    short                   tab_elements_ok;
-    short                   R;              //pour savoir que la fonction parsing de la lettre a bien fonctionné
-    short					textures;
-    short                   F;
-    short                   C;
-}                           t_check;
+// typedef struct              s_check  			
+// {
+//     short                   full_elements_detected;
+//     short                   tab_elements_ok;
+//     short                   R;              //pour savoir que la fonction parsing de la lettre a bien fonctionné
+//     short					textures;
+//     short                   F;
+//     short                   C;
+// }                           t_check;
 
 typedef enum                s_error
 {
+	SUCCESS,
 	ERROR_INVALID_ELEMENTS, // == 0
-	SUCCESS,			// = 1		//Si tous les éléments de t_check sont à 1
 	LINE_NOT_CLOSED,
 	MAP_NOT_CLOSED,
     MAP_ERROR_WRONG_CHAR,
@@ -109,7 +110,7 @@ typedef	struct				s_env // définie par "env"
 	t_map					t_map;
 	t_colors				t_colors;
 	t_res 					t_res;
-	t_check					t_check;
+	// t_check					t_check;
 	t_error					t_error;
 	int						error_type;
 	

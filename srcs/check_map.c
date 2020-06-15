@@ -27,7 +27,6 @@ void    find_start_end_lines(t_env *env, int *start_end)
         while (env->t_map.map[env->t_map.i + 1])
             env->t_map.i++;
     }
-    
     while (env->t_map.map[env->t_map.i] && *start_end == 0)
     {
         j = 0;

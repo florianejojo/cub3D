@@ -20,11 +20,11 @@ SRCS		=	srcs/parsing.c \
 				srcs/pars_textures.c \
 				srcs/check_map.c \
 				srcs/print_error.c \
-
+%.o: %.c
 
 OBJS		=	$(SRCS:.c=.o)
 
-FLAGS		=	-c -Wall -Wextra -Werror 
+FLAGS		=	-c -Wall -Wextra -Werror -Imlx -c $< -o $@ #ajouté -Imlx -c $< -o $@ 
 
 HEADER		=	includes/cub3d.h
 
