@@ -23,8 +23,11 @@ void pars_textures(t_env *env, int i, int j) // Tester avec toutes les lettres v
     env->t_textures_path.WE = ft_substr(env->t_map.map[i], k, j - k);
   else if (env->t_map.map[i][0] == 'E' && env->t_textures_path.EA == NULL)
     env->t_textures_path.EA = ft_substr(env->t_map.map[i], k, j - k);
-  else 
-    env->t_error = ERROR_INVALID_ELEMENTS; 
+  else
+  { 
+    // printf ("PB ICI\n");
+    env->t_error = ERROR_INVALID_ELEMENTS;
+  }
   
 }
 

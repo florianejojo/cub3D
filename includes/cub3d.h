@@ -23,8 +23,8 @@ typedef struct              s_check
 
 typedef enum                s_error
 {
-	SUCCESS,					//Si tous les éléments de t_check sont à 1
-	ERROR_INVALID_ELEMENTS,
+	ERROR_INVALID_ELEMENTS, // == 0
+	SUCCESS,			// = 1		//Si tous les éléments de t_check sont à 1
 	LINE_NOT_CLOSED,
 	MAP_NOT_CLOSED,
     MAP_ERROR_WRONG_CHAR,

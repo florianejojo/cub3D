@@ -121,7 +121,7 @@ void pars_elem(t_env *env)
     //     env->t_error = ERROR_INVALID_ELEMENTS;
     // i++;
     env->t_map.i = i - 1; // on choppe la ligne après tous les éléments
-    
+//    printf("t_map.i = %d\n\n", env->t_map.i); 
 }
 
 
