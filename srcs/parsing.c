@@ -1,36 +1,3 @@
-
-
-// 1 
-// 2 
-// La description de la carte sera toujours en dernier dans le fichier, le reste des éléments peut être dans n’importe quel ordre.
-// Mis à part la description de la map, chaque type d’élément peut être séparé par une ou plusieurs lignes vides.
-// Sauf pour la map elle-même, les informations de chaque élément peuvent être séparées par un ou plusieurs espace(s).
-// le parsing de la map doit prendre en compte les espaces
-
-// --> 1 - ranger le fichier text dans un double tableau.
-// --> 2 - Ranger les éléments dans la envcture
-//              "FULL_ELEMENTS_DETECTED" != 1 ou que
-//              "TAB_ELEMENTS OK" != 1 (quand j'ai toutes les lettres et que je renconte un "\n")
-//               si la lettre fait partie du charset, envoyer la lettre dans une fonction + mettre la lettre à 1
-//--> Parcourir la ligne à chaque fois pour mettre à jour les stuctures
-//--> A chaque nouvelle lettre je mets la lettre de la envcture éléments à 1, et je check si FULL_ELEMENTS _DETECTED = 1.
-//
-//              Si l'élément est déjà à 1 : Je renvoi error
-//
-// --> Lire tant que c'est un \n
-// --> Si c'est plus un \n, utiliser GNL et stocker la ligne à chaque fois dans un tableau de la envcture.
-
-//
-
-// --> Quand FULL ELMENTRS DETECTED = 1, je cherche la première ligne avec un char
-//              si c'est un 1, continuer,
-//              sinon renvoyer "error car pas de 1"
-// --> Ranger la map dans un double tableau
-//              checker le char à chaque fois pour voir s'il est dans le charset "0, 1,2,N,S,E,W + espace" (faire une fonction dédiée pour espace peut être ?)
-//              si un char est pas dans charset renvoyer une erreur
-//              si open = 0 alors fin de fichier
-// --> Parcourir la map pour voir si elle est bien fermée et si elle commence bien par un 1
-
 #include "../includes/cub3d.h"
 
 void make_tab(char *file, t_env *env)
@@ -44,17 +11,17 @@ void make_tab(char *file, t_env *env)
 
     if ((fd = open(file, O_RDONLY)) < 0)
         printf("fd = %d\n", fd);
-    while ((ret = read(fd, buf, 1)) > 0) // pour compter les chars
+    while ((ret = read(fd, buf, 1)) > 0)
         env->t_map.nb_char++;
-    str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1)); // malloc de la chaine
+    str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1));
     close(fd);
     fd = open(file, O_RDONLY);
-    while ((ret = read(fd, buf, 1)) > 0) // pour remplir la chaine
+    while ((ret = read(fd, buf, 1)) > 0)
         str[i++] = buf[0];
     str[i] = '\0';
-    env->t_map.map = ft_split(str, '\n'); // pour créer un double tableau
+    env->t_map.map = ft_split(str, '\n'); 
     close(fd);
-    free(str); // maintenant il y a 2 trucs mallocs: env + double tableau **map
+    free(str); 
 }
 
 void pars_resolution(t_env *env, int i, int j)
@@ -79,67 +46,70 @@ void pars_resolution(t_env *env, int i, int j)
     //     env->t_error = ERROR_INVALID_ELEMENTS;
 }
 
-// int charset(char c) // a mettre dans ma libft ?
-// {
-//     int i;
-//     char *charset;
+int skip_wsp(int i, int j, t_env *env)
+{
+    while (env->t_map.map[i][j] == ' ')
+        j++;
+    return (j);
+}
 
-//     i = 0;
-//     charset = "RNSWEFC";
-//     while (charset[i])
-//     {
-//         if (charset[i] == c)
-//             return (1);
-//         i++;
-//     }
-//     return (0);
-// }
-
-
-void pars_elem(t_env *env)
+int pars_elem(t_env *env) // modif avec wsp
 {
     int i;
+    int j;
 
     i = 0;
-    while (ft_charset("RNSWEFC", env->t_map.map[i][0]) == 1 || env->t_map.map[i][0] == '\0') // faire une fonction empty_line? pour le cas ou la lignes contient que des espaces ?
+    
+    // printf("ft_charset = %d\n", ft_charset("RNSWEFC", env->t_map.map[i][0]));
+    while (env->t_map.map[i] && env->t_map.map[i][j])
     {
-        if (env->t_map.map[i][0] == 'R')
+        j = skip_wsp(i, 0, env);
+        if (env->t_map.map[i][j] == 'R')
         {
-        pars_resolution(env, i, 1);
+            return(pars_resolution(env, i, (j + 1)));
         }
-        else if (env->t_map.map[i][0] == 'F' || env->t_map.map[i][0] == 'C')
+        else if (env->t_map.map[i][j] == 'F' || env->t_map.map[i][j] == 'C')
         {
-            pars_colors(env, i, 1);
+            return(pars_colors(env, i, (j + 1)));
         }
-        else if (env->t_map.map[i][0] != '\0')
+        else if (ft_charset("SNWE",env->t_map.map[i][j] == 1))
         {
-            pars_textures(env, i, 2);
+            return(pars_textures(env, i, (j + 2)));
         }
-    i++;
+        i++;
     }
-    // if (env->t_textures_path.S == NULL || env->t_textures_path.NO == NULL || env->t_textures_path.SO == NULL || env->t_textures_path.WE == NULL || env->t_textures_path.EA == NULL)
-    //     env->t_error = ERROR_INVALID_ELEMENTS;
-    // i++;
     env->t_map.i = i - 1; // on choppe la ligne après tous les éléments
 //    printf("t_map.i = %d\n\n", env->t_map.i); 
 }
 
+int check_parsing()
 
-
-// void    parsing()
+// void pars_elem(t_env *env)
 // {
-// // int i;
+//     int i;
+// 
 
-// //     i = 0;
-//     t_env  *env;
-//     env = malloc(sizeof(t_env));
-//     bzero(env, sizeof(t_env));
-//     //void	(*tab_fct[8])(t_env*, int);
-//     //init_tab_fct(env);
-//     make_tab(env);
-//     pars_elem(env);
-//     printf("env->t_res.width= %d, env->t_res.height= %d\n",env->t_res.width, env->t_res.height);
-//    // free(env->t_elements.NO);
-//     free(env);
-
+//     i = 0;
+//  
+//     // printf("ft_charset = %d\n", ft_charset("RNSWEFC", env->t_map.map[i][0]));
+//     while (ft_charset("RNSWEFC", env->t_map.map[i][0]) == 1 || env->t_map.map[i][0] == '\0') // faire une fonction empty_line? pour le cas ou la lignes contient que des espaces ?
+//     {
+//         // printf ("env->t_map.map[%d][0] = %c", i, env->t_map.map[i][0]);
+//         if (env->t_map.map[i][0] == 'R')
+//         {
+//         pars_resolution(env, i, 1);
+//         }
+//         else if (env->t_map.map[i][0] == 'F' || env->t_map.map[i][0] == 'C')
+//         {
+//             pars_colors(env, i, 1);
+//         }
+//         else if (env->t_map.map[i][0] != '\0')
+//         {
+//             pars_textures(env, i, 2);
+//         }
+//     i++;
+//     }
+//     env->t_map.i = i - 1; // on choppe la ligne après tous les éléments
+// //    printf("t_map.i = %d\n\n", env->t_map.i); 
+ 
 // }

@@ -24,7 +24,7 @@ SRCS		=	srcs/parsing.c \
 
 OBJS		=	$(SRCS:.c=.o)
 
-FLAGS		=	-c -Wall -Wextra -Werror -Imlx -c $< -o $@ #ajouté -Imlx -c $< -o $@ 
+FLAGS		=	-c -Wall -Wextra -Werror #-Imlx -c $< -o $@ #ajouté -Imlx -c $< -o $@ 
 
 HEADER		=	includes/cub3d.h
 

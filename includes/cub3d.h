@@ -6,21 +6,21 @@
 #include <stdlib.h>
 #include <unistd.h> //read
 #include <stdio.h> //printf
-#include "minilibx_mms_20200219/mlx.h"
+#include "../minilibx_mms_20200219/mlx.h"
 
 #include "../libft/libft.h"
 
 
 
-// typedef struct              s_check  			
-// {
-//     short                   full_elements_detected;
-//     short                   tab_elements_ok;
-//     short                   R;              //pour savoir que la fonction parsing de la lettre a bien fonctionné
-//     short					textures;
-//     short                   F;
-//     short                   C;
-// }                           t_check;
+typedef struct              s_check  			
+{
+    short                   full_elements_detected;
+    short                   tab_elements_ok;
+    short                   R;              //pour savoir que la fonction parsing de la lettre a bien fonctionné
+    short					textures;
+    short                   F;
+    short                   C;
+}                           t_check;
 
 typedef enum                s_error
 {
@@ -31,7 +31,9 @@ typedef enum                s_error
     MAP_ERROR_WRONG_CHAR,
     ERROR_INVALID_FILE, // si c'est pas .cub
 	ERROR_MALLOC,
-	ERROR_FILE_NOT_OPENED
+	ERROR_FILE_NOT_OPENED,
+	NO_PLAYER_POS,
+	TO_MANY_PLAYER_POS,
 
 	//WRONG_INPUT,
 	//MALLOC_FAIL,
@@ -99,8 +101,8 @@ typedef struct              s_map
 	int 					j;
 	int 					start_line;
 	int						end_line;
-	int						pos_x;
-	int						pos_y;
+	char					player_pos;
+	// int						pos_y;
 	int						error;
 }							t_map;
 
@@ -110,7 +112,7 @@ typedef	struct				s_env // définie par "env"
 	t_map					t_map;
 	t_colors				t_colors;
 	t_res 					t_res;
-	// t_check					t_check;
+	t_check					t_check;
 	t_error					t_error;
 	int						error_type;
 	

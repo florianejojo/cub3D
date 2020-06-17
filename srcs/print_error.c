@@ -17,4 +17,8 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n Invalid file extention\n", 1);
 	if (error == ERROR_FILE_NOT_OPENED)
 		ft_putstr_fd("Error\n Fail opening file\n", 1);
+	if (error == NO_PLAYER_POS)
+		ft_putstr_fd("Error\n No player position detected\n", 1);
+	if (error == TO_MANY_PLAYER_POS)
+		ft_putstr_fd("Error\n Two or more player positions detected\n", 1);
 }

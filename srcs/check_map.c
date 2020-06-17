@@ -12,8 +12,14 @@ int     line_closed(char *line)
     j = ft_strlen(line) - 1;
     while (line[j] && line[j] == ' ')
         j--;
+    
     if (line[j] != '1')
+    {
+        printf (" different de 1 ='%c'\n", line[j]);
         return (0);
+    }
+
+        
     return (1);
 }
 
@@ -30,12 +36,14 @@ void    find_start_end_lines(t_env *env, int *start_end)
     while (env->t_map.map[env->t_map.i] && *start_end == 0)
     {
         j = 0;
+        
         while (env->t_map.map[env->t_map.i][j] && *start_end == 0)
         {
             if (env->t_map.map[env->t_map.i][j] != ' ')
                 *start_end = env->t_map.i;
             j++;
         }
+        
         if (start_end == &env->t_map.start_line)
             env->t_map.i++;
         else if (start_end == &env->t_map.end_line)
@@ -79,7 +87,14 @@ int    check_map(t_env *env)
             return (LINE_NOT_CLOSED);
         while (map[i][j])
         {
-            if (ft_charset("012NSWE ", map[i][j]) != 1)
+            if (ft_charset("NSWE", map[i][j]) == 1)
+            {
+                if (env->t_map.player_pos == 0)
+                    env->t_map.player_pos = map[i][j];
+                else
+                    return (TO_MANY_PLAYER_POS);
+            }
+            else if (ft_charset("012 ", map[i][j]) != 1)
                 return(MAP_ERROR_WRONG_CHAR);
             if (map[i][j] != '1')
             {
@@ -91,5 +106,7 @@ int    check_map(t_env *env)
         j = 0;
         i++;
     }
+    if (env->t_map.player_pos == 0)
+        return (NO_PLAYER_POS);
     return(SUCCESS);
 }
