@@ -20,7 +20,7 @@ SRCS		=	srcs/parsing.c \
 				srcs/pars_textures.c \
 				srcs/check_map.c \
 				srcs/print_error.c \
-%.o: %.c
+#%.o: %.c
 
 OBJS		=	$(SRCS:.c=.o)
 
