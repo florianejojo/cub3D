@@ -1,28 +1,28 @@
 #include "../includes/cub3d.h"
 
-void make_tab(char *file, t_env *env)
-{
-    int fd;
-    int ret;
-    char buf[10];
-    char *str;
-    int i;
-    i = 0;
+// void make_tab(char *file, t_env *env)
+// {
+//     int fd;
+//     int ret;
+//     char buf[10];
+//     char *str;
+//     int i;
+//     i = 0;
 
-    if ((fd = open(file, O_RDONLY)) < 0)
-        printf("fd = %d\n", fd);
-    while ((ret = read(fd, buf, 1)) > 0)
-        env->t_map.nb_char++;
-    str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1));
-    close(fd);
-    fd = open(file, O_RDONLY);
-    while ((ret = read(fd, buf, 1)) > 0)
-        str[i++] = buf[0];
-    str[i] = '\0';
-    env->t_map.map = ft_split(str, '\n'); 
-    close(fd);
-    free(str); 
-}
+//     if ((fd = open(file, O_RDONLY)) < 0)
+//         printf("fd = %d\n", fd);
+//     while ((ret = read(fd, buf, 1)) > 0)
+//         env->t_map.nb_char++;
+//     str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1));
+//     close(fd);
+//     fd = open(file, O_RDONLY);
+//     while ((ret = read(fd, buf, 1)) > 0)
+//         str[i++] = buf[0];
+//     str[i] = '\0';
+//     env->t_map.map = ft_split(str, '\n'); 
+//     close(fd);
+//     free(str); 
+// }
 
 void pars_resolution(t_env *env, int i, int j)
 {
