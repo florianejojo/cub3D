@@ -46,12 +46,7 @@ void pars_resolution(t_env *env, int i, int j)
     //     env->t_error = ERROR_INVALID_ELEMENTS;
 }
 
-int skip_wsp(int i, int j, t_env *env)
-{
-    while (env->t_map.map[i][j] == ' ')
-        j++;
-    return (j);
-}
+
 
 int pars_elem(t_env *env) // modif avec wsp
 {
@@ -82,9 +77,9 @@ int pars_elem(t_env *env) // modif avec wsp
 //    printf("t_map.i = %d\n\n", env->t_map.i); 
 }
 
-int check_parsing()
 
-// void pars_elem(t_env *env)
+
+// void pars_elem(t_env *env) // fonctionne 
 // {
 //     int i;
 // 

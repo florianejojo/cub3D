@@ -16,10 +16,13 @@ LIBFT_PATH	=	libft/ #dans cub3d la libft doit être dans un dossier à la racine
 
 CC			=	gcc
 
-SRCS		=	srcs/parsing.c \
-				srcs/pars_textures.c \
-				srcs/check_map.c \
+SRCS		=	srcs/check_map.c \
 				srcs/print_error.c \
+				srcs/init_map.c \
+				srcs/init_map_utils.c \
+#srcs/pars_map.c \#
+				#srcs/pars_map2.c \#
+				
 #%.o: %.c
 
 OBJS		=	$(SRCS:.c=.o)

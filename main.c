@@ -8,11 +8,12 @@ int main (int argc, char **argv)
     i = 0;
     
     t_env  *env;
-    if ((env = malloc(sizeof(t_env))) == NULL)
-        return (MALLOC_FAILED);
+    env = malloc(sizeof(t_env));
     ft_bzero(env, sizeof(t_env));
 
-    init_map(argv[1], env);
+    env->t_error = init_map(argv[1], env);
+    print_error(env->t_error);
+    
 
     // make_tab(argv[1], env);
     // pars_elem(env);

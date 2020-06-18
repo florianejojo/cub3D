@@ -21,41 +21,14 @@ int     line_closed(char *line)
     return (1);
 }
 
-// void    find_start_end_lines(t_env *env, int *start_end)
-// {
-//     int j;
-
-//     j = 0;
-//     if (start_end == &env->t_map.end_line)
-//     {
-//         while (env->t_map.map[env->t_map.i + 1])
-//             env->t_map.i++;
-//     }
-//     while (env->t_map.map[env->t_map.i] && *start_end == 0)
-//     {
-//         j = 0;
-        
-//         while (env->t_map.map[env->t_map.i][j] && *start_end == 0)
-//         {
-//             if (env->t_map.map[env->t_map.i][j] != ' ')
-//                 *start_end = env->t_map.i;
-//             j++;
-//         }
-        
-//         if (start_end == &env->t_map.start_line)
-//             env->t_map.i++;
-//         else if (start_end == &env->t_map.end_line)
-//             env->t_map.i--;
-//     }
-// }
-
-void    find_start_end_lines(t_env *env)
+void    find_start_end_line(t_env *env)
 {
     int j;
     int i;
 
     j = 0;
     i = env->t_map.i;
+    printf ("env->t_map.i = %d\n", env->t_map.i);
     while (env->t_map.map[i])
     {
         j = skip_wsp(i, 0, env);
@@ -78,12 +51,14 @@ int     check_elems(t_env *env) // les textures je checks deja dans une autre fo
     int j;
 
     i = 0;
-    while (env->t_map.map[i])
+    
+    while (env->t_map.map[i] && (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1))
     {
+        // printf("player pos = %d\n\n", env->t_map.player_pos);
         if (env->t_map.map[i][j])
         {
             j = skip_wsp(i, 0, env);
-            if (env->t_map.map[i][j] == 'R' && env->t_check.R != 0 || env->t_map.map[i][j] == 'F' && env->t_check.F != 0 || env->t_map.map[i][j] == 'C' && env->t_check.C != 0)
+            if ((env->t_map.map[i][j] == 'R' && env->t_check.R != 0) || (env->t_map.map[i][j] == 'F' && env->t_check.F != 0) || (env->t_map.map[i][j] == 'C' && env->t_check.C != 0))
                 return (INVALID_ELEMENTS);
             else if (env->t_map.map[i][j] == 'R')
                 env->t_check.R = 1;
@@ -91,51 +66,36 @@ int     check_elems(t_env *env) // les textures je checks deja dans une autre fo
                 env->t_check.F = 1;
             else if (env->t_map.map[i][j] == 'C')
                 env->t_check.C = 1;
+            
         }
         i++;
     }
-    env->t_map.i = i - 1;
+    env->t_map.i = i;
+    // printf ("env->t_check.R = %d, env->t_check.F = %d, env->t_check.F = %d\n", env->t_check.R, env->t_check.F, env->t_check.C);
     if (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1)
         return (INVALID_ELEMENTS);
-    return (SUCESS)
+    return (SUCCESS);
 }
 
-
-int     find_wall_up(t_env *env, int i, int j)
-{
-    while (env->t_map.map[i - 1][j] && env->t_map.map[i][j] != '1')
-        i--;
-    if (env->t_map.map[i] && env->t_map.map[i][j] == '1')
-            return (1);
-    return(0);
-}
-
-int     find_wall_down(t_env *env, int i, int j)
-{
-    while (env->t_map.map[i] && env->t_map.map[i][j] != '1')
-        i++;
-    if (env->t_map.map[i] && env->t_map.map[i][j] == '1')
-            return (1);
-    return(0);
-}
 
 int     check_char(int i, int j, t_env *env)
 {
     if (ft_charset("NSWE", env->t_map.map[i][j]) == 1)
     {
-                
-                if (env->t_map.player_pos == 0)
-                    env->t_map.player_pos = env->t_map.map[i][j];
-                else
-                    return (TO_MANY_PLAYER_POS);
-            }
-            else if (ft_charset("012 ", env->t_map.map[i][j]) != 1)
-                return(WRONG_CHAR);
-            if (env->t_map.map[i][j] != '1')
-            {
-                if ((env->t_map.map[i][j] == '2' || env->t_map.map[i][j] == '0') && (find_wall_down (env, i, j) != 1 || find_wall_up(env, i, j) != 1))
-                    return (MAP_NOT_CLOSED);
-            }
+        // printf ("char pos détecté\n");
+        if (env->t_map.player_pos == 0)
+            env->t_map.player_pos = env->t_map.map[i][j];
+        else
+            return (TO_MANY_PLAYER_POS);
+    }
+    else if (ft_charset("012 ", env->t_map.map[i][j]) != 1)
+        return(WRONG_CHAR);
+    if (env->t_map.map[i][j] != '1')
+    {
+        if ((env->t_map.map[i][j] == '2' || env->t_map.map[i][j] == '0') && (find_wall_down (env, i, j) != 1 || find_wall_up(env, i, j) != 1))
+            return (MAP_NOT_CLOSED);
+    }
+    return (SUCCESS);
 }
 
 int     check_map(t_env *env)
@@ -144,41 +104,36 @@ int     check_map(t_env *env)
     int i;
     int j;
 
+    error = SUCCESS;
+    
     if ((error = check_elems(env)) != SUCCESS)
+    {
         return (error);
+    }
+    
     find_start_end_line(env);
+
     i = env->t_map.start_line;
     j = skip_wsp(i, 0, env);
+    
     while (env->t_map.map[i] && i < env->t_map.end_line)
     {
         if (line_closed(env->t_map.map[i]) != 1)
             return (LINE_NOT_CLOSED);
-        while (map[i][j])
+        while (env->t_map.map[i][j])
         {
             if ((error = check_char(i, j, env)) != SUCCESS)
                 return (error);
-            if (ft_charset("NSWE", env->t_map.map[i][j]) == 1)
-            {
-                
-                if (env->t_map.player_pos == 0)
-                    env->t_map.player_pos = env->t_map.map[i][j];
-                else
-                    return (TO_MANY_PLAYER_POS);
-            }
-            else if (ft_charset("012 ", env->t_map.map[i][j]) != 1)
-                return(WRONG_CHAR);
-            if (env->t_map.map[i][j] != '1')
-            {
-                if ((env->t_map.map[i][j] == '2' || env->t_map.map[i][j] == '0') && (find_wall_down (env, i, j) != 1 || find_wall_up(env, i, j) != 1))
-                    return (MAP_NOT_CLOSED);
-            }
             j++;
         }
-        j = 0;
         i++;
+        j = skip_wsp(i, 0, env);
     }
+    
     if (env->t_map.player_pos == 0)
+    {
         return (NO_PLAYER_POS);
+    }
     return(SUCCESS);
     
 }

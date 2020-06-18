@@ -25,13 +25,14 @@ typedef struct              s_check
 typedef enum                s_error
 {
 	SUCCESS,
-	ERROR_INVALID_ELEMENTS, // == 0
+	INVALID_ELEMENTS, // == 0
 	LINE_NOT_CLOSED,
 	MAP_NOT_CLOSED,
-    MAP_ERROR_WRONG_CHAR,
-    ERROR_INVALID_FILE, // si c'est pas .cub
-	ERROR_MALLOC,
-	ERROR_FILE_NOT_OPENED,
+    WRONG_CHAR,
+	MAP_ERROR,
+    INVALID_FILE, // si c'est pas .cub
+	MALLOC_FAILED,
+	FILE_NOT_OPENED,
 	NO_PLAYER_POS,
 	TO_MANY_PLAYER_POS,
 
@@ -129,7 +130,10 @@ void  	pars_colors(t_env *env, int i, int j);
 int		check_map(t_env *env);
 void    check_first_line(t_env *env);
 void    print_error(int error);
-// int		find_wall_up(char **map, int i, int j);
-// int		find_wall_down(char **map, int i, int j);
+int 	skip_wsp(int i, int j, t_env *env);
+int		find_wall_up(t_env *env, int i, int j);
+int		find_wall_down(t_env *env, int i, int j);
+int     init_map(char *file, t_env *env);
+int     line_closed(char *line);
 //void	find_start_end_lines(t_env *env, int i);
 #endif
