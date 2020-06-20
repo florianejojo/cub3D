@@ -26,23 +26,37 @@ void    find_start_end_line(t_env *env)
     int j;
     int i;
 
+
     j = 0;
     i = env->t_map.i;
-    printf ("env->t_map.i = %d\n", env->t_map.i);
-    while (env->t_map.map[i])
+    
+    while (env->t_map.map[i] && env->t_map.start_line == 0)
     {
+        
+        // printf ("j avant skip = %d\n", j);
         j = skip_wsp(i, 0, env);
+        // printf ("j après skip = %d\n", j);
         if (env->t_map.map[i][j])
                 env->t_map.start_line = i;
         i++;
     }
+    // i = ft_strlen(*env->t_map.map) - 1;
+    while (env->t_map.map[i])
+        i++;
+    i--;
     while (env->t_map.start_line != 0 && env->t_map.end_line == 0 && env->t_map.map[i])
     {
+        
         j = skip_wsp(i, 0, env);
         if (env->t_map.map[i][j])
                 env->t_map.end_line = i;
         i--;
     }
+    // printf ("i = %d\n", i);
+    // printf ("env->t_map.start_line = %d\n", env->t_map.start_line);
+    // printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
+    // printf ("env->t_map.map[%d] = '%s'\n", i, env->t_map.map[i]);
+    
 }
 
 int     check_elems(t_env *env) // les textures je checks deja dans une autre fonction 
@@ -82,9 +96,12 @@ int     check_char(int i, int j, t_env *env)
 {
     if (ft_charset("NSWE", env->t_map.map[i][j]) == 1)
     {
-        // printf ("char pos détecté\n");
+        
         if (env->t_map.player_pos == 0)
+        {
+            
             env->t_map.player_pos = env->t_map.map[i][j];
+        }
         else
             return (TO_MANY_PLAYER_POS);
     }
@@ -112,18 +129,22 @@ int     check_map(t_env *env)
     }
     
     find_start_end_line(env);
-
-    i = env->t_map.start_line;
-    j = skip_wsp(i, 0, env);
     
+    i = env->t_map.start_line;
+    j = 0;
+    // printf ("env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]); 
+    j = skip_wsp(i, 0, env);
+    // printf ("env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]); 
     while (env->t_map.map[i] && i < env->t_map.end_line)
     {
         if (line_closed(env->t_map.map[i]) != 1)
             return (LINE_NOT_CLOSED);
         while (env->t_map.map[i][j])
         {
+            
             if ((error = check_char(i, j, env)) != SUCCESS)
                 return (error);
+            
             j++;
         }
         i++;
@@ -132,6 +153,7 @@ int     check_map(t_env *env)
     
     if (env->t_map.player_pos == 0)
     {
+        
         return (NO_PLAYER_POS);
     }
     return(SUCCESS);

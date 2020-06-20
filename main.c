@@ -28,12 +28,12 @@ int main (int argc, char **argv)
     // printf("env->t_colors.t_rgb_F.r = %d, env->t_colors.t_rgb_F.g = %d , env->t_colors.t_rgb_F.b = %d, env->t_colors.t_rgb_C.r = %d, env->t_colors.t_rgb_C.g = %d, env->t_colors.t_rgb_C.b = %d\n",env->t_colors.t_rgb_F.r, env->t_colors.t_rgb_F.g, env->t_colors.t_rgb_F.b, env->t_colors.t_rgb_C.r, env->t_colors.t_rgb_C.g, env->t_colors.t_rgb_C.b);
     printf ("\n --------------------------------------- MAP : \n");
     
-    while (env->t_map.map[i])
-    {
-        printf("'%s'", env->t_map.map[i]);
-        printf("\n");
-        i++;
-    }
+    // while (env->t_map.map[i])
+    // {
+    //     printf("'%s'", env->t_map.map[i]);
+    //     printf("\n");
+    //     i++;
+    // }
     free(env);
     //return (1);
 }
