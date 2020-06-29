@@ -35,6 +35,10 @@ typedef enum                s_error
 	FILE_NOT_OPENED,
 	NO_PLAYER_POS,
 	TO_MANY_PLAYER_POS,
+	ERROR_RES,
+	ERROR_COLORS,
+	INVALID_TEXTURES,
+	ERROR_PARSING,
 
 	//WRONG_INPUT,
 	//MALLOC_FAIL,
@@ -70,8 +74,8 @@ typedef struct				s_rgb
 typedef struct				s_colors
 {
 
-	t_rgb				t_rgb_C;
-	t_rgb				t_rgb_F;
+	t_rgb				rgb_C;
+	t_rgb				rgb_F;
 
 }							t_colors;
 
@@ -98,6 +102,7 @@ typedef struct              s_map
     char					**map;
 	int						nb_lines;
 	int						nb_char;
+	t_res 					t_res;
 	int						i;
 	int 					j;
 	int 					start_line;
@@ -112,7 +117,6 @@ typedef	struct				s_env // définie par "env"
     t_textures_path         t_textures_path;
 	t_map					t_map;
 	t_colors				t_colors;
-	t_res 					t_res;
 	t_check					t_check;
 	t_error					t_error;
 	int						error_type;
@@ -121,12 +125,12 @@ typedef	struct				s_env // définie par "env"
 }							t_env;
 
 void    make_tab(char *file, t_env *env);
-void    pars_textures(t_env *env, int i, int j);
-void    pars_resolution(t_env *env, int i, int j);
-void    pars_colors(t_env *env, int i, int j);
+int 	check_textures(t_env *env);
+int    pars_textures(t_env *env, int i, int j);
+int    pars_resolution(t_env *env, int i, int j);
+int    pars_colors(t_env *env, int i, int j);
 void    parsing();
-void    pars_elem(t_env *env);
-void  	pars_colors(t_env *env, int i, int j);
+int     pars_map(t_env *env);
 int		check_map(t_env *env);
 void    check_first_line(t_env *env);
 void    print_error(int error);
@@ -135,5 +139,7 @@ int		find_wall_up(t_env *env, int i, int j);
 int		find_wall_down(t_env *env, int i, int j);
 int     init_map(char *file, t_env *env);
 int     line_closed(char *line);
+int 	is_wsp(int i, int j, t_env *env);
+
 //void	find_start_end_lines(t_env *env, int i);
 #endif

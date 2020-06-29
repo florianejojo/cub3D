@@ -1,80 +1,96 @@
 #include "../includes/cub3d.h"
 
-// void make_tab(char *file, t_env *env)
+// int pars_resolution(t_env *env, int i, int j)
 // {
-//     int fd;
-//     int ret;
-//     char buf[10];
-//     char *str;
-//     int i;
-//     i = 0;
-
-//     if ((fd = open(file, O_RDONLY)) < 0)
-//         printf("fd = %d\n", fd);
-//     while ((ret = read(fd, buf, 1)) > 0)
-//         env->t_map.nb_char++;
-//     str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1));
-//     close(fd);
-//     fd = open(file, O_RDONLY);
-//     while ((ret = read(fd, buf, 1)) > 0)
-//         str[i++] = buf[0];
-//     str[i] = '\0';
-//     env->t_map.map = ft_split(str, '\n'); 
-//     close(fd);
-//     free(str); 
+//     while (env->t_map.map[i][j] == ' ')
+//         j++;
+//     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
+//     {
+//         env->t_map.t_res.width = env->t_map.t_res.width * 10 + env->t_map.map[i][j] - 48;
+//         j++;
+//     }
+//     while (env->t_map.map[i][j] == ' ')
+//         j++;
+//     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
+//     {
+//         env->t_map.t_res.height = env->t_map.t_res.height * 10 + env->t_map.map[i][j] - 48;
+//         j++;
+//     }
+//     while (env->t_map.map[i][j] == ' ')
+//         j++;
+//     return (SUCCESS);
+//     // if (env->t_map.map[i][j] != '\0' || env->t_map.t_res.width <= 0 || env->t_map.t_res.height <= 0)
+//     //     env->t_error = ERROR_INVALID_ELEMENTS;
 // }
 
-void pars_resolution(t_env *env, int i, int j)
+int pars_resolution(t_env *env, int i, int j)
 {
-    while (env->t_map.map[i][j] == ' ')
-        j++;
+    j = skip_wsp(i, j + 1, env); // on skpi wsp après le R
     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
     {
-        env->t_res.width = env->t_res.width * 10 + env->t_map.map[i][j] - 48;
+        env->t_map.t_res.width = env->t_map.t_res.width * 10 + env->t_map.map[i][j] - 48;
         j++;
     }
-    while (env->t_map.map[i][j] == ' ')
-        j++;
+    j = skip_wsp(i, j, env);
     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
     {
-        env->t_res.height = env->t_res.height * 10 + env->t_map.map[i][j] - 48;
+        env->t_map.t_res.height = env->t_map.t_res.height * 10 + env->t_map.map[i][j] - 48;
         j++;
     }
-    while (env->t_map.map[i][j] == ' ')
-        j++;
-    // if (env->t_map.map[i][j] != '\0' || env->t_res.width <= 0 || env->t_res.height <= 0)
+    j = skip_wsp(i, j, env);
+    // printf ("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
+    // printf("env->t_res.height = %d, env->t_res.width = %d \n",env->t_map.t_res.height, env->t_map.t_res.width);
+    if (env->t_map.t_res.width == 0 || env->t_map.t_res.height == 0)
+        return (ERROR_RES);
+    return (SUCCESS);
+    // if (env->t_map.map[i][j] != '\0' || env->t_map.t_res.width <= 0 || env->t_map.t_res.height <= 0)
     //     env->t_error = ERROR_INVALID_ELEMENTS;
 }
 
-
-
-int pars_elem(t_env *env) // modif avec wsp
+int pars_map(t_env *env) // modif avec wsp
 {
     int i;
     int j;
+    int error;
 
     i = 0;
     
     // printf("ft_charset = %d\n", ft_charset("RNSWEFC", env->t_map.map[i][0]));
-    while (env->t_map.map[i] && env->t_map.map[i][j])
+    // j = 0;
+    error = 0;
+    // printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
+    j = skip_wsp(i, 0, env);
+    while (i < env->t_map.start_line)
     {
+
         j = skip_wsp(i, 0, env);
-        if (env->t_map.map[i][j] == 'R')
+        // printf("DANS PARS MAP --> env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]);
+        if (env->t_map.map[i][j] == 'R' && (error = pars_resolution(env, i, j)) != SUCCESS)
         {
-            return(pars_resolution(env, i, (j + 1)));
+            
+            return(error); 
         }
-        else if (env->t_map.map[i][j] == 'F' || env->t_map.map[i][j] == 'C')
+        else if ((env->t_map.map[i][j] == 'F' || env->t_map.map[i][j] == 'C') && (error = pars_colors(env, i, j)) != SUCCESS)
         {
-            return(pars_colors(env, i, (j + 1)));
+            
+            return(error);
         }
-        else if (ft_charset("SNWE",env->t_map.map[i][j] == 1))
+        else if (ft_charset("SNWE",env->t_map.map[i][j]) == 1 && (error = pars_textures(env, i, j)) != SUCCESS)
         {
-            return(pars_textures(env, i, (j + 2)));
+            
+            return(error);
         }
+        
         i++;
     }
-    env->t_map.i = i - 1; // on choppe la ligne après tous les éléments
-//    printf("t_map.i = %d\n\n", env->t_map.i); 
+    if ((error = check_textures(env)) != SUCCESS)
+    {
+        // printf ("ERREUR ICI \n");
+        return (error);
+    }
+    // env->t_map.i = i - 1; // on choppe la ligne après tous les éléments
+    // printf("t_map.i = %d\n\n", env->t_map.i);
+    return (SUCCESS);
 }
 
 

@@ -12,6 +12,16 @@ int skip_wsp(int i, int j, t_env *env)
     return (j);
 }
 
+int is_wsp(int i, int j, t_env *env)
+{
+    if (env->t_map.map[i][j] && (env->t_map.map[i][j] == ' ' || 
+        env->t_map.map[i][j] == '\t' || env->t_map.map[i][j] == '\v' || 
+        env->t_map.map[i][j] == '\n' || env->t_map.map[i][j] == '\f' || env->t_map.map[i][j] == '\r'))
+        return (1);
+    return (0);
+
+}
+
 int     find_wall_up(t_env *env, int i, int j)
 {
     while (env->t_map.map[i - 1][j] && env->t_map.map[i][j] != '1')
