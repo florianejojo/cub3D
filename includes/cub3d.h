@@ -39,6 +39,7 @@ typedef enum                s_error
 	ERROR_COLORS,
 	INVALID_TEXTURES,
 	ERROR_PARSING,
+	ERROR_START_END,
 
 	//WRONG_INPUT,
 	//MALLOC_FAIL,
@@ -123,7 +124,8 @@ typedef	struct				s_env // définie par "env"
 	
 
 }							t_env;
-
+char		**ft_split_cub(t_env *env, char const *s, char c);
+int make_map(char *file, t_env *env);
 void    make_tab(char *file, t_env *env);
 int 	check_textures(t_env *env);
 int    pars_textures(t_env *env, int i, int j);

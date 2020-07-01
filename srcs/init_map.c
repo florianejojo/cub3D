@@ -17,6 +17,33 @@ int		check_file(char *file)
 	return (SUCCESS);
 }
 
+// int make_map(char *file, t_env *env)
+// {
+//     int fd;
+//     int ret;
+//     char buf[10];
+//     char *str;
+//     int i;
+//     i = 0;
+
+//     if ((fd = open(file, O_RDONLY)) < 0)
+//         return(FILE_NOT_OPENED);
+//     while ((ret = read(fd, buf, 1)) > 0)
+//         env->t_map.nb_char++;
+//     if (!(str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1))))
+//         return (MALLOC_FAILED);
+//     close(fd);
+//     if ((fd = open(file, O_RDONLY)) < 0)
+//         return (FILE_NOT_OPENED);
+//     while ((ret = read(fd, buf, 1)) > 0)
+//         str[i++] = buf[0];
+//     str[i] = '\0';
+//     env->t_map.map = ft_split(str, '\n');
+//     close(fd);
+//     free(str); 
+//     return (SUCCESS);
+// }
+
 int make_map(char *file, t_env *env)
 {
     int fd;
@@ -38,9 +65,10 @@ int make_map(char *file, t_env *env)
     while ((ret = read(fd, buf, 1)) > 0)
         str[i++] = buf[0];
     str[i] = '\0';
-    env->t_map.map = ft_split(str, '\n');
+    env->t_map.map = ft_split_cub(env, str, '\n');
     close(fd);
-    free(str); 
+    free(str);
+    // printf ("env->t_map.nb_lines = %d\n", env->t_map.nb_lines);
     return (SUCCESS);
 }
 
@@ -54,13 +82,13 @@ int     init_map(char *file, t_env *env)
         return (error);
     else if ((error = make_map(file, env)) != SUCCESS) // fait
         return (error);
-    else if ((error = check_map(env)) != SUCCESS) // fait 
+    else if ((error = check_map(env)) != SUCCESS)
     {
         return (error);
     }
-    else if ((error = pars_map(env)) != SUCCESS )
-    {
-        return (error);
-    }
+    // else if ((error = pars_map(env)) != SUCCESS )
+    // {
+    //     return (error);
+    // }
     return (SUCCESS);
 }

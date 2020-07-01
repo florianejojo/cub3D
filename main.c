@@ -10,8 +10,9 @@ int main (int argc, char **argv)
     t_env  *env;
     env = malloc(sizeof(t_env));
     ft_bzero(env, sizeof(t_env));
-
+    
     env->t_error = init_map(argv[1], env);
+    printf("coucou\n");
     print_error(env->t_error);
     
     printf("\n\n");

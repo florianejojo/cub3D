@@ -22,6 +22,7 @@ SRCS		=	srcs/check_map.c \
 				srcs/init_map_utils.c \
 				srcs/pars_map.c \
 				srcs/pars_map2.c \
+				srcs/ft_split_cub.c \
 				
 #%.o: %.c
 

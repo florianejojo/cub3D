@@ -5,6 +5,8 @@ int     line_closed(char *line)
     int j;
 
     j = 0;
+    if (line == '\0')
+        return (1);
     while (line[j] && line[j] == ' ')
         j++;
     if (line[j] != '1')
@@ -21,7 +23,7 @@ int     line_closed(char *line)
     return (1);
 }
 
-void    find_start_end_line(t_env *env)
+int    find_start_end_line(t_env *env)
 {
     int j;
     int i;
@@ -29,53 +31,60 @@ void    find_start_end_line(t_env *env)
 
     j = 0;
     i = env->t_map.i;
-    
-    while (env->t_map.map[i] && env->t_map.start_line == 0)
+    printf("coucou1\n");
+    while (i <= env->t_map.nb_lines && env->t_map.start_line == 0)
     {
-        
-        // printf ("j avant skip = %d\n", j);
+        if (env->t_map.map[i])
+        {
+        printf ("i = %d\n", i);
+        printf ("j avant skip = %d\n", j);
         j = skip_wsp(i, 0, env);
-        // printf ("j après skip = %d\n", j);
         if (env->t_map.map[i][j])
-                env->t_map.start_line = i;
+            env->t_map.start_line = i;
+        printf ("j après skip = %d\n", j);
+        
+        }
+                
         i++;
     }
     // i = ft_strlen(*env->t_map.map) - 1;
-    while (env->t_map.map[i])
+    while (i < env->t_map.nb_lines)
         i++;
-    i--;
-    while (env->t_map.start_line != 0 && env->t_map.end_line == 0 && env->t_map.map[i])
+    // i--;
+    while (env->t_map.start_line != 0 && env->t_map.end_line == 0 && i > env->t_map.i)
     {
-        
+        if (env->t_map.map[i])
+        {
         j = skip_wsp(i, 0, env);
         if (env->t_map.map[i][j])
-                env->t_map.end_line = i;
+            env->t_map.end_line = i;
+        }   
         i--;
     }
     // printf ("i = %d\n", i);
-    printf ("env->t_map.start_line = %d\n", env->t_map.start_line);
-    printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
+    printf ("env->t_map.map[env->t_map.start_line] = '%s'\n", env->t_map.map[env->t_map.start_line]);
+printf ("env->t_map.map[env->t_map.end_line] = '%s'\n", env->t_map.map[env->t_map.end_line]);
+
     // printf ("env->t_map.map[%d] = '%s'\n", i, env->t_map.map[i]);
+    if (env->t_map.start_line == 0 || env->t_map.end_line == 0 || env->t_map.i == 0)
+        return (ERROR_START_END);
+    return (SUCCESS);
     
 }
 
-int     check_elems(t_env *env) // les textures je checks deja dans une autre fonction 
+int     check_elems(t_env *env) 
 {
     int i;
     int j;
 
     i = 0;
     
-    while (env->t_map.map[i] && (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1))
+    while (i <= env->t_map.nb_lines && (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1)) // les textures je checks deja dans une autre fonction 
     {
-        
-        // printf("player pos = %d\n\n", env->t_map.player_pos);
-       printf("env->t_map.map[%d] = '%s'\n", i, env->t_map.map[i]); 
-        // printf("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
-        if (env->t_map.map[i][j])
+        if (env->t_map.map[i])
         {
             j = skip_wsp(i, 0, env);
-            
+            // printf("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
             if ((env->t_map.map[i][j] == 'R' && env->t_check.R != 0) || (env->t_map.map[i][j] == 'F' && env->t_check.F != 0) || (env->t_map.map[i][j] == 'C' && env->t_check.C != 0))
                 return (INVALID_ELEMENTS);
             else if (env->t_map.map[i][j] == 'R')
@@ -87,9 +96,11 @@ int     check_elems(t_env *env) // les textures je checks deja dans une autre fo
             
         }
         i++;
+
     }
-    env->t_map.i = i;
-    // printf ("env->t_check.R = %d, env->t_check.F = %d, env->t_check.F = %d\n", env->t_check.R, env->t_check.F, env->t_check.C);
+    env->t_map.i = i; // sensé etre juste apres les elements
+    printf ("env->t_map.i = %d\n", env->t_map.i);
+    printf ("env->t_check.R = %d, env->t_check.F = %d, env->t_check.F = %d\n", env->t_check.R, env->t_check.F, env->t_check.C);
     if (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1)
         return (INVALID_ELEMENTS);
     return (SUCCESS);
@@ -131,24 +142,28 @@ int     check_map(t_env *env)
     {
         return (error);
     }
-    
-    find_start_end_line(env);
-    
+    if ((error = find_start_end_line(env)) != SUCCESS)
+        return (error);
+    printf("coucou2\n");
     i = env->t_map.start_line;
     j = 0;
     // printf ("env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]); 
     j = skip_wsp(i, 0, env);
     // printf ("env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]); 
-    while (env->t_map.map[i] && i < env->t_map.end_line)
+    while (i <= env->t_map.end_line) // env->t_map.map[i] && 
     {
-        if (line_closed(env->t_map.map[i]) != 1)
-            return (LINE_NOT_CLOSED);
-        while (env->t_map.map[i][j])
+        printf ("env->t_map.map[i] = '%s'\n", env->t_map.map[i]);
+        if (env->t_map.map[i] && env->t_map.map[i][j] && line_closed(env->t_map.map[i]) != 1)
         {
-            printf ("j = %d\n", j);
-            printf ("i = %d\n", i);
+            printf ("ici\n");
+            return (LINE_NOT_CLOSED);
+        }
+        while (env->t_map.map[i] && env->t_map.map[i][j])
+        {
+            // printf ("j = %d\n", j);
+            // printf ("i = %d\n", i);
             
-            printf ("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
+            // printf ("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
             if ((error = check_char(i, j, env)) != SUCCESS)
                 return (error);
             

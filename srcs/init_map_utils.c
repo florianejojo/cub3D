@@ -3,13 +3,17 @@
 
 int skip_wsp(int i, int j, t_env *env)
 {
-    
-    while (env->t_map.map[i][j] && (env->t_map.map[i][j] == ' ' || 
-        env->t_map.map[i][j] == '\t' || env->t_map.map[i][j] == '\v' || 
-        env->t_map.map[i][j] == '\n' || env->t_map.map[i][j] == '\f' || env->t_map.map[i][j] == '\r'))
-        j++;
+    if (env->t_map.map[i])
+    {
+        while (env->t_map.map[i][j] && (env->t_map.map[i][j] == ' ' || 
+            env->t_map.map[i][j] == '\t' || env->t_map.map[i][j] == '\v' || 
+            env->t_map.map[i][j] == '\n' || env->t_map.map[i][j] == '\f' || env->t_map.map[i][j] == '\r'))
+            j++;
     // printf ("i = %d, j = %d\n", i, j);
-    return (j);
+        return (j);
+    }
+    return (0);
+    
 }
 
 int is_wsp(int i, int j, t_env *env)
