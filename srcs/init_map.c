@@ -59,6 +59,8 @@ int     init_map(char *file, t_env *env)
         return (error);
     }
     else if ((error = pars_map(env)) != SUCCESS )
+    {
         return (error);
+    }
     return (SUCCESS);
 }

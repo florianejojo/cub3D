@@ -38,7 +38,14 @@ int pars_textures(t_env *env, int i, int j) // on est sur j = N S W E --> et S =
     env->t_textures_path.EA = ft_substr(env->t_map.map[i], k, j - k);
   else
     return (INVALID_ELEMENTS);
-  return (SUCCESS);
+  j = skip_wsp(i, j, env);
+  if (env->t_map.map[i][j] == '\0') // checker si c'est pas j + 1
+  {
+  // printf ("env->t_map.map[%d][%d] = '%c'\n", i ,j, env->t_map.map[i][j]);
+
+    return (SUCCESS);
+  }
+  return (INVALID_ELEMENTS);
 }
 
 // int pars_textures(t_env *env, int i, int j) // j = S N W E
@@ -130,31 +137,23 @@ int pars_colors(t_env *env, int i, int j) // ici j est sur F ou C
   // printf ("avant r ---> env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
   while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9' && pars_colors_rgb(env, i, j, 'r') == SUCCESS)
     j++;
-  
   j = skip_wsp(i, j, env) + 1;
   j = skip_wsp(i, j, env); 
-  
-  // if (j == ',')
-  //   j = j + 1;
-  // j = j + 1;
-  // printf ("avant g => env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
-  // printf("env->t_map.map[i][j] = %c\n", env->t_map.map[i][j]);
   while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9' && pars_colors_rgb(env, i, j, 'g') == SUCCESS)
     j++;
-  
-  // j = skip_wsp(i, j, env);
-  // if (j == ',')
-  //   j = skip_wsp(i, j + 1, env);
   j = skip_wsp(i, j, env) + 1;
   j = skip_wsp(i, j, env); 
   // printf ("avant b => env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
   while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9' && pars_colors_rgb(env, i, j, 'b') == SUCCESS)
     j++;
   j = skip_wsp(i, j, env);
-  if (env->t_map.map[i][j]) // checker si c'est pas j + 1
-    return (ERROR_COLORS);
-  return (SUCCESS);
-  
+  if (env->t_map.map[i][j] == '\0') // checker si c'est pas j + 1
+  {
+  // printf ("env->t_map.map[%d][%d] = '%c'\n", i ,j, env->t_map.map[i][j]);
+    return (SUCCESS);
+  }
+  return (ERROR_COLORS);
+}
 
   //    int pars_colors(t_env *env, int i, int j)
   // {
@@ -182,4 +181,4 @@ int pars_colors(t_env *env, int i, int j) // ici j est sur F ou C
 
   // if (env->t_colors.rgb_F.r > 255 || env->t_colors.rgb_F.g > 255 || env->t_colors.rgb_F.b > 255 || env->t_colors.rgb_C.r > 255 || env->t_colors.rgb_C.g > 255 || env->t_colors.rgb_C.b > 255)
   //   env->t_error = ERROR_INVALID_ELEMENTS;
-}
+// }

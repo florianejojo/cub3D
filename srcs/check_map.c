@@ -53,8 +53,8 @@ void    find_start_end_line(t_env *env)
         i--;
     }
     // printf ("i = %d\n", i);
-    // printf ("env->t_map.start_line = %d\n", env->t_map.start_line);
-    // printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
+    printf ("env->t_map.start_line = %d\n", env->t_map.start_line);
+    printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
     // printf ("env->t_map.map[%d] = '%s'\n", i, env->t_map.map[i]);
     
 }
@@ -68,10 +68,14 @@ int     check_elems(t_env *env) // les textures je checks deja dans une autre fo
     
     while (env->t_map.map[i] && (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1))
     {
+        
         // printf("player pos = %d\n\n", env->t_map.player_pos);
+       printf("env->t_map.map[%d] = '%s'\n", i, env->t_map.map[i]); 
+        // printf("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
         if (env->t_map.map[i][j])
         {
             j = skip_wsp(i, 0, env);
+            
             if ((env->t_map.map[i][j] == 'R' && env->t_check.R != 0) || (env->t_map.map[i][j] == 'F' && env->t_check.F != 0) || (env->t_map.map[i][j] == 'C' && env->t_check.C != 0))
                 return (INVALID_ELEMENTS);
             else if (env->t_map.map[i][j] == 'R')
@@ -141,7 +145,10 @@ int     check_map(t_env *env)
             return (LINE_NOT_CLOSED);
         while (env->t_map.map[i][j])
         {
+            printf ("j = %d\n", j);
+            printf ("i = %d\n", i);
             
+            printf ("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
             if ((error = check_char(i, j, env)) != SUCCESS)
                 return (error);
             
@@ -159,46 +166,3 @@ int     check_map(t_env *env)
     return(SUCCESS);
     
 }
-
-// int    check_map(t_env *env)
-// {
-//     int i;
-//     int j;
-
-//     char **map;
-//     map = env->t_map.map;
-
-//     find_start_end_lines(env, &env->t_map.start_line); // attention le start depend du t_map.i
-//     find_start_end_lines(env, &env->t_map.end_line);
-//     map[env->t_map.end_line + 1] = 0;
-//     i = env->t_map.start_line;
-//     j = 0;
-//     while (map[i] && i < env->t_map.end_line)
-//     {
-//         if (line_closed(map[i]) != 1)
-//             return (LINE_NOT_CLOSED);
-//         while (map[i][j])
-//         {
-//             if (ft_charset("NSWE", map[i][j]) == 1)
-//             {
-//                 if (env->t_map.player_pos == 0)
-//                     env->t_map.player_pos = map[i][j];
-//                 else
-//                     return (TO_MANY_PLAYER_POS);
-//             }
-//             else if (ft_charset("012 ", map[i][j]) != 1)
-//                 return(MAP_ERROR_WRONG_CHAR);
-//             if (map[i][j] != '1')
-//             {
-//                 if ((map[i][j] == '2' || map[i][j] == '0') && (find_wall_down (env, i, j) != 1 || find_wall_up(env, i, j) != 1))
-//                     return (MAP_NOT_CLOSED);
-//             }
-//             j++;
-//         }
-//         j = 0;
-//         i++;
-//     }
-//     if (env->t_map.player_pos == 0)
-//         return (NO_PLAYER_POS);
-//     return(SUCCESS);
-// }

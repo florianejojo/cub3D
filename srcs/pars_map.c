@@ -60,10 +60,14 @@ int pars_map(t_env *env) // modif avec wsp
     error = 0;
     // printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
     j = skip_wsp(i, 0, env);
-    while (i < env->t_map.start_line)
+    while (i < env->t_map.start_line) //&& ft_charset("NSWECF\0 ", (env->t_map.map[i][skip_wsp(i, 0, env)])) == 1)
     {
-
         j = skip_wsp(i, 0, env);
+        if (env->t_map.map[i][j] != '\0' && ft_charset("NSWECFR", env->t_map.map[i][j]) == 0)
+        {
+            printf ("env->t_map.map[%d][%d] = '%c'\n", i, j,  env->t_map.map[i][j]);
+            return (INVALID_ELEMENTS);
+        }
         // printf("DANS PARS MAP --> env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]);
         if (env->t_map.map[i][j] == 'R' && (error = pars_resolution(env, i, j)) != SUCCESS)
         {
@@ -72,7 +76,6 @@ int pars_map(t_env *env) // modif avec wsp
         }
         else if ((env->t_map.map[i][j] == 'F' || env->t_map.map[i][j] == 'C') && (error = pars_colors(env, i, j)) != SUCCESS)
         {
-            
             return(error);
         }
         else if (ft_charset("SNWE",env->t_map.map[i][j]) == 1 && (error = pars_textures(env, i, j)) != SUCCESS)

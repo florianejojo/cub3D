@@ -29,5 +29,7 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n Textures\n", 1);
 	else if (error == ERROR_PARSING)
 		ft_putstr_fd("Error\n Parsing\n", 1);
+	else if (error == ERROR_COLORS)
+		ft_putstr_fd("Error\n Colors\n", 1);
 	
 }
