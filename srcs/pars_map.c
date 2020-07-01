@@ -60,7 +60,7 @@ int pars_map(t_env *env) // modif avec wsp
     error = 0;
     // printf ("env->t_map.end_line = %d\n", env->t_map.end_line);
     j = skip_wsp(i, 0, env);
-    printf ("env->t_map.map[%d][%d] = '%c'\n", i, j,  env->t_map.map[i][j]);
+    // printf ("env->t_map.map[%d][%d] = '%c'\n", i, j,  env->t_map.map[i][j]);
     while (i < env->t_map.start_line) //&& ft_charset("NSWECF\0 ", (env->t_map.map[i][skip_wsp(i, 0, env)])) == 1)
     {
         j = skip_wsp(i, 0, env);

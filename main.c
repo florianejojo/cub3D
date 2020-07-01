@@ -12,7 +12,7 @@ int main (int argc, char **argv)
     ft_bzero(env, sizeof(t_env));
     
     env->t_error = init_map(argv[1], env);
-    printf("coucou\n");
+    
     print_error(env->t_error);
     
     printf("\n\n");
