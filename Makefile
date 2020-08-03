@@ -12,6 +12,8 @@
 
 NAME		=	cub3d.a
 
+MLX			=	-lmlx -lm -framework OpenGL -framework AppKit
+
 LIBFT_PATH	=	libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
 
 CC			=	gcc
@@ -23,14 +25,17 @@ SRCS		=	srcs/check_map.c \
 				srcs/pars_map.c \
 				srcs/pars_map2.c \
 				srcs/ft_split_cub.c \
+				srcs/init_ray.c \
+				srcs/ray.c \
 				
 #%.o: %.c
 
 OBJS		=	$(SRCS:.c=.o)
 
-FLAGS		=	-c -Wall -Wextra -Werror #-Imlx -c $< -o $@ #ajouté -Imlx -c $< -o $@ 
+FLAGS		=	-c -Wall -Wextra -Werror $(MLX)#-Imlx -c $< -o $@ #ajouté -Imlx -c $< -o $@ 
 
 HEADER		=	includes/cub3d.h
+KEYCODE 	=	includes/keycode.h
 
 all			:	$(NAME)
 

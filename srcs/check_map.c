@@ -116,8 +116,10 @@ int     check_char(int i, int j, t_env *env)
         {
             
             env->t_map.player_dir = env->t_map.map[i][j];
-            env->t_map.player_pos_x = i;
-            env->t_map.player_pos_y = j;
+            env->t_map.player_pos_x = i + 0.5;
+            env->t_map.player_pos_y = j + 0.5;
+            env->t_map.player_dir = '0';
+
         }
         else
             return (TO_MANY_PLAYER_POS);

@@ -11,9 +11,11 @@ int main (int argc, char **argv)
     env = malloc(sizeof(t_env));
     ft_bzero(env, sizeof(t_env));
     
-    if ((env->t_error = init_map(argv[1], env) != SUCCESS))
+    if ((env->t_error = init_map(argv[1], env)) != SUCCESS)
         print_error(env->t_error);
-    if ((env->t_error = init_ray(argv[1], env) != SUCCESS))
+    if ((env->t_error = init_ray(env)) != SUCCESS)
+        print_error(env->t_error);
+    if ((env->t_error = ray(env)) != SUCCESS)
         print_error(env->t_error);
     
     

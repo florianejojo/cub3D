@@ -84,11 +84,11 @@ typedef struct				s_colors
 }							t_colors;
 
 typedef struct  s_img {
-    void        *ptr;
-    char        *addr;
-    int         bpp;
-    int         line_length;
-    int         endian;
+    void      	  			*ptr;
+    char        			*addr;
+    int         			bits_pp;
+    int         			line_length;
+    int         			endian;
 }               t_img;
 
 //  typedef struct	s_img
@@ -100,17 +100,20 @@ typedef struct  s_img {
 // 	int   endian;    /* permet de signifier la fin d'une image*/
 // }               t_img;                       
 
-typedef struct				s_pos
+typedef struct				s_coord
 {
-	double					x;
-	double					y;
-}							t_pos;
+	float					x;
+	float					y;
+}							t_coord;
 
 typedef struct				s_ray
 {
-	t_pos					pos;
-	t_pos					dir;
-	t_pos					plane;
+	t_coord					pos;
+	t_coord					dir;
+	t_coord					plane;
+	float					*buff;
+	t_coord					camera;
+	t_coord					raydir;
 	
 	// t_pos					step;
 	// t_pos_i					tex;
@@ -137,8 +140,8 @@ typedef struct				s_ray
 
 typedef	struct				s_res
 {
-	int						width;
-	int						height;
+	unsigned int			width;
+	unsigned int			height;
 
 }							t_res;
 
@@ -175,33 +178,36 @@ typedef	struct				s_env // définie par "env"
 	t_colors				t_colors;
 	t_check					t_check;
 	t_error					t_error;
-	t_img	 				img;
 	int						error_type;
 	t_ray					ray;
 	void					*mlx_ptr;
-	void					*img_ptr;
 	void					*win_ptr;
+	t_img	 				img;
 	
 
 }							t_env;
-char		**ft_split_cub(t_env *env, char const *s, char c);
-int make_map(char *file, t_env *env);
+
+
+char	**ft_split_cub(t_env *env, char const *s, char c);
+int 	make_map(char *file, t_env *env);
 void    make_tab(char *file, t_env *env);
 int 	check_textures(t_env *env);
-int    pars_textures(t_env *env, int i, int j);
-int    pars_resolution(t_env *env, int i, int j);
-int    pars_colors(t_env *env, int i, int j);
+int    	pars_textures(t_env *env, int i, int j);
+int    	pars_resolution(t_env *env, int i, int j);
+int    	pars_colors(t_env *env, int i, int j);
 void    parsing();
 int     pars_map(t_env *env);
 int		check_map(t_env *env);
 void    check_first_line(t_env *env);
-void    print_error(int error);
+void	    print_error(int error);
 int 	skip_wsp(int i, int j, t_env *env);
 int		find_wall_up(t_env *env, int i, int j);
 int		find_wall_down(t_env *env, int i, int j);
 int     init_map(char *file, t_env *env);
 int     line_closed(char *line);
 int 	is_wsp(int i, int j, t_env *env);
+int 	init_ray(t_env *env);
+int		ray(t_env *env);
 
 //void	find_start_end_lines(t_env *env, int i);
 #endif
