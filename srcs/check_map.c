@@ -17,7 +17,7 @@ int     line_closed(char *line)
     
     if (line[j] != '1')
     {
-        printf (" different de 1 ='%c'\n", line[j]);
+        // printf (" different de 1 ='%c'\n", line[j]);
         return (0);
     }
     return (1);
@@ -31,17 +31,17 @@ int    find_start_end_line(t_env *env)
 
     j = 0;
     i = env->t_map.i;
-    printf("coucou1\n");
+    // printf("coucou1\n");
     while (i <= env->t_map.nb_lines && env->t_map.start_line == 0)
     {
         if (env->t_map.map[i])
         {
-        printf ("i = %d\n", i);
-        printf ("j avant skip = %d\n", j);
+        // printf ("i = %d\n", i);
+        // printf ("j avant skip = %d\n", j);
         j = skip_wsp(i, 0, env);
         if (env->t_map.map[i][j])
             env->t_map.start_line = i;
-        printf ("j après skip = %d\n", j);
+        // printf ("j après skip = %d\n", j);
         
         }
                 
@@ -62,8 +62,8 @@ int    find_start_end_line(t_env *env)
         i--;
     }
     // printf ("i = %d\n", i);
-    printf ("env->t_map.map[env->t_map.start_line] = '%s'\n", env->t_map.map[env->t_map.start_line]);
-printf ("env->t_map.map[env->t_map.end_line] = '%s'\n", env->t_map.map[env->t_map.end_line]);
+//     printf ("env->t_map.map[env->t_map.start_line] = '%s'\n", env->t_map.map[env->t_map.start_line]);
+// printf ("env->t_map.map[env->t_map.end_line] = '%s'\n", env->t_map.map[env->t_map.end_line]);
 
     // printf ("env->t_map.map[%d] = '%s'\n", i, env->t_map.map[i]);
     if (env->t_map.start_line == 0 || env->t_map.end_line == 0 || env->t_map.i == 0)
@@ -99,8 +99,8 @@ int     check_elems(t_env *env)
 
     }
     env->t_map.i = i; // sensé etre juste apres les elements
-    printf ("env->t_map.i = %d\n", env->t_map.i);
-    printf ("env->t_check.R = %d, env->t_check.F = %d, env->t_check.F = %d\n", env->t_check.R, env->t_check.F, env->t_check.C);
+    // printf ("env->t_map.i = %d\n", env->t_map.i);
+    // printf ("env->t_check.R = %d, env->t_check.F = %d, env->t_check.F = %d\n", env->t_check.R, env->t_check.F, env->t_check.C);
     if (env->t_check.R != 1 || env->t_check.F != 1 || env->t_check.C != 1)
         return (INVALID_ELEMENTS);
     return (SUCCESS);
@@ -112,10 +112,12 @@ int     check_char(int i, int j, t_env *env)
     if (ft_charset("NSWE", env->t_map.map[i][j]) == 1)
     {
         
-        if (env->t_map.player_pos == 0)
+        if (env->t_map.player_dir == 0)
         {
             
-            env->t_map.player_pos = env->t_map.map[i][j];
+            env->t_map.player_dir = env->t_map.map[i][j];
+            env->t_map.player_pos_x = i;
+            env->t_map.player_pos_y = j;
         }
         else
             return (TO_MANY_PLAYER_POS);
@@ -152,10 +154,10 @@ int     check_map(t_env *env)
     // printf ("env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]); 
     while (i <= env->t_map.end_line) // env->t_map.map[i] && 
     {
-        printf ("env->t_map.map[i] = '%s'\n", env->t_map.map[i]);
+        // printf ("env->t_map.map[i] = '%s'\n", env->t_map.map[i]);
         if (env->t_map.map[i] && env->t_map.map[i][j] && line_closed(env->t_map.map[i]) != 1)
         {
-            printf ("ici\n");
+            // printf ("ici\n");
             return (LINE_NOT_CLOSED);
         }
         while (env->t_map.map[i] && env->t_map.map[i][j])
@@ -173,7 +175,7 @@ int     check_map(t_env *env)
         j = skip_wsp(i, 0, env);
     }
     
-    if (env->t_map.player_pos == 0)
+    if (env->t_map.player_dir == 0)
     {
         
         return (NO_PLAYER_POS);

@@ -11,12 +11,14 @@ int main (int argc, char **argv)
     env = malloc(sizeof(t_env));
     ft_bzero(env, sizeof(t_env));
     
-    env->t_error = init_map(argv[1], env);
+    if ((env->t_error = init_map(argv[1], env) != SUCCESS))
+        print_error(env->t_error);
+    if ((env->t_error = init_ray(argv[1], env) != SUCCESS))
+        print_error(env->t_error);
     
-    print_error(env->t_error);
     
     printf("\n\n");
-    printf("env->t_res.height = %d, env->t_res.width = %d \n",env->t_map.t_res.height, env->t_map.t_res.width);
+    printf("env->res.height = %d, env->res.width = %d \n",env->t_map.res.height, env->t_map.res.width);
     
     printf("env->t_textures_path.NO = '%s'\nenv->t_textures_path.SO = %s\nenv->t_textures_path.WE = %s\nenv->t_textures_path.EA = %s\nenv->t_textures_path.S = %s\n",env->t_textures_path.NO, env->t_textures_path.SO, env->t_textures_path.WE, env->t_textures_path.EA, env->t_textures_path.S);
     

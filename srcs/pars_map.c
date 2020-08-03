@@ -6,20 +6,20 @@
 //         j++;
 //     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
 //     {
-//         env->t_map.t_res.width = env->t_map.t_res.width * 10 + env->t_map.map[i][j] - 48;
+//         env->t_map.res.width = env->t_map.res.width * 10 + env->t_map.map[i][j] - 48;
 //         j++;
 //     }
 //     while (env->t_map.map[i][j] == ' ')
 //         j++;
 //     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
 //     {
-//         env->t_map.t_res.height = env->t_map.t_res.height * 10 + env->t_map.map[i][j] - 48;
+//         env->t_map.res.height = env->t_map.res.height * 10 + env->t_map.map[i][j] - 48;
 //         j++;
 //     }
 //     while (env->t_map.map[i][j] == ' ')
 //         j++;
 //     return (SUCCESS);
-//     // if (env->t_map.map[i][j] != '\0' || env->t_map.t_res.width <= 0 || env->t_map.t_res.height <= 0)
+//     // if (env->t_map.map[i][j] != '\0' || env->t_map.res.width <= 0 || env->t_map.res.height <= 0)
 //     //     env->t_error = ERROR_INVALID_ELEMENTS;
 // }
 
@@ -28,22 +28,22 @@ int pars_resolution(t_env *env, int i, int j)
     j = skip_wsp(i, j + 1, env); // on skpi wsp après le R
     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
     {
-        env->t_map.t_res.width = env->t_map.t_res.width * 10 + env->t_map.map[i][j] - 48;
+        env->t_map.res.width = env->t_map.res.width * 10 + env->t_map.map[i][j] - 48;
         j++;
     }
     j = skip_wsp(i, j, env);
     while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
     {
-        env->t_map.t_res.height = env->t_map.t_res.height * 10 + env->t_map.map[i][j] - 48;
+        env->t_map.res.height = env->t_map.res.height * 10 + env->t_map.map[i][j] - 48;
         j++;
     }
     j = skip_wsp(i, j, env);
     // printf ("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
-    // printf("env->t_res.height = %d, env->t_res.width = %d \n",env->t_map.t_res.height, env->t_map.t_res.width);
-    if (env->t_map.t_res.width == 0 || env->t_map.t_res.height == 0)
+    // printf("env->res.height = %d, env->res.width = %d \n",env->t_map.res.height, env->t_map.res.width);
+    if (env->t_map.res.width == 0 || env->t_map.res.height == 0)
         return (ERROR_RES);
     return (SUCCESS);
-    // if (env->t_map.map[i][j] != '\0' || env->t_map.t_res.width <= 0 || env->t_map.t_res.height <= 0)
+    // if (env->t_map.map[i][j] != '\0' || env->t_map.res.width <= 0 || env->t_map.res.height <= 0)
     //     env->t_error = ERROR_INVALID_ELEMENTS;
 }
 
@@ -64,11 +64,11 @@ int pars_map(t_env *env) // modif avec wsp
     while (i < env->t_map.start_line) //&& ft_charset("NSWECF\0 ", (env->t_map.map[i][skip_wsp(i, 0, env)])) == 1)
     {
         j = skip_wsp(i, 0, env);
-        if (env->t_map.map[i][j] != '\0') // && ft_charset("NSWECFR", env->t_map.map[i][j]) == 0)
-        {
+        // if (env->t_map.map[i][j] != '\0') // && ft_charset("NSWECFR", env->t_map.map[i][j]) == 0)
+        // {
             
-            return (INVALID_ELEMENTS);
-        }
+        //     return (INVALID_ELEMENTS);
+        // }
         // printf("DANS PARS MAP --> env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]);
         if (env->t_map.map[i][j] == 'R' && (error = pars_resolution(env, i, j)) != SUCCESS)
         {

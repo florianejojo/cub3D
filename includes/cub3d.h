@@ -10,6 +10,8 @@
 
 #include "../libft/libft.h"
 
+# include "keycode.h"
+
 
 
 typedef struct              s_check  			
@@ -40,6 +42,7 @@ typedef enum                s_error
 	INVALID_TEXTURES,
 	ERROR_PARSING,
 	ERROR_START_END,
+	MLX_FAIL,
 
 	//WRONG_INPUT,
 	//MALLOC_FAIL,
@@ -80,7 +83,57 @@ typedef struct				s_colors
 
 }							t_colors;
 
-                        
+typedef struct  s_img {
+    void        *ptr;
+    char        *addr;
+    int         bpp;
+    int         line_length;
+    int         endian;
+}               t_img;
+
+//  typedef struct	s_img
+// {
+// 	void  *img;      /* pointer qui permet d'identifier l'image */
+// 	char  *img_str;  /* string contenant tous les pixels de l'image */
+// 	int   bits;      /* nombre de bits par pixels */
+// 	int   size_line; /*  taille de la img_str*/
+// 	int   endian;    /* permet de signifier la fin d'une image*/
+// }               t_img;                       
+
+typedef struct				s_pos
+{
+	double					x;
+	double					y;
+}							t_pos;
+
+typedef struct				s_ray
+{
+	t_pos					pos;
+	t_pos					dir;
+	t_pos					plane;
+	
+	// t_pos					step;
+	// t_pos_i					tex;
+	// t_pos					rpos;
+	// t_pos					rdir;
+	// t_pos					rdisd;
+	// t_pos					rdist;
+	// t_pos_i					rmap;
+	// int						wall;
+	// int						wstart;
+	// int						wend;
+	// double					camera;
+	// int						hit;
+	// double					rh;
+	// double					step_tex;
+	// double					tex_pos;
+	// double					dist;
+	// double					speed;
+	// double					*zbuffer;
+	// int						*sp_order;
+	// double					*sp_distance;
+
+}							t_ray;
 
 typedef	struct				s_res
 {
@@ -103,12 +156,14 @@ typedef struct              s_map
     char					**map;
 	int						nb_lines;
 	int						nb_char;
-	t_res 					t_res;
+	t_res 					res;
 	int						i;
 	int 					j;
 	int 					start_line;
 	int						end_line;
-	char					player_pos;
+	char					player_dir;
+	int						player_pos_x;
+	int						player_pos_y;
 	// int						pos_y;
 	int						error;
 }							t_map;
@@ -120,7 +175,12 @@ typedef	struct				s_env // définie par "env"
 	t_colors				t_colors;
 	t_check					t_check;
 	t_error					t_error;
+	t_img	 				img;
 	int						error_type;
+	t_ray					ray;
+	void					*mlx_ptr;
+	void					*img_ptr;
+	void					*win_ptr;
 	
 
 }							t_env;

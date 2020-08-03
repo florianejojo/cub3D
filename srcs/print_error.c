@@ -33,5 +33,7 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n Colors\n", 1);
 	else if (error == ERROR_START_END)
 		ft_putstr_fd("Error\n start or end lines not found\n", 1);
+		else if (error == MLX_FAIL)
+		ft_putstr_fd("Error\n mlx pb\n", 1)
 	
 }
