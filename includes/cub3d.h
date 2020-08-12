@@ -11,6 +11,7 @@
 #include "../libft/libft.h"
 
 # include "keycode.h"
+# include "mlx.h"
 
 
 

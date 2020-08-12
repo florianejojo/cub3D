@@ -82,10 +82,10 @@ int init_ray(t_env *env) // je vais essayer sans malloc pour voir mais peut etre
 if (!(env->mlx_ptr = mlx_init()))
     return (MLX_FAIL);
 if (!(env->img.ptr = mlx_new_image(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height)))
-    return (NULL);
+    return (MLX_FAIL);
 if (!(env->img.addr = mlx_get_data_addr(env->img.ptr, &env->img.bits_pp, &env->img.line_length,
                                  &env->img.endian)))
-    return (NULL);
+    return (MLX_FAIL);
 init_dir_plane(env);
 if (!(env->ray.buff = (float*)malloc(sizeof(float) * env->t_map.res.width)))
 		return (MALLOC_FAILED);

@@ -15,8 +15,8 @@ int main (int argc, char **argv)
         print_error(env->t_error);
     if ((env->t_error = init_ray(env)) != SUCCESS)
         print_error(env->t_error);
-    if ((env->t_error = ray(env)) != SUCCESS)
-        print_error(env->t_error);
+    // if ((env->t_error = ray(env)) != SUCCESS)
+    //     print_error(env->t_error);
     
     
     printf("\n\n");

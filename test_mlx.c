@@ -33,11 +33,11 @@ typedef struct  s_vars {
 }               t_vars;
 
 
-int             closes(int keycode, t_vars *vars)
-{
-    mlx_destroy_window(vars->mlx, vars->win);
-    return (1);
-}
+// int             closes(int keycode, t_vars *vars)
+// {
+//     mlx_destroy_window(vars->mlx, vars->win);
+//     return (1);
+// }
 
 
 
@@ -52,7 +52,7 @@ int main (void)
     int r = 255;
     int g = 0;
     int b = 0;
-    int rgb = 10710701;
+    // int rgb = 10710701;
     int x = 600;
     int y = 700;
     
@@ -105,7 +105,7 @@ int main (void)
     // } 
     mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 
-    mlx_key_hook(vars.win, closes, &vars);
+    // mlx_key_hook(vars.win, closes, &vars);
     mlx_loop(vars.mlx);
 }
 //-------------------------------------------------------

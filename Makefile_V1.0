@@ -10,12 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	Cub3d
+Qui fonctionne avec la première partie du parsing mais pas avec la mlx
 
-CC			=	clang
 
-SRCS		=	main.c \
-				srcs/check_map.c \
+NAME		=	cub3d.a
+
+MLX			=	-lmlx -framework OpenGL -framework AppKit
+
+LIBFT_PATH	=	libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
+
+CC			=	gcc
+
+SRCS		=	srcs/check_map.c \
 				srcs/print_error.c \
 				srcs/init_map.c \
 				srcs/init_map_utils.c \
@@ -24,35 +30,33 @@ SRCS		=	main.c \
 				srcs/ft_split_cub.c \
 				srcs/init_ray.c \
 				#srcs/ray.c \#
+				
+#%.o: %.c
 
 OBJS		=	$(SRCS:.c=.o)
 
-CFLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-c -Wall -Wextra -Werror #-Imlx -c $< -o $@ #ajouté -Imlx -c $< -o $@ #
+#FLAGS		= $(MLX)#
 
 HEADER		=	includes/cub3d.h
+#KEYCODE 	=	includes/keycode.h#
 
-mk_libft	:	
-				make -C ./libft
+all			:	$(NAME)
 
-all			:	mk_libft
-				$(NAME)
-
-
-
-$(NAME) 	:	$(OBJS)
-				${CC} ${CFLAGS} -I ${HEADER} ${OBJS} libft/libft.a -lmlx -framework OpenGL -framework AppKit -o ${NAME}
-				printf "\033[32m$@ is ready ! \n\033[0m"
-
-
-${OBJS}		: 	%.o: %.c ${HEADER}
-				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
+$(NAME) 	:	$(HEADER) $(OBJS)
+				make -C $(LIBFT_PATH)
+				cp ./libft/libft.a $(NAME)
+				$(CC) $(FLAGS) $(SRCS)
+				ar -rcs $(NAME) $(OBJS)
+				ranlib $(NAME)
 
 clean		:	
-				make clean -C ./libft
+				make -C $(LIBFT_PATH) clean
 				rm -rf $(OBJS)
+				rm -rf *.o
 
 fclean		:	clean
-				make fclean -C ./libft
+				make -C $(LIBFT_PATH) fclean
 				rm -rf $(NAME)
 
 re			:	fclean all
