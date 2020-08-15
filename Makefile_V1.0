@@ -21,7 +21,8 @@ LIBFT_PATH	=	libft/ #dans cub3d la libft doit être dans un dossier à la racine
 
 CC			=	gcc
 
-SRCS		=	srcs/check_map.c \
+SRCS		=	main.c \
+				srcs/check_map.c \
 				srcs/print_error.c \
 				srcs/init_map.c \
 				srcs/init_map_utils.c \
@@ -29,7 +30,15 @@ SRCS		=	srcs/check_map.c \
 				srcs/pars_map2.c \
 				srcs/ft_split_cub.c \
 				srcs/init_ray.c \
-				#srcs/ray.c \#
+				srcs/ray.c \
+				srcs/ray_utils.c \
+				srcs/move.c \
+				libft/ft_bzero.c \
+				libft/ft_charset.c \
+				libft/ft_putstr_fd.c \
+				libft/ft_strlen.c \
+				libft/ft_substr.c \
+				libft/ft_putchar_fd.c \
 				
 #%.o: %.c
 

@@ -12,6 +12,7 @@
 
 # include "keycode.h"
 # include "mlx.h"
+#include <math.h>
 
 
 
@@ -44,30 +45,7 @@ typedef enum                s_error
 	ERROR_PARSING,
 	ERROR_START_END,
 	MLX_FAIL,
-
-	//WRONG_INPUT,
-	//MALLOC_FAIL,
-	//IMG_FAIL,
-	//OPEN_ERR,
-	//MLX_FAIL,
-	//WRITE_FAIL,
-	//WRONG_TEX
 }						    t_error;
-
-// typedef struct				s_elements
-// {
-// //	char					*r;
-// 	char					*n;
-// 	char					*s;
-// 	char					*w;
-// 	char					*e;
-// 	char					*nw;
-// 	char					*ne;
-// 	char					*sw;
-// 	char					*se;
-// 	char					*f;
-// 	char					*c;
-// }							t_elements;
 
 typedef struct				s_rgb
 {
@@ -109,40 +87,25 @@ typedef struct				s_coord
 
 typedef struct				s_ray
 {
-	t_coord					pos;
+	t_coord					pos; //(est-ce que je n’irai pas remplir directement ici au lieu de player_pos_x et y) c'est fait dans init ray
 	t_coord					dir;
 	t_coord					plane;
 	float					*buff;
 	t_coord					camera;
 	t_coord					raydir;
-	
-	// t_pos					step;
-	// t_pos_i					tex;
-	// t_pos					rpos;
-	// t_pos					rdir;
-	// t_pos					rdisd;
-	// t_pos					rdist;
-	// t_pos_i					rmap;
-	// int						wall;
-	// int						wstart;
-	// int						wend;
-	// double					camera;
-	// int						hit;
-	// double					rh;
-	// double					step_tex;
-	// double					tex_pos;
-	// double					dist;
-	// double					speed;
-	// double					*zbuffer;
-	// int						*sp_order;
-	// double					*sp_distance;
+	float					speed;
+	t_coord					deltadist;
+	t_coord					step;
+	int						hit; //was there a wall hit?
+	int						side; //was a NS or a EW wall hit?
+
 
 }							t_ray;
 
 typedef	struct				s_res
 {
-	unsigned int			width;
-	unsigned int			height;
+	int			width;
+	int			height;
 
 }							t_res;
 
@@ -155,7 +118,7 @@ typedef	struct				s_textures_path
 	char					*S;
 }							t_textures_path;
 
-typedef struct              s_map
+typedef struct              s_map // tout ce que je pars grâce au fichier 
 {
     char					**map;
 	int						nb_lines;
@@ -166,11 +129,22 @@ typedef struct              s_map
 	int 					start_line;
 	int						end_line;
 	char					player_dir;
-	int						player_pos_x;
-	int						player_pos_y;
+	// int						player_dir_x;	
+	// int						player_dir_y;
+	int						player_pos_x; //je le remplis au moment du parsing de la Map 
+	int						player_pos_y; //je le remplis au moment du parsing de la Map 
 	// int						pos_y;
-	int						error;
+	// int						error;
 }							t_map;
+
+typedef struct 				s_mvt
+{
+	int						up;
+	int						dwn;
+	int						lft;
+	int						rgt;
+}							t_mvt;
+
 
 typedef	struct				s_env // définie par "env"
 {
@@ -184,6 +158,7 @@ typedef	struct				s_env // définie par "env"
 	void					*mlx_ptr;
 	void					*win_ptr;
 	t_img	 				img;
+	t_mvt 					mvt;
 	
 
 }							t_env;
@@ -200,7 +175,7 @@ void    parsing();
 int     pars_map(t_env *env);
 int		check_map(t_env *env);
 void    check_first_line(t_env *env);
-void	    print_error(int error);
+void	print_error(int error);
 int 	skip_wsp(int i, int j, t_env *env);
 int		find_wall_up(t_env *env, int i, int j);
 int		find_wall_down(t_env *env, int i, int j);
@@ -209,6 +184,7 @@ int     line_closed(char *line);
 int 	is_wsp(int i, int j, t_env *env);
 int 	init_ray(t_env *env);
 int		ray(t_env *env);
+void	moves(t_env *env);
+int		ft_new_image(t_env *env, int width, int height);
 
-//void	find_start_end_lines(t_env *env, int i);
 #endif

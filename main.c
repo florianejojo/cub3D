@@ -1,5 +1,5 @@
 #include "includes/cub3d.h"
-
+// #include "libft/libft.h"
 
 int main (int argc, char **argv)
 {
@@ -10,7 +10,8 @@ int main (int argc, char **argv)
     t_env  *env;
     env = malloc(sizeof(t_env));
     ft_bzero(env, sizeof(t_env));
-    
+    if ((argc != 2 && argc != 3))
+		return(0);
     if ((env->t_error = init_map(argv[1], env)) != SUCCESS)
         print_error(env->t_error);
     if ((env->t_error = init_ray(env)) != SUCCESS)

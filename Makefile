@@ -12,6 +12,8 @@
 
 NAME		=	Cub3d
 
+LIBFT_PATH	=	./libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
+
 CC			=	clang
 
 SRCS		=	main.c \
@@ -23,7 +25,13 @@ SRCS		=	main.c \
 				srcs/pars_map2.c \
 				srcs/ft_split_cub.c \
 				srcs/init_ray.c \
-				#srcs/ray.c \#
+				srcs/ray_utils.c \
+				libft/ft_bzero.c \
+				libft/ft_charset.c \
+				libft/ft_putstr_fd.c \
+				libft/ft_strlen.c \
+				libft/ft_substr.c \
+				libft/ft_putchar_fd.c \
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -31,16 +39,10 @@ CFLAGS		=	-Wall -Wextra -Werror
 
 HEADER		=	includes/cub3d.h
 
-mk_libft	:	
-				make -C ./libft
-
-all			:	mk_libft
-				$(NAME)
-
-
+all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS)
-				${CC} ${CFLAGS} -I ${HEADER} ${OBJS} libft/libft.a -lmlx -framework OpenGL -framework AppKit -o ${NAME}
+				${CC} ${CFLAGS} -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
 
@@ -48,12 +50,9 @@ ${OBJS}		: 	%.o: %.c ${HEADER}
 				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
 
 clean		:	
-				make clean -C ./libft
 				rm -rf $(OBJS)
 
 fclean		:	clean
-				make fclean -C ./libft
 				rm -rf $(NAME)
 
 re			:	fclean all
-
