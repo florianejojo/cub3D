@@ -24,8 +24,9 @@ SRCS		=	main.c \
 				srcs/pars_map.c \
 				srcs/pars_map2.c \
 				srcs/ft_split_cub.c \
-				srcs/init_ray.c \
-				srcs/ray_utils.c \
+				srcs/init_raycasting.c \
+				srcs/raycasting_utils.c \
+				srcs/moves.c \
 				libft/ft_bzero.c \
 				libft/ft_charset.c \
 				libft/ft_putstr_fd.c \

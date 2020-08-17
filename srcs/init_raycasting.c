@@ -88,11 +88,11 @@ int	    ft_new_image(t_env *env, int width, int height)
     return(SUCCESS);
 }
 
-int init_ray(t_env *env) // je vais essayer sans malloc pour voir mais peut etre qu'il faut malloc
+int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais peut etre qu'il faut malloc
 {
 	env->ray.speed = 0.1;
-	env->ray.pos.x = env->t_map.player_pos_x;
-	env->ray.pos.y = env->t_map.player_pos_y;
+	env->ray.map.x = env->t_map.player_pos.x;
+	env->ray.map.y = env->t_map.player_pos.y;
 
 	if (!(env->mlx_ptr = mlx_init()))
 		return (MLX_FAIL);

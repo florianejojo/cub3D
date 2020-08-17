@@ -87,7 +87,7 @@ typedef struct				s_coord
 
 typedef struct				s_ray
 {
-	t_coord					pos; //(est-ce que je n’irai pas remplir directement ici au lieu de player_pos_x et y) c'est fait dans init ray
+	t_coord					map; //(est-ce que je n’irai pas remplir directement ici au lieu de player_pos_x et y) c'est fait dans init ray
 	t_coord					dir;
 	t_coord					plane;
 	float					*buff;
@@ -95,6 +95,8 @@ typedef struct				s_ray
 	t_coord					raydir;
 	float					speed;
 	t_coord					deltadist;
+	t_coord					sidedist;
+	float					perpwalldist;
 	t_coord					step;
 	int						hit; //was there a wall hit?
 	int						side; //was a NS or a EW wall hit?
@@ -129,10 +131,7 @@ typedef struct              s_map // tout ce que je pars grâce au fichier
 	int 					start_line;
 	int						end_line;
 	char					player_dir;
-	// int						player_dir_x;	
-	// int						player_dir_y;
-	int						player_pos_x; //je le remplis au moment du parsing de la Map 
-	int						player_pos_y; //je le remplis au moment du parsing de la Map 
+	t_coord					player_pos; //je le remplis au moment du parsing de la Map + 0,5
 	// int						pos_y;
 	// int						error;
 }							t_map;
@@ -182,8 +181,8 @@ int		find_wall_down(t_env *env, int i, int j);
 int     init_map(char *file, t_env *env);
 int     line_closed(char *line);
 int 	is_wsp(int i, int j, t_env *env);
-int 	init_ray(t_env *env);
-int		ray(t_env *env);
+int 	init_raycasting(t_env *env);
+int		raycasting(t_env *env);
 void	moves(t_env *env);
 int		ft_new_image(t_env *env, int width, int height);
 
