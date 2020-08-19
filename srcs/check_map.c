@@ -116,9 +116,9 @@ int     check_char(int i, int j, t_env *env)
         {
             
             env->t_map.player_dir = env->t_map.map[i][j];
-            env->t_map.player_pos_x = i + 0.5;
-            env->t_map.player_pos_y = j + 0.5;
-            env->t_map.player_dir = '0';
+            env->t_map.player_pos.x = j + 0.5;
+            env->t_map.player_pos.y = i + 0.5;
+            env->t_map.map[i][j] = '0';
 
         }
         else
@@ -148,7 +148,7 @@ int     check_map(t_env *env)
     }
     if ((error = find_start_end_line(env)) != SUCCESS)
         return (error);
-    printf("coucou2\n");
+    // printf("coucou2\n");
     i = env->t_map.start_line;
     j = 0;
     // printf ("env->t_map.map[%d][%d] = %c\n", i, j, env->t_map.map[i][j]); 

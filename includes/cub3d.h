@@ -91,15 +91,22 @@ typedef struct				s_ray
 	t_coord					dir;
 	t_coord					plane;
 	float					*buff;
-	t_coord					camera;
+	// t_coord					camera;
 	t_coord					raydir;
 	float					speed;
+	float					camera;
 	t_coord					deltadist;
 	t_coord					sidedist;
 	float					perpwalldist;
 	t_coord					step;
 	int						hit; //was there a wall hit?
 	int						side; //was a NS or a EW wall hit?
+	int						lineheight;
+	int						drawstart;
+	int						drawend;
+	// int						RGB_color_C;
+	// int						RGB_color_F;
+	int						color;
 
 
 }							t_ray;
@@ -184,6 +191,6 @@ int 	is_wsp(int i, int j, t_env *env);
 int 	init_raycasting(t_env *env);
 int		raycasting(t_env *env);
 void	moves(t_env *env);
-int		ft_new_image(t_env *env, int width, int height);
+// int		ft_new_image(t_env *env, int width, int height);
 
 #endif

@@ -14,10 +14,10 @@ int main (int argc, char **argv)
 		return(0);
     if ((env->t_error = init_map(argv[1], env)) != SUCCESS)
         print_error(env->t_error);
-    if ((env->t_error = init_ray(env)) != SUCCESS)
+    if ((env->t_error = init_raycasting(env)) != SUCCESS)
         print_error(env->t_error);
-    // if ((env->t_error = ray(env)) != SUCCESS)
-    //     print_error(env->t_error);
+    if ((env->t_error = raycasting(env)) != SUCCESS)
+        print_error(env->t_error);
     
     
     printf("\n\n");
