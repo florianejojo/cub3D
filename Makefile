@@ -26,6 +26,9 @@ SRCS		=	main.c \
 				srcs/ft_split_cub.c \
 				srcs/init_raycasting.c \
 				srcs/raycasting.c \
+				srcs/raycasting_utils.c \
+				srcs/calc_data_raycasting.c \
+				srcs/moves.c \
 				libft/ft_bzero.c \
 				libft/ft_charset.c \
 				libft/ft_putstr_fd.c \

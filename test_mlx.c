@@ -48,26 +48,13 @@ int key_press(int key, t_vars *vars)
     	mlx_destroy_window(vars->mlx, vars->win);
     return (1);
 }
-int main (void)
+
+void    draw_line(t_data img, int x, int start, int end)
 {
-    // void *mlx_ptr;
-    // void *win_ptr;
-    // void *img_ptr;
-    t_data img;
-    t_vars vars;
+     int y = 700;
     int r = 255;
     int g = 0;
     int b = 0;
-    // int rgb = 10710701;
-    int x = 600;
-    int y = 700;
-    
-    // int i = 0;
-    vars.mlx = mlx_init();
-    vars.win = mlx_new_window(vars.mlx, x, y, "lol");
-    img.img = mlx_new_image(vars.mlx, x, y);
-
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
     while (g < 255 && x > (600 * 1/3))
     {
             while (y > 0)
@@ -94,6 +81,29 @@ int main (void)
 
         x--;
     }
+}
+int main (void)
+{
+    // void *mlx_ptr;
+    // void *win_ptr;
+    // void *img_ptr;
+    t_data img;
+    t_vars vars;
+    int r = 255;
+    int g = 0;
+    int b = 0;
+    // int rgb = 10710701;
+    int x = 600;
+    int y = 700;
+    
+    // int i = 0;
+    vars.mlx = mlx_init();
+    vars.win = mlx_new_window(vars.mlx, x, y, "lol");
+    img.img = mlx_new_image(vars.mlx, x, y);
+
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    printf("img.addr = %p\n",img.addr);
+    draw_line(img, x, 50, 100);
     
     mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
     mlx_hook(vars.win, 2, 1, key_press, &vars);
