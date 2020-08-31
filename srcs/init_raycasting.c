@@ -33,6 +33,8 @@ int init_dir_plane(t_env *env)
 
 int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais peut etre qu'il faut malloc
 {
+	int x;
+	x = 0;
 	env->ray.speed = 0.1;
 	// env->ray.rotspeed = 0.1;
 	env->ray.map.x = (int)env->t_map.player_pos.x;
@@ -45,7 +47,13 @@ int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais pe
     //     return (MLX_FAIL);
 	
 	init_dir_plane(env);
-	// if (!(env->ray.buff = (float *)malloc(sizeof(float) * env->t_map.res.width)))
-	// 	return (MALLOC_FAILED); // on malloc ula largeur de l'écran, tableau qui selon moi contient chaque ligne de pixel (voir si on les malloc dejà quelque part)
+	if (!(*env->ray.buff = (double *)malloc(sizeof(double) * env->t_map.res.width)))
+		return (MALLOC_FAILED); // on malloc ula largeur de l'écran, tableau qui selon moi contient chaque ligne de pixel (voir si on les malloc dejà quelque part)
+	while (x < env->t_map.res.width)
+	{
+		if (!(env->ray.buff[x] = (double *)malloc(sizeof(double) * env->t_map.res.height)))
+			return (MALLOC_FAILED);
+		x++;
+	}
 	return (SUCCESS);
 }

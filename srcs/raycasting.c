@@ -37,12 +37,12 @@ int key_release(int key, t_env *env)
         env->mvt.lft = 0;
     if (key == KEY_RIGHT)
         env->mvt.rgt = 0;
-    // if (key == KEY_ESCAPE)
-    // 	{
-    //     mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-    //     if (env->mlx_ptr)
-    //         free(env->mlx_ptr);
-    // }
+    if (key == KEY_ESCAPE)
+    	{
+        mlx_destroy_window(env->mlx_ptr, env->win_ptr);
+        if (env->mlx_ptr)
+            free(env->mlx_ptr);
+    }
     return (SUCCESS);
 }
 
@@ -60,15 +60,13 @@ void pick_color(t_env *env)
     // env->ray.RGBcolor_F = create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b);
     if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '1')
     {
+        env->ray.tex.y = (int)env->ray.tex_pos; //& (TEXHEIGHT - 1); je ne sais pas à quoi ça sert
+        env->ray.tex_pos += env->ray.tex_step;
+        env->ray.color = // en fontcion de la position du mur: on utilise le chemin de texture: texture[texNum][texHeight * texY + texX]; 
         env->ray.color = create_rgb(255, 0, 127);
         if (env->ray.side == 1)
         env->ray.color = env->ray.color / 2;
     }
-
-    //give x and y sides different brightness
-    
-
-    //draw the pixels of the stripe as a vertical line
 }
 void draw_line(t_env *env, int x, int drawstart, int drawend)
 {

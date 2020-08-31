@@ -141,6 +141,26 @@ void calc_draw_infos(t_env *env) // a Quel moment on calcule la hauteur du mur e
 // printf ("env->ray.drawend = %d\n", env->ray.drawend);
 }
 
+void	calc_textures_data(t_env *env)
+{
+	// double wallx;
+    // //texturing calculations
+//       int texNum = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
+
+	if (env->ray.side == 0)
+		env->ray.wall.x = env->t_map.player_pos.y + env->ray.perpwalldist * env->ray.raydir.y;
+	else
+		env->ray.wall.x = env->t_map.player_pos.x + env->ray.perpwalldist * env->ray.raydir.x;
+	env->ray.wall.x -= floor(env->ray.wall.x);
+	env->ray.tex.x = (int)(env->ray.wall.x * TEXWIDTH);
+	if ((env->ray.side == 0 && env->ray.raydir.x > 0) || (env->ray.side == 1 && env->ray.raydir.x < 0))
+		env->ray.tex.x = TEXWIDTH - env->ray.tex.x - 1;
+    
+	env->ray.tex_step = 1.0 * TEXHEIGHT / env->ray.lineheight; // How much to increase the texture coordinate per screen pixel
+	env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step; // Starting texture coordinate
+}
+     
+
 int     calc_data_raycasting(t_env *env, int x)
 {
         init_vectors(env, x); // Calculs OK -  ici on a, le numéro de ligne verticale de pixels ou on est, on a déjà initilaité plane et dir avant, maintenant on calcule raydir
@@ -148,8 +168,10 @@ int     calc_data_raycasting(t_env *env, int x)
         perform_DDA(env);
         calc_perpwalldist(env);
         calc_draw_infos(env);
-        if (env->check_calc == 5 )
-            return (SUCCESS);
-        else 
-            return (CALC_RAY_FAIL);
+        calc_textures_data(env);
+        // if (env->check_calc == 5 )
+        //     return (SUCCESS);
+        // else 
+        //     return (CALC_RAY_FAIL);
+        return (SUCCESS);
 }

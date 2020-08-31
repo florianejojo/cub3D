@@ -14,6 +14,9 @@
 #include "mlx.h"
 #include <math.h>
 
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
+
 typedef struct s_check
 {
 	short full_elements_detected;
@@ -99,7 +102,7 @@ typedef struct s_ray
 	t_coordf 	old_dir;
 	t_coordf 	plane;
 	t_coordf 	old_plane;	
-	double 		*buff;
+	double 		**buff;
 	t_coordf 	raydir;
 	double 		speed;
 	double 		camera;
@@ -115,6 +118,10 @@ typedef struct s_ray
 	// int						RGB_color_C;
 	// int						RGB_color_F;
 	int 		color;
+	t_coordf		wall;
+	t_coordi	tex;
+	double		tex_step;
+	double		tex_pos;
 	
 
 
