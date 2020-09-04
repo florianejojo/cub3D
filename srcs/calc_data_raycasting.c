@@ -139,6 +139,13 @@ void calc_draw_infos(t_env *env) // a Quel moment on calcule la hauteur du mur e
     env->check_calc = env->check_calc + 1; 
 //     printf ("env->ray.drawstart = %d\n", env->ray.drawstart);
 // printf ("env->ray.drawend = %d\n", env->ray.drawend);
+    // printf ("env->ray.lineheight = %f\n", env->ray.lineheight);
+    // printf ("env->t_map.res.height = %d\n", env->t_map.res.height);
+    // printf ("env->ray.perpwalldist = %f\n", env->ray.perpwalldist);
+    //     printf("--------------------------------------------\n");
+    
+
+
 }
 
 void	calc_textures_data(t_env *env)
@@ -158,6 +165,10 @@ void	calc_textures_data(t_env *env)
     
 	env->ray.tex_step = 1.0 * TEXHEIGHT / env->ray.lineheight; // How much to increase the texture coordinate per screen pixel
 	env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step; // Starting texture coordinate
+;
+    // printf ("env->ray.tex_step = %f\n", env->ray.tex_step);
+    // printf ("env->ray.tex_pos = %f\n", env->ray.tex_pos);
+    // printf ("env->ray.tex.x = %d\n", env->ray.tex.x);
 }
      
 
@@ -173,5 +184,6 @@ int     calc_data_raycasting(t_env *env, int x)
         //     return (SUCCESS);
         // else 
         //     return (CALC_RAY_FAIL);
+
         return (SUCCESS);
 }

@@ -1,5 +1,17 @@
 #include "../includes/cub3d.h"
 
+int quit(t_env *env)
+{
+    if (env->win_ptr)
+        mlx_destroy_window(env->mlx_ptr, env->win_ptr);
+    if (env->img)
+        free(env->img);
+    env->img = NULL;
+    if (env->mlx_ptr)
+        free(env->mlx_ptr);
+    exit(1);
+}
+
 int create_rgb(int r, int g, int b)
 {
     return (r << 16 | g << 8 | b);
@@ -17,12 +29,8 @@ int key_press(int key, t_env *env)
         env->mvt.rgt = 1;
     if (key == KEY_ESCAPE)
     {
-        mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-        if (env->img)
-            free(env->img);
-		env->img = NULL;
-        if (env->mlx_ptr)
-            free(env->mlx_ptr);
+        quit(env);
+        
     }
     return (SUCCESS);
 }
@@ -37,35 +45,62 @@ int key_release(int key, t_env *env)
         env->mvt.lft = 0;
     if (key == KEY_RIGHT)
         env->mvt.rgt = 0;
-    if (key == KEY_ESCAPE)
-    	{
-        mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-        if (env->mlx_ptr)
-            free(env->mlx_ptr);
-    }
     return (SUCCESS);
 }
 
-void my_mlx_pixel_put(t_img *img, int x, int y, int color)
-{
-    char *dst;
+// void my_mlx_pixel_put(t_env *env, int x, int y, int color)
+// {
+//     char *dst;
 
-    dst = img->addr + (y * img->line_length + x * (img->bits_pp / 8));
-    *(unsigned int *)dst = color;
+//     dst = env->img->addr + (y * env->img->line_length + x * (env->img->bits_pp / 8));
+
+//     *(unsigned int *)dst = color;
+
+// }
+
+void my_mlx_pixel_put_tex(t_env *env, int x, int y, int color)
+{
+    // char *dst;
+
+    // dst = img->addr + (y * img->line_length + x * (img->bits_pp / 8));
+env->img->addr[(y * env->t_map.res.width + x)] = color;
+    // *(unsigned int *)dst = color;
+    // printf ("dst = %s\n", dst);
 }
+
 void pick_color(t_env *env)
 {
-    //choose wall color
-    // env->ray.RGBcolor_C = create_rgb(env->t_colors.rgb_C.r, env->t_colors.rgb_C.g, env->t_colors.rgb_C.b);
-    // env->ray.RGBcolor_F = create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b);
+    
+// je veux trouver la couleur du pixel qui se trouve dans la chaine env->img_tex_WE->addr[]
+    // printf(env->img_tex_WE->addr[env->ray.tex.y * env->img_tex_WE->line_length + env->ray.tex.x * env->img->bits_pp / 8];
+
     if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '1')
     {
-        env->ray.tex.y = (int)env->ray.tex_pos; //& (TEXHEIGHT - 1); je ne sais pas à quoi ça sert
-        env->ray.tex_pos += env->ray.tex_step;
-        env->ray.color = // en fontcion de la position du mur: on utilise le chemin de texture: texture[texNum][texHeight * texY + texX]; 
-        env->ray.color = create_rgb(255, 0, 127);
-        if (env->ray.side == 1)
-        env->ray.color = env->ray.color / 2;
+        if (env->ray.side == 0) // SOIT WEST SOIT EAST
+	    {
+		    if (env->ray.step.x < 0) // WEST
+            {
+                env->ray.color = env->img_tex_WE->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+                // printf ("env->ray.color = %d\n", env->ray.color);
+            }
+		    else                                //EAST
+            {
+			    env->ray.color = env->img_tex_EA->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+            }
+	    }
+	    else // NORD OU SUD
+	    {
+		    if (env->ray.step.y > 0) // SUD
+             {
+			    env->ray.color = env->img_tex_SO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+             }
+		    else
+             {
+			    env->ray.color = env->img_tex_NO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+             }
+	    }
+        // if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '2')
+        //     env->ray.color = env->img_tex_S->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
     }
 }
 void draw_line(t_env *env, int x, int drawstart, int drawend)
@@ -73,20 +108,25 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
     int y = 0;
     while (y < drawstart)
     {
-        my_mlx_pixel_put(env->img, x, y, create_rgb(env->t_colors.rgb_C.r, env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
+        my_mlx_pixel_put_tex(env, x, y, create_rgb(env->t_colors.rgb_C.r, env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
         y++;
     }
-    while (y < drawend)
+    while (y < drawend) //&& y < 10)
     {
-        // pick_color(env); // je n'arrive pas à savoir comment ça va choisir la couleur
+        env->ray.color= 0;
+        // env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step;
+        env->ray.tex.y = (int)env->ray.tex_pos & (TEXHEIGHT - 1);
+        env->ray.tex_pos += env->ray.tex_step;
+        // printf("env->ray.tex.y = %d, env->ray.tex.x = %d\n",env->ray.tex.y, env->ray.tex.x);
         pick_color(env);
-        my_mlx_pixel_put(env->img, x, y, env->ray.color); //1106252);
+        
+        my_mlx_pixel_put_tex(env, x, y, env->ray.color); //1106252);
         y++;
     }
     while (y < env->t_map.res.height)
     {
-        // pick_color(env); // je n'arrive pas à savoir comment ça va choisir la couleur
-        my_mlx_pixel_put(env->img, x, y, create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b));
+        
+        my_mlx_pixel_put_tex(env, x, y, create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b));
         y++;
     }
 }
@@ -105,26 +145,32 @@ int go(t_env *env)
     env->line = 0;
     while (env->line < env->t_map.res.width) // calc_data_raycasting
     {
+        // printf("x = %d\n", env->line);
         calc_data_raycasting(env, env->line);
         draw_line(env, env->line, env->ray.drawstart, env->ray.drawend);
+        env->sprites.zbuffer[env->line] = env->ray.perpwalldist;
         env->line++;
     }
     // printf("env->mlx_ptr = %p\n",env->mlx_ptr);
 	// printf("env->win_ptr = %p\n",env->win_ptr);
 	// printf("env->img.addr = %p\n",env->img->addr);
+    draw_sprites(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
     return (SUCCESS);
 }
+
+
 
 int raycasting(t_env *env) // dans init ray on a: Les vecteurs dir et plane, mlx init, l'image (avec les bpp, endian et les longueurs des lignes de pixels)
 {
     if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
         return (MLX_FAIL);
-    // mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, deal_exit, env);
+    mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
     mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
     mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
     if ((env->t_error = mlx_loop_hook(env->mlx_ptr, go, env)) != SUCCESS)
         return (env->t_error);
     mlx_loop(env->mlx_ptr);
+    
     return (SUCCESS);
 }

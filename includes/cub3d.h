@@ -48,6 +48,7 @@ typedef enum s_error
 	MLX_FAIL,
 	CALC_RAY_FAIL,
 	IMG_FAIL,
+	WRONG_TEX,
 } t_error;
 
 typedef struct s_rgb
@@ -68,11 +69,20 @@ typedef struct s_colors
 typedef struct s_img
 {
 	void *ptr;
-	char *addr;
+	int *addr;
 	int bits_pp;
 	int line_length;
 	int endian;
 } t_img;
+
+typedef struct s_tex
+{
+	void *ptr;
+	int *addr;
+	int bits_pp;
+	int line_length;
+	int endian;
+} t_tex;
 
 //  typedef struct	s_img
 // {
@@ -117,7 +127,9 @@ typedef struct s_ray
 	int 		drawend;
 	// int						RGB_color_C;
 	// int						RGB_color_F;
-	int 		color;
+	unsigned int 		color;
+	t_rgb		color_rgb;
+	char		*color_char;
 	t_coordf		wall;
 	t_coordi	tex;
 	double		tex_step;
@@ -143,6 +155,17 @@ typedef struct s_textures_path
 	char *EA;
 	char *S;
 } t_textures_path;
+
+typedef struct s_sprites
+{	
+	t_coordf	*tab_pos; // 
+	t_tex		*img_tex_S;
+	int			nb;
+	char		*str;
+	double		*zbuffer; // de la tailel de la largeur de l'écran
+	int			*order; // [numSprites]   arrays used to sort the sprites
+	double 		*distance; // [numSprites]   arrays used to sort the sprites
+}	t_sprites;
 
 typedef struct s_map // tout ce que je pars grâce au fichier
 {
@@ -180,6 +203,15 @@ typedef struct s_env // définie par "env"
 	void *mlx_ptr;
 	void *win_ptr;
 	t_img *img;
+	t_tex *img_tex_NO;
+	t_tex *img_tex_SO;
+	t_tex *img_tex_WE;
+	t_tex *img_tex_EA;
+	t_sprites	sprites;
+	
+
+	int		tex_width;
+	int		tex_height;
 	t_mvt mvt;
 	int check_calc;
 	int line;
@@ -214,6 +246,7 @@ void perform_DDA(t_env *env);
 void calc_perpwalldist(t_env *env);
 void calc_draw_infos(t_env *env);
 t_img *new_image(t_env *env); //int width, int height);
+t_tex	*new_texture(t_env *env, char *file);
 
 // int		ft_new_image(t_env *env, int width, int height);
 

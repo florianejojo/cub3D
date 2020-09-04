@@ -168,9 +168,15 @@ int     check_map(t_env *env)
             // printf ("i = %d\n", i);
             
             // printf ("env->t_map.map[%d][%d] = '%c'\n", i, j, env->t_map.map[i][j]);
-            if ((error = check_char(i, j, env)) != SUCCESS)
+            if ((error = check_char(i, j, env)) != SUCCESS) // peut être faire une autre fonction ailleurs avec ça, peut être pars map description puis pars map
                 return (error);
-            
+            if (env->t_map.map[i][j] == '2')
+            {
+                env->sprites.tab_pos[env->sprites.nb].x = j + 0.5;
+                env->sprites.tab_pos[env->sprites.nb].y = i + 0.5; 
+                env->sprites.nb += 1;
+                
+            }
             j++;
         }
         i++;

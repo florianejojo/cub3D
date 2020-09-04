@@ -37,4 +37,7 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n mlx pb\n", 1);
 	else if (error == IMG_FAIL)
 		ft_putstr_fd("Error\n img pb\n", 1);
+	else if (error == WRONG_TEX)
+		ft_putstr_fd("Error\n wrong tex\n", 1);
+
 }
