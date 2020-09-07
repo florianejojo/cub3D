@@ -29,6 +29,7 @@ SRCS		=	main.c \
 				srcs/raycasting_utils.c \
 				srcs/calc_data_raycasting.c \
 				srcs/moves.c \
+				srcs/sprites.c \
 				libft/ft_bzero.c \
 				libft/ft_charset.c \
 				libft/ft_putstr_fd.c \

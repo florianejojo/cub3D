@@ -165,6 +165,17 @@ typedef struct s_sprites
 	double		*zbuffer; // de la tailel de la largeur de l'écran
 	int			*order; // [numSprites]   arrays used to sort the sprites
 	double 		*distance; // [numSprites]   arrays used to sort the sprites
+	double		x;
+	double		y;
+	double 		inv_det;
+	t_coordf	transform;
+	t_coordi	screen;
+	int			height;
+	t_coordi	drawstart;
+	t_coordi	drawend;
+	int			width;
+	t_coordi	tex;
+	int			color;
 }	t_sprites;
 
 typedef struct s_map // tout ce que je pars grâce au fichier
@@ -247,6 +258,9 @@ void calc_perpwalldist(t_env *env);
 void calc_draw_infos(t_env *env);
 t_img *new_image(t_env *env); //int width, int height);
 t_tex	*new_texture(t_env *env, char *file);
+int    add_sprites(t_env *env);
+void my_mlx_pixel_put_tex(t_env *env, int x, int y, int color);
+void    count_sprites(t_env *env);
 
 // int		ft_new_image(t_env *env, int width, int height);
 

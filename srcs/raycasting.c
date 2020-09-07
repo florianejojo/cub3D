@@ -148,13 +148,13 @@ int go(t_env *env)
         // printf("x = %d\n", env->line);
         calc_data_raycasting(env, env->line);
         draw_line(env, env->line, env->ray.drawstart, env->ray.drawend);
-        env->sprites.zbuffer[env->line] = env->ray.perpwalldist;
+        // env->sprites.zbuffer[env->line] = env->ray.perpwalldist;
         env->line++;
     }
     // printf("env->mlx_ptr = %p\n",env->mlx_ptr);
 	// printf("env->win_ptr = %p\n",env->win_ptr);
 	// printf("env->img.addr = %p\n",env->img->addr);
-    draw_sprites(env);
+    // add_sprites(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
     return (SUCCESS);
 }
@@ -165,6 +165,7 @@ int raycasting(t_env *env) // dans init ray on a: Les vecteurs dir et plane, mlx
 {
     if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
         return (MLX_FAIL);
+    
     mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
     mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
     mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);

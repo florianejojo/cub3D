@@ -56,11 +56,6 @@ int	init_textures(t_env *env) // on créer les img avec les données dedans
 		return (WRONG_TEX);
 	return (SUCCESS);
 }
-int	init_sprites(t_env *env)
-{
-
-	return (SUCCESS);
-}
 
 
 int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais peut etre qu'il faut malloc
@@ -82,9 +77,12 @@ int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais pe
 		return (env->t_error);
 	if ((env->t_error = init_textures(env)) != SUCCESS)
 		return (env->t_error);
-	if ((env->t_error = init_sprites(env)) != SUCCESS)
-		return (env->t_error);
-	printf("OK ICHI HEY \n");
+	count_sprites(env);
+    env->sprites.zbuffer = malloc(sizeof(double) * env->sprites.nb);
+
+	// if ((env->t_error = _sprites(env)) != SUCCESS)
+	// 	return (env->t_error);
+	// printf("OK ICHI HEY \n");
 	// if (!(*env->ray.buff = (double *)malloc(sizeof(double) * env->t_map.res.width)))
 	// 	return (MALLOC_FAILED); // on malloc ula largeur de l'écran, tableau qui selon moi contient chaque ligne de pixel (voir si on les malloc dejà quelque part)
 	// while (x < env->t_map.res.width)
