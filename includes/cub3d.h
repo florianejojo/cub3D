@@ -158,7 +158,7 @@ typedef struct s_textures_path
 
 typedef struct s_sprites
 {	
-	t_coordf	*tab_pos; // 
+	t_coordf	*pos; // 
 	t_tex		*img_tex_S;
 	int			nb;
 	char		*str;

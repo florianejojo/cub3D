@@ -98,9 +98,11 @@ void pick_color(t_env *env)
              {
 			    env->ray.color = env->img_tex_NO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
              }
+             env->ray.color = (env->ray.color >> 1) & 8355711; 
 	    }
         // if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '2')
         //     env->ray.color = env->img_tex_S->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+        
     }
 }
 void draw_line(t_env *env, int x, int drawstart, int drawend)
@@ -148,13 +150,15 @@ int go(t_env *env)
         // printf("x = %d\n", env->line);
         calc_data_raycasting(env, env->line);
         draw_line(env, env->line, env->ray.drawstart, env->ray.drawend);
-        // env->sprites.zbuffer[env->line] = env->ray.perpwalldist;
+        env->sprites.zbuffer[env->line] = env->ray.perpwalldist;
+        // printf("env->sprites.zbuffer[%d] = %f\n", env->line, env->sprites.zbuffer[env->line]);
+
         env->line++;
     }
     // printf("env->mlx_ptr = %p\n",env->mlx_ptr);
 	// printf("env->win_ptr = %p\n",env->win_ptr);
 	// printf("env->img.addr = %p\n",env->img->addr);
-    // add_sprites(env);
+    add_sprites(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
     return (SUCCESS);
 }
@@ -171,7 +175,9 @@ int raycasting(t_env *env) // dans init ray on a: Les vecteurs dir et plane, mlx
     mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
     if ((env->t_error = mlx_loop_hook(env->mlx_ptr, go, env)) != SUCCESS)
         return (env->t_error);
+  
     mlx_loop(env->mlx_ptr);
+    
     
     return (SUCCESS);
 }

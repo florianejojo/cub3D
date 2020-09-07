@@ -57,6 +57,20 @@ int	init_textures(t_env *env) // on créer les img avec les données dedans
 	return (SUCCESS);
 }
 
+int	init_sprites(t_env *env)
+{
+	if (!(env->sprites.zbuffer = malloc(sizeof(double) * env->t_map.res.width)))
+		return (MALLOC_FAILED);
+	if (!(env->sprites.order = (int *)malloc(sizeof(int) * env->sprites.nb)))
+        return (MALLOC_FAILED);
+    if (!(env->sprites.distance = (double *)malloc(sizeof(double) * env->sprites.nb)))
+        return (MALLOC_FAILED);
+	if (!(env->sprites.pos = (t_coordf *)malloc(sizeof(t_coordf) * env->sprites.nb)))
+        return (MALLOC_FAILED);
+	return (SUCCESS);
+	
+}
+
 
 int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais peut etre qu'il faut malloc
 {
@@ -77,8 +91,10 @@ int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais pe
 		return (env->t_error);
 	if ((env->t_error = init_textures(env)) != SUCCESS)
 		return (env->t_error);
-	count_sprites(env);
-    env->sprites.zbuffer = malloc(sizeof(double) * env->sprites.nb);
+	// count_sprites(env);
+	if ((env->t_error = init_sprites(env)) != SUCCESS)
+		return (env->t_error);
+    
 
 	// if ((env->t_error = _sprites(env)) != SUCCESS)
 	// 	return (env->t_error);
