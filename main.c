@@ -40,6 +40,6 @@ int main (int argc, char **argv)
         printf("env->sprites.zbuffer[env->line] = %f\n", env->sprites.zbuffer[i]);
         i++;
 }
-    free(env);
+    // free(env);
     //return (1);
 }

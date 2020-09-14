@@ -261,6 +261,7 @@ t_tex	*new_texture(t_env *env, char *file);
 int    add_sprites(t_env *env);
 void my_mlx_pixel_put_tex(t_env *env, int x, int y, int color);
 void    count_sprites(t_env *env);
+void free_all(t_env *env);
 
 // int		ft_new_image(t_env *env, int width, int height);
 

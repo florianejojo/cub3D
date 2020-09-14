@@ -6,9 +6,10 @@ int quit(t_env *env)
         mlx_destroy_window(env->mlx_ptr, env->win_ptr);
     if (env->img)
         free(env->img);
-    env->img = NULL;
+    env->img = NULL; // a vior si je laisse ?
     if (env->mlx_ptr)
         free(env->mlx_ptr);
+    free_all(env);
     exit(1);
 }
 
