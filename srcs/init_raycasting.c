@@ -104,15 +104,8 @@ int	init_sprites(t_env *env)
         return (MALLOC_FAILED);
     if (!(env->distance = (double *)malloc(sizeof(double) * env->sprites.nb)))
         return (MALLOC_FAILED);
-	if (!(env->pos = (t_coordf *)malloc(sizeof(t_coordf) * env->sprites.nb)))
-	{
-		printf ("IL Y A UN PB\n");
-        return (MALLOC_FAILED);
-	}
-	printf("env->sprites.zbuffer = %p\n", env->zbuffer);
-	printf("env->sprites.order = %p\n", env->order);
-	printf("env->sprites.distance = %p\n", env->distance);
-	printf("env->sprites.pos = %p\n", env->pos);
+	// printf("env->sprites = %p\n", env->distance);
+	// printf("env->sprites.pos = %p\n", env->pos);
 
 	return (SUCCESS);
 	

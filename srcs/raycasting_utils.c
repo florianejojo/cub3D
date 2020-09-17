@@ -84,8 +84,10 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 			free(env->order);
 		if (env->distance)
 			free(env->distance);
-		if (env->pos)
-			free(env->pos);
+		if (env->sprite_pos_x)
+			free(env->sprite_pos_x);
+		if (env->sprite_pos_y)
+			free(env->sprite_pos_y);	
 		if (env)
 			free(env);
 		// return (SUCCESS);

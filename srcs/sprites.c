@@ -33,15 +33,15 @@
 void    init_calc_sprites(t_env *env, int i) // caluls OK
 {
     i = 0;
-    env->sprites.x = 15;//env->pos[env->order[i]].x - env->t_map.player_pos.x;
-    env->sprites.y = 12;//env->pos[env->order[i]].y - env->t_map.player_pos.y;
+    env->sprites.x = env->sprite_pos_x[env->order[i]] - env->t_map.player_pos.x;
+    env->sprites.y = env->sprite_pos_y[env->order[i]] - env->t_map.player_pos.y;
     // printf("env->order[%d] = %p\n", i, env->order);
     env->sprites.inv_det = 1.0 / (env->ray.plane.x * env->ray.dir.y - env->ray.dir.x * env->ray.plane.y);
     env->sprites.transform.x = env->sprites.inv_det * (env->ray.dir.y * env->sprites.x - env->ray.dir.x * env->sprites.y);
     env->sprites.transform.y = env->sprites.inv_det * (-env->ray.plane.y * env->sprites.x + env->ray.plane.x * env->sprites.y); //this is actually the depth inside the screen, that what Z is in 3D
     env->sprites.screen.x = (int)((env->t_map.res.width / 2) * (1 + env->sprites.transform.x / env->sprites.transform.y));
-    printf("env->pos[env->order[i]].x = %p\n", env->pos);
-    printf("env->pos[env->order[i]].x = %p\n", env->pos); 
+    // printf("env->pos[env->order[i]].x = %p\n", env->pos);
+    // printf("env->pos[env->order[i]].x = %p\n", env->pos); 
     // printf("env->sprites.x = %f\n", env->sprites.x);
     // printf("env->sprites.y = %f\n", env->sprites.y);
     // printf("env->sprites.inv_det = %f\n", env->sprites.inv_det);
@@ -115,7 +115,7 @@ void draw_sprites(t_env *env)
 
 
 
-void    count_and_stock_data_sprites(t_env *env)
+void    count_sprites(t_env *env)
 {
     int i;
     int j;
@@ -129,11 +129,7 @@ void    count_and_stock_data_sprites(t_env *env)
         {
             if (env->t_map.map[i][j] == '2')
             {
-                env->sprites.nb += 1;  // on commence a 1
-                env->pos[env->sprites.nb - 1].x = j + 0.5;
-                env->pos[env->sprites.nb - 1].y = i + 0.5;
-                
-                
+                env->sprites.nb += 1;
             }
             j++;
         }
@@ -143,6 +139,43 @@ void    count_and_stock_data_sprites(t_env *env)
     }
     // env->sprites.nb--;
     // printf("env->sprites.nb = %d\n",env->sprites.nb);
+}
+
+void    stock_sprites_pos(t_env *env)
+{
+
+    int i;
+    int j;
+    int nb;
+    nb = 0;
+    i = env->t_map.start_line;
+    j = 0;
+
+    
+    
+    // printf ("env->sprite.nb = %d\n", env->sprites.nb);
+	// printf ("env->sprite_pos_y = %p\n", env->sprite_pos_y);
+    while (i <= env->t_map.end_line)
+    {
+        while (env->t_map.map[i][j] && nb < env->sprites.nb)
+        {
+            if (env->t_map.map[i][j] == '2')
+            {
+                env->sprite_pos_x[nb] = j + 0.5;
+                env->sprite_pos_y[nb] = i + 0.5;
+                // printf ("env->sprite_pos_x[nb] = %f\n", env->sprite_pos_x[nb]);
+	            // printf ("env->sprite_pos_y[nb] = %f\n", env->sprite_pos_y[nb]);
+                nb++;
+            }
+            j++;
+        }
+        j = 0;
+        i++;
+        
+    }
+    // env->sprites.nb--;
+    // printf("env->sprites.nb = %d\n",env->sprites.nb);
+    // return (SUCCESS);
 }
 
 void    make_tab_distance(t_env *env)
@@ -156,8 +189,7 @@ void    make_tab_distance(t_env *env)
     while (i < env->sprites.nb)
     {
         env->order[i] = i; //on commence a 0 donc i = 0,1,2,3,4 et pour l'ordre c'est pareil + pour es distnce c'est pareil aussi
-        env->distance[i] = ((env->t_map.player_pos.x - env->pos[i].x) * (env->t_map.player_pos.x - env->pos[i].x) + (env->t_map.player_pos.y - env->pos[i].y) * (env->t_map.player_pos.y - env->pos[i].y));
-        
+        env->distance[i] = ((env->t_map.player_pos.x - env->sprite_pos_x[i]) * (env->t_map.player_pos.x - env->sprite_pos_x[i]) + (env->t_map.player_pos.y - env->sprite_pos_y[i]) * (env->t_map.player_pos.y - env->sprite_pos_y[i]));
         i++;
     }
     
@@ -203,13 +235,28 @@ void    sort_tab(t_env  *env)
 int add_sprites(t_env *env)
 {
     int i;
+    if (!(env->sprite_pos_x = (double *)malloc(sizeof(double) * env->sprites.nb)))
+	{
+        return (MALLOC_FAILED);
+	}
+	if (!(env->sprite_pos_y = (double *)malloc(sizeof(double) * env->sprites.nb)))
+	{
+        return (MALLOC_FAILED);
+	}
     
-    count_and_stock_data_sprites(env);
+    count_sprites(env);
+    stock_sprites_pos(env);
     make_tab_distance(env);
     sort_tab(env);
-
-
     i = 0;
+    
+    // while (i < env->sprites.nb)
+    // {
+    //     printf ("env->distance[env->order[%d]] = %f\n", i, env->distance[env->order[i]]);
+    //     i++;
+    // }
+
+    // i = 0;
     while (i < env->sprites.nb)
     {
         // calc_data_sprites(env, i);

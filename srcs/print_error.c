@@ -39,5 +39,7 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n img pb\n", 1);
 	else if (error == WRONG_TEX)
 		ft_putstr_fd("Error\n wrong tex\n", 1);
+	else if (error == ERROR_SPRITES)
+		ft_putstr_fd("Error\n Sprites\n", 1);
 
 }

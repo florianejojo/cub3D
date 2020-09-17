@@ -130,13 +130,11 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
         env->ray.tex_pos += env->ray.tex_step;
         // printf("env->ray.tex.y = %d, env->ray.tex.x = %d\n",env->ray.tex.y, env->ray.tex.x);
         pick_color(env);
-        
         my_mlx_pixel_put(env, x, y, env->ray.color); //1106252);
         y++;
     }
     while (y < env->t_map.res.height)
     {
-        
         my_mlx_pixel_put(env, x, y, create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b));
         y++;
     }
@@ -172,6 +170,10 @@ int go(t_env *env)
 	// printf("env->img.addr = %p\n",env->img->addr);
     add_sprites(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
+    // if (env->sprite_pos_x)
+    //     free (env->sprite_pos_x);
+    // if (env->sprite_pos_y)
+    //     free(env->sprite_pos_y);
     return (SUCCESS);
 }
 

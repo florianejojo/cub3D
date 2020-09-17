@@ -49,6 +49,7 @@ typedef enum s_error
 	CALC_RAY_FAIL,
 	IMG_FAIL,
 	WRONG_TEX,
+	ERROR_SPRITES,
 } t_error;
 
 
@@ -223,7 +224,8 @@ typedef struct s_env // définie par "env"
 	double		*zbuffer; // de la tailel de la largeur de l'écran
 	int			*order; // [numSprites]   arrays used to sort the sprites
 	double 		*distance; // [numSprites]   arrays used to sort the sprites
-	t_coordf	*pos; // sprites
+	double		*sprite_pos_x; // sprites
+	double 		*sprite_pos_y;
 	int				tex_width;
 	int				tex_height;
 	t_mvt			mvt;
