@@ -67,6 +67,7 @@ int make_map(char *file, t_env *env)
     str[i] = '\0';
     env->t_map.map = ft_split_cub(env, str, '\n');
     close(fd);
+    // printf ("str = %p\n", str);
     free(str);
     // printf ("env->t_map.nb_lines = %d\n", env->t_map.nb_lines);
     return (SUCCESS);

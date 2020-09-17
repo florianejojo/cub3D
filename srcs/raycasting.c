@@ -2,14 +2,22 @@
 
 int quit(t_env *env)
 {
+    free_all(env);
     if (env->win_ptr)
         mlx_destroy_window(env->mlx_ptr, env->win_ptr);
     if (env->img)
+    {
+        mlx_destroy_image(env->mlx_ptr, env->img->ptr);
+        // printf ("env->img = %p\n", env->img);
         free(env->img);
+    }
     env->img = NULL; // a vior si je laisse ?
+    
     if (env->mlx_ptr)
+    {
+        // printf ("mlx_ptr= %p\n", env->mlx_ptr);
         free(env->mlx_ptr);
-    free_all(env);
+    }
     exit(1);
 }
 
@@ -59,7 +67,7 @@ int key_release(int key, t_env *env)
 
 // }
 
-void my_mlx_pixel_put_tex(t_env *env, int x, int y, int color)
+void my_mlx_pixel_put(t_env *env, int x, int y, int color)
 {
     // char *dst;
 
@@ -111,7 +119,7 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
     int y = 0;
     while (y < drawstart)
     {
-        my_mlx_pixel_put_tex(env, x, y, create_rgb(env->t_colors.rgb_C.r, env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
+        my_mlx_pixel_put(env, x, y, create_rgb(env->t_colors.rgb_C.r, env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
         y++;
     }
     while (y < drawend) //&& y < 10)
@@ -123,25 +131,28 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
         // printf("env->ray.tex.y = %d, env->ray.tex.x = %d\n",env->ray.tex.y, env->ray.tex.x);
         pick_color(env);
         
-        my_mlx_pixel_put_tex(env, x, y, env->ray.color); //1106252);
+        my_mlx_pixel_put(env, x, y, env->ray.color); //1106252);
         y++;
     }
     while (y < env->t_map.res.height)
     {
         
-        my_mlx_pixel_put_tex(env, x, y, create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b));
+        my_mlx_pixel_put(env, x, y, create_rgb(env->t_colors.rgb_F.r, env->t_colors.rgb_F.g, env->t_colors.rgb_F.b));
         y++;
     }
 }
 
 int go(t_env *env)
 {
-    if (env->img != NULL)
+    if (env->img)
     {
-        free(env->img); // je l'enlève car je ne fais pas de malloc pour la structure img
+        // printf ("env->img dans raycasting = %p\n", env->img);
+        // mlx_destroy_image(env->mlx_ptr, env->img);
+        
+        free(env->img);
         env->img = NULL;
     }
-    if (!(env->img = new_image(env)))
+    if (!(env->img = new_image(env, NULL)))
         return(IMG_FAIL);
 	// // printf("ichi hey 11");
     moves(env);
@@ -151,7 +162,7 @@ int go(t_env *env)
         // printf("x = %d\n", env->line);
         calc_data_raycasting(env, env->line);
         draw_line(env, env->line, env->ray.drawstart, env->ray.drawend);
-        env->sprites.zbuffer[env->line] = env->ray.perpwalldist;
+        env->zbuffer[env->line] = env->ray.perpwalldist;
         // printf("env->sprites.zbuffer[%d] = %f\n", env->line, env->sprites.zbuffer[env->line]);
 
         env->line++;
@@ -170,15 +181,11 @@ int raycasting(t_env *env) // dans init ray on a: Les vecteurs dir et plane, mlx
 {
     if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
         return (MLX_FAIL);
-    
     mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
     mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
     mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
     if ((env->t_error = mlx_loop_hook(env->mlx_ptr, go, env)) != SUCCESS)
         return (env->t_error);
-  
     mlx_loop(env->mlx_ptr);
-    
-    
     return (SUCCESS);
 }

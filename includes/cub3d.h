@@ -51,6 +51,7 @@ typedef enum s_error
 	WRONG_TEX,
 } t_error;
 
+
 typedef struct s_rgb
 {
 	unsigned int r;
@@ -60,7 +61,6 @@ typedef struct s_rgb
 
 typedef struct s_colors
 {
-
 	t_rgb rgb_C;
 	t_rgb rgb_F;
 
@@ -69,25 +69,25 @@ typedef struct s_colors
 typedef struct s_img
 {
 	void *ptr;
-	int *addr;
+	int *addr; /* string contenant tous les pixels de l'image */
 	int bits_pp;
 	int line_length;
 	int endian;
 } t_img;
 
-typedef struct s_tex
-{
-	void *ptr;
-	int *addr;
-	int bits_pp;
-	int line_length;
-	int endian;
-} t_tex;
+// typedef struct s_tex
+// {
+// 	void *ptr;
+// 	int *addr;
+// 	int bits_pp;
+// 	int line_length;
+// 	int endian;
+// } t_img;
 
 //  typedef struct	s_img
 // {
 // 	void  *img;      /* pointer qui permet d'identifier l'image */
-// 	char  *img_str;  /* string contenant tous les pixels de l'image */
+// 	char  *img_str;  
 // 	int   bits;      /* nombre de bits par pixels */
 // 	int   size_line; /*  taille de la img_str*/
 // 	int   endian;    /* permet de signifier la fin d'une image*/
@@ -158,13 +158,13 @@ typedef struct s_textures_path
 
 typedef struct s_sprites
 {	
-	t_coordf	*pos; // 
-	t_tex		*img_tex_S;
+	
+	
 	int			nb;
 	char		*str;
-	double		*zbuffer; // de la tailel de la largeur de l'écran
-	int			*order; // [numSprites]   arrays used to sort the sprites
-	double 		*distance; // [numSprites]   arrays used to sort the sprites
+	// double		*zbuffer; // de la tailel de la largeur de l'écran
+	// int			*order; // [numSprites]   arrays used to sort the sprites
+	// double 		*distance; // [numSprites]   arrays used to sort the sprites
 	double		x;
 	double		y;
 	double 		inv_det;
@@ -205,27 +205,30 @@ typedef struct s_mvt
 typedef struct s_env // définie par "env"
 {
 	t_textures_path t_textures_path;
-	t_map t_map;
-	t_colors t_colors;
-	t_check t_check;
-	t_error t_error;
-	int error_type;
-	t_ray ray;
-	void *mlx_ptr;
-	void *win_ptr;
-	t_img *img;
-	t_tex *img_tex_NO;
-	t_tex *img_tex_SO;
-	t_tex *img_tex_WE;
-	t_tex *img_tex_EA;
-	t_sprites	sprites;
-	
-
-	int		tex_width;
-	int		tex_height;
-	t_mvt mvt;
-	int check_calc;
-	int line;
+	t_map			t_map;
+	t_colors		t_colors;
+	t_check			t_check;
+	t_error			t_error;
+	int				error_type;
+	t_ray			ray;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	t_img			*img;
+	t_img			*img_tex_NO;
+	t_img			*img_tex_SO;
+	t_img			*img_tex_WE;
+	t_img			*img_tex_EA;
+	t_img			*img_tex_S;
+	t_sprites		sprites;
+	double		*zbuffer; // de la tailel de la largeur de l'écran
+	int			*order; // [numSprites]   arrays used to sort the sprites
+	double 		*distance; // [numSprites]   arrays used to sort the sprites
+	t_coordf	*pos; // sprites
+	int				tex_width;
+	int				tex_height;
+	t_mvt			mvt;
+	int				check_calc;
+	int				line;
 
 } t_env;
 
@@ -256,10 +259,9 @@ void calc_step(t_env *env);
 void perform_DDA(t_env *env);
 void calc_perpwalldist(t_env *env);
 void calc_draw_infos(t_env *env);
-t_img *new_image(t_env *env); //int width, int height);
-t_tex	*new_texture(t_env *env, char *file);
+t_img *new_image(t_env *env, char *file);
 int    add_sprites(t_env *env);
-void my_mlx_pixel_put_tex(t_env *env, int x, int y, int color);
+void my_mlx_pixel_put(t_env *env, int x, int y, int color);
 void    count_sprites(t_env *env);
 void free_all(t_env *env);
 

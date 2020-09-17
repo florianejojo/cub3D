@@ -46,7 +46,7 @@ HEADER		=	includes/cub3d.h
 all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS)
-				${CC} ${CFLAGS} -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME}
+				${CC} -g3 -fsanitize=address ${CFLAGS} -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
 
