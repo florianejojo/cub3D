@@ -36,6 +36,9 @@ SRCS		=	main.c \
 				libft/ft_strlen.c \
 				libft/ft_substr.c \
 				libft/ft_putchar_fd.c \
+				libft/ft_strncmp.c \
+				libft/ft_strdup.c \
+				
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -46,7 +49,7 @@ HEADER		=	includes/cub3d.h
 all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS)
-				${CC} -g3 -fsanitize=address ${CFLAGS} -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME}
+				${CC} -fsanitize=address -g3 ${CFLAGS} -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
 

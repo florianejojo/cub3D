@@ -1,3 +1,5 @@
+
+
 #include "../includes/cub3d.h"
 
 int quit(t_env *env)
@@ -170,6 +172,7 @@ int go(t_env *env)
 	// printf("env->img.addr = %p\n",env->img->addr);
     add_sprites(env);
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
+    
     // if (env->sprite_pos_x)
     //     free (env->sprite_pos_x);
     // if (env->sprite_pos_y)
@@ -183,11 +186,16 @@ int raycasting(t_env *env) // dans init ray on a: Les vecteurs dir et plane, mlx
 {
     if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
         return (MLX_FAIL);
+    if (env->save == 1)
+        save(env);
+    else
+    {
     mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
     mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
     mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
     if ((env->t_error = mlx_loop_hook(env->mlx_ptr, go, env)) != SUCCESS)
         return (env->t_error);
     mlx_loop(env->mlx_ptr);
+    }
     return (SUCCESS);
 }

@@ -30,6 +30,7 @@ typedef struct s_check
 typedef enum s_error
 {
 	SUCCESS,
+	WRONG_ARGS,
 	INVALID_ELEMENTS, // == 0
 	LINE_NOT_CLOSED,
 	MAP_NOT_CLOSED,
@@ -231,6 +232,7 @@ typedef struct s_env // définie par "env"
 	t_mvt			mvt;
 	int				check_calc;
 	int				line;
+	int 			save;
 
 } t_env;
 
