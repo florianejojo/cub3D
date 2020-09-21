@@ -16,6 +16,14 @@
 
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
+# define SAVE_FILE "sreenshot.bmp"
+# define RIGHTS 0644
+# define BPP 24
+# define BM_FILE_HEADER_SIZE 14
+# define BM_INFO_HEADER_SIZE 40
+# define PIXEL_DATA_OFFSET 54 // combiened value of bitmap headers = File header + info header // valeur de décalage pour l'image
+
+
 
 typedef struct s_check
 {
@@ -25,7 +33,9 @@ typedef struct s_check
 	short textures;
 	short F;
 	short C;
-} t_check;
+}				t_check;
+
+
 
 typedef enum s_error
 {
@@ -51,8 +61,25 @@ typedef enum s_error
 	IMG_FAIL,
 	WRONG_TEX,
 	ERROR_SPRITES,
+	ERROR_SAVE,
 } t_error;
 
+typedef struct s_save_bmp
+{
+	int	fd;
+	// unsigned char			*file_header;
+	// unsigned char			*img_header;
+	int height;
+	int	width;
+	double	padding;
+	char	file_header[BM_FILE_HEADER_SIZE];
+	char	img_header[BM_INFO_HEADER_SIZE];
+	int		file_size;
+	int		r;
+	int		g;
+	int		b;
+	int		rgb;
+}	t_save_bmp;
 
 typedef struct s_rgb
 {
@@ -232,6 +259,7 @@ typedef struct s_env // définie par "env"
 	t_mvt			mvt;
 	int				check_calc;
 	int				line;
+	t_save_bmp 		bmp;
 	int 			save;
 
 } t_env;
@@ -268,6 +296,12 @@ int    add_sprites(t_env *env);
 void my_mlx_pixel_put(t_env *env, int x, int y, int color);
 void    count_sprites(t_env *env);
 void free_all(t_env *env);
+int check_flag_save(char *str, t_env *env);
+int		get_r(int rgb);
+int		get_g(int rgb);
+int		get_b(int rgb);
+int		create_rgb(int r, int g, int b);
+void draw_line(t_env *env, int x, int drawstart, int drawend);
 
 // int		ft_new_image(t_env *env, int width, int height);
 

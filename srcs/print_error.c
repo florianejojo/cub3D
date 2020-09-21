@@ -55,5 +55,7 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n wrong tex\n", 1);
 	else if (error == ERROR_SPRITES)
 		ft_putstr_fd("Error\n Sprites\n", 1);
+	else if (error == ERROR_SAVE)
+		ft_putstr_fd("Error\n File not saved\n", 1);
 
 }

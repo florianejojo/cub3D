@@ -23,10 +23,10 @@ int quit(t_env *env)
     exit(1);
 }
 
-int create_rgb(int r, int g, int b)
-{
-    return (r << 16 | g << 8 | b);
-}
+// int create_rgb(int r, int g, int b)
+// {
+//     return (r << 16 | g << 8 | b);
+// }
 
 int key_press(int key, t_env *env)
 {
@@ -186,16 +186,14 @@ int raycasting(t_env *env) // dans init ray on a: Les vecteurs dir et plane, mlx
 {
     if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
         return (MLX_FAIL);
-    if (env->save == 1)
-        save(env);
-    else
-    {
+    // if (env->save == 1)
+    //     save(env);
+    
     mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
     mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
     mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
     if ((env->t_error = mlx_loop_hook(env->mlx_ptr, go, env)) != SUCCESS)
         return (env->t_error);
     mlx_loop(env->mlx_ptr);
-    }
     return (SUCCESS);
 }
