@@ -30,24 +30,28 @@
 //     //continuer à loops
 // }
 
-void    init_calc_sprites(t_env *env, int i) // caluls OK
+void    init_calc_sprites(t_env *env, int i) // calculs OK
 {
     i = 0;
+    // printf (" 1 \n");
     env->sprites.x = env->sprite_pos_x[env->order[i]] - env->t_map.player_pos.x;
     env->sprites.y = env->sprite_pos_y[env->order[i]] - env->t_map.player_pos.y;
+    printf("env->sprites.x = %f\n", env->sprites.x);
+    printf("env->sprites.y = %f\n", env->sprites.y);
+    printf("env->sprites.inv_det = %f\n", env->sprites.inv_det);
+    printf("env->sprites.transform.x = %f\n", env->sprites.transform.x);
+    printf("env->sprites.transform.y = %f\n", env->sprites.transform.y);
+    printf("env->sprites.screen.x = %d\n", env->sprites.screen.x);
+    // printf (" 2 \n");
     // printf("env->order[%d] = %p\n", i, env->order);
     env->sprites.inv_det = 1.0 / (env->ray.plane.x * env->ray.dir.y - env->ray.dir.x * env->ray.plane.y);
     env->sprites.transform.x = env->sprites.inv_det * (env->ray.dir.y * env->sprites.x - env->ray.dir.x * env->sprites.y);
     env->sprites.transform.y = env->sprites.inv_det * (-env->ray.plane.y * env->sprites.x + env->ray.plane.x * env->sprites.y); //this is actually the depth inside the screen, that what Z is in 3D
     env->sprites.screen.x = (int)((env->t_map.res.width / 2) * (1 + env->sprites.transform.x / env->sprites.transform.y));
+    // printf (" 3 \n");
     // printf("env->pos[env->order[i]].x = %p\n", env->pos);
     // printf("env->pos[env->order[i]].x = %p\n", env->pos); 
-    // printf("env->sprites.x = %f\n", env->sprites.x);
-    // printf("env->sprites.y = %f\n", env->sprites.y);
-    // printf("env->sprites.inv_det = %f\n", env->sprites.inv_det);
-    // printf("env->sprites.transform.x = %f\n", env->sprites.transform.x);
-    // printf("env->sprites.transform.y = %f\n", env->sprites.transform.y);
-    // printf("env->sprites.screen.x = %d\n", env->sprites.screen.x);
+    
     
 }
 

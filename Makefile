@@ -30,8 +30,8 @@ SRCS		=	main.c \
 				srcs/calc_data_raycasting.c \
 				srcs/moves.c \
 				srcs/sprites.c \
-				srcs/save.c \
 				srcs/create_rgb.c \
+				srcs/save.c \
 				libft/ft_bzero.c \
 				libft/ft_charset.c \
 				libft/ft_putstr_fd.c \

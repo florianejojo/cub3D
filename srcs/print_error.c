@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:29 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/18 14:07:50 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/23 12:15:44 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "../includes/cub3d.h"
 
-void	print_error(int error)
+int		print_error(int error)
 {
 
 	if (error == SUCCESS) // à enlever à la fin
@@ -57,5 +57,5 @@ void	print_error(int error)
 		ft_putstr_fd("Error\n Sprites\n", 1);
 	else if (error == ERROR_SAVE)
 		ft_putstr_fd("Error\n File not saved\n", 1);
-
+	return (1);
 }

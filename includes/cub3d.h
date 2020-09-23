@@ -16,7 +16,7 @@
 
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
-# define SAVE_FILE "sreenshot.bmp"
+# define SAVE_FILE "screenshot.bmp"
 # define RIGHTS 0644
 # define BPP 24
 # define BM_FILE_HEADER_SIZE 14
@@ -64,21 +64,31 @@ typedef enum s_error
 	ERROR_SAVE,
 } t_error;
 
+typedef struct s_header
+{
+	int			file_size;
+	short		reserved1;
+	short		reserved2;
+	int			pixel_data_offset;
+	int			header_size;
+	int			width;
+	int			height;
+	short		planes;
+	short		bbp;
+	int			compression;
+	int			image_size;
+	int			x_px_pm;
+	int			y_px_pm;
+	int			total_colors;
+	int			important_colors;
+}			t_header;
+
 typedef struct s_save_bmp
 {
-	int	fd;
-	// unsigned char			*file_header;
-	// unsigned char			*img_header;
-	int height;
-	int	width;
-	double	padding;
-	char	file_header[BM_FILE_HEADER_SIZE];
-	char	img_header[BM_INFO_HEADER_SIZE];
-	int		file_size;
-	int		r;
-	int		g;
-	int		b;
-	int		rgb;
+	int			fd;
+	double		padding;
+	t_header	header;
+	
 }	t_save_bmp;
 
 typedef struct s_rgb
@@ -103,24 +113,6 @@ typedef struct s_img
 	int line_length;
 	int endian;
 } t_img;
-
-// typedef struct s_tex
-// {
-// 	void *ptr;
-// 	int *addr;
-// 	int bits_pp;
-// 	int line_length;
-// 	int endian;
-// } t_img;
-
-//  typedef struct	s_img
-// {
-// 	void  *img;      /* pointer qui permet d'identifier l'image */
-// 	char  *img_str;  
-// 	int   bits;      /* nombre de bits par pixels */
-// 	int   size_line; /*  taille de la img_str*/
-// 	int   endian;    /* permet de signifier la fin d'une image*/
-// }               t_img;
 
 typedef struct s_coordf
 {
@@ -264,44 +256,46 @@ typedef struct s_env // définie par "env"
 
 } t_env;
 
-char **ft_split_cub(t_env *env, char const *s, char c);
-int make_map(char *file, t_env *env);
-void make_tab(char *file, t_env *env);
-int check_textures(t_env *env);
-int pars_textures(t_env *env, int i, int j);
-int pars_resolution(t_env *env, int i, int j);
-int pars_colors(t_env *env, int i, int j);
-void parsing();
-int pars_map(t_env *env);
-int check_map(t_env *env);
-void check_first_line(t_env *env);
-void print_error(int error);
-int skip_wsp(int i, int j, t_env *env);
-int find_wall_up(t_env *env, int i, int j);
-int find_wall_down(t_env *env, int i, int j);
-int init_map(char *file, t_env *env);
-int line_closed(char *line);
-int is_wsp(int i, int j, t_env *env);
-int init_raycasting(t_env *env);
-int raycasting(t_env *env);
-void moves(t_env *env);
-int calc_data_raycasting(t_env *env, int x);
-void init_vectors(t_env *env, int x);
-void calc_step(t_env *env);
-void perform_DDA(t_env *env);
-void calc_perpwalldist(t_env *env);
-void calc_draw_infos(t_env *env);
-t_img *new_image(t_env *env, char *file);
-int    add_sprites(t_env *env);
-void my_mlx_pixel_put(t_env *env, int x, int y, int color);
+char	**ft_split_cub(t_env *env, char const *s, char c);
+int		make_map(char *file, t_env *env);
+void	make_tab(char *file, t_env *env);
+int		check_textures(t_env *env);
+int		pars_textures(t_env *env, int i, int j);
+int		pars_resolution(t_env *env, int i, int j);
+int		pars_colors(t_env *env, int i, int j);
+void	parsing();
+int		pars_map(t_env *env);
+int		check_map(t_env *env);
+void	check_first_line(t_env *env);
+int		print_error(int error);
+int		skip_wsp(int i, int j, t_env *env);
+int		find_wall_up(t_env *env, int i, int j);
+int		find_wall_down(t_env *env, int i, int j);
+int		init_map(char *file, t_env *env);
+int 	line_closed(char *line);
+int		is_wsp(int i, int j, t_env *env);
+int		init_raycasting(t_env *env);
+int		raycasting(t_env *env);
+void	moves(t_env *env);
+int		calc_data_raycasting(t_env *env, int x);
+void	init_vectors(t_env *env, int x);
+void	calc_step(t_env *env);
+void	perform_DDA(t_env *env);
+void	calc_perpwalldist(t_env *env);
+void	calc_draw_infos(t_env *env);
+t_img	*new_image(t_env *env, char *file);
+int		add_sprites(t_env *env);
+void	my_mlx_pixel_put(t_env *env, int x, int y, int color);
 void    count_sprites(t_env *env);
-void free_all(t_env *env);
-int check_flag_save(char *str, t_env *env);
+void	free_all(t_env *env);
+int		check_flag_save(char *str, t_env *env);
 int		get_r(int rgb);
 int		get_g(int rgb);
 int		get_b(int rgb);
 int		create_rgb(int r, int g, int b);
-void draw_line(t_env *env, int x, int drawstart, int drawend);
+void	draw_line(t_env *env, int x, int drawstart, int drawend);
+int		save_bmp(t_env *env);
+int		quit(t_env *env);
 
 // int		ft_new_image(t_env *env, int width, int height);
 

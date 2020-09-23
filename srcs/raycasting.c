@@ -75,6 +75,7 @@ void my_mlx_pixel_put(t_env *env, int x, int y, int color)
 
     // dst = img->addr + (y * img->line_length + x * (img->bits_pp / 8));
 env->img->addr[(y * env->t_map.res.width + x)] = color;
+// printf ("env->img->addr[(%d * env->t_map.res.width + %d)] = %d\n", y, x, env->img->addr[(y * env->t_map.res.width + x)]);
     // *(unsigned int *)dst = color;
     // printf ("dst = %s\n", dst);
 }
