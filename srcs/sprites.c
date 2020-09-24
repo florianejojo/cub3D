@@ -1,41 +1,13 @@
 
 #include "../includes/cub3d.h"
 
-
-
-// void calc_data_sprites(t_env *env, int i)
-// {
-//     env->sprites.x = env->sprites.tab_pos[env->order[i]].x - env->t_map.player_pos.x;
-//     env->sprites.y = env->sprites.tab_pos[env->order[i]].y - env->t_map.player_pos.y;
-//     env->sprites.inv_det = 1.0 / (env->ray.plane.x * env->ray.dir.y - env->ray.dir.x * env->ray.plane.y);
-//     env->sprites.transform.x = env->sprites.inv_det * (env->ray.dir.y * env->sprites.x - env->ray.dir.x * env->sprites.y);
-//     env->sprites.transform.y = env->sprites.inv_det * (-env->ray.plane.y * env->sprites.x + env->ray.plane.x * env->sprites.y); //this is actually the depth inside the screen, that what Z is in 3D
-//     env->sprites.screen.x = (int)((env->t_map.res.width / 2) * (1 + env->sprites.transform.x / env->sprites.transform.y));
-
-//     env->sprites.height = fabs((int)(env->t_map.res.width) / (env->sprites.transform.y));
-//     env->sprites.drawstart.y = -env->sprites.height / 2 + env->t_map.res.width / 2;
-//     if (env->sprites.drawstart.y < 0)
-//         env->sprites.drawstart.y = 0;
-//     env->sprites.drawend.y = env->sprites.height / 2 + env->t_map.res.width / 2;
-//     if (env->sprites.drawend.y >= env->sprites.height)
-//         env->sprites.drawend.y = env->sprites.height - 1;
-
-//     env->sprites.width = abs((int)(env->sprites.height / (env->sprites.transform.y)));
-//     env->sprites.drawstart.x = -env->sprites.width / 2 + env->sprites.screen.x;
-//     if (env->sprites.drawstart.x < 0)
-//         env->sprites.drawstart.x = 0;
-//     env->sprites.drawend.x = env->sprites.width / 2 + env->sprites.screen.x;
-//     if (env->sprites.drawend.x >= env->sprites.width)
-//         env->sprites.drawend.x = env->sprites.width - 1;
-//     //continuer à loops
-// }
-
-void    init_calc_sprites(t_env *env, int i) // calculs OK
+int    init_calc_sprites(t_env *env, int i) // calculs OK
 {
-    i = 0;
+    // i = 0; // de quel sprite on aprle 
     // printf (" 1 \n");
     env->sprites.x = env->sprite_pos_x[env->order[i]] - env->t_map.player_pos.x;
     env->sprites.y = env->sprite_pos_y[env->order[i]] - env->t_map.player_pos.y;
+
     printf("env->sprites.x = %f\n", env->sprites.x);
     printf("env->sprites.y = %f\n", env->sprites.y);
     printf("env->sprites.inv_det = %f\n", env->sprites.inv_det);
@@ -49,8 +21,9 @@ void    init_calc_sprites(t_env *env, int i) // calculs OK
     env->sprites.transform.y = env->sprites.inv_det * (-env->ray.plane.y * env->sprites.x + env->ray.plane.x * env->sprites.y); //this is actually the depth inside the screen, that what Z is in 3D
     env->sprites.screen.x = (int)((env->t_map.res.width / 2) * (1 + env->sprites.transform.x / env->sprites.transform.y));
     // printf (" 3 \n");
-    // printf("env->pos[env->order[i]].x = %p\n", env->pos);
-    // printf("env->pos[env->order[i]].x = %p\n", env->pos); 
+    printf("-------env->sprite_pos_x[env->order[%d]] = %f\n", i, env->sprite_pos_x[env->order[i]]);
+    printf("-------env->sprite_pos_y[env->order[%d]] = %f\n", i, env->sprite_pos_y[env->order[i]]);
+    return (SUCCESS);
     
     
 }
@@ -102,7 +75,7 @@ void draw_sprites(t_env *env)
             y = env->sprites.drawstart.y;
             while (y < env->sprites.drawend.y) //for every pixel of the current stripe
             {
-                d = (y)*256 - env->t_map.res.height * 128 + env->sprites.height * 128; //256 and 128 factors to avoid floats
+                d = (y) * 256 - env->t_map.res.height * 128 + env->sprites.height * 128; //256 and 128 factors to avoid floats
                 env->sprites.tex.y = ((d * TEXHEIGHT) / env->sprites.height) / 256;
                 env->sprites.color = env->img_tex_S->addr[TEXWIDTH * env->sprites.tex.y + env->sprites.tex.x]; //get current color from the texture
                 if ((env->sprites.color & 0x00FFFFFF) != 0)
@@ -151,12 +124,10 @@ void    stock_sprites_pos(t_env *env)
     int i;
     int j;
     int nb;
+
     nb = 0;
     i = env->t_map.start_line;
     j = 0;
-
-    
-    
     // printf ("env->sprite.nb = %d\n", env->sprites.nb);
 	// printf ("env->sprite_pos_y = %p\n", env->sprite_pos_y);
     while (i <= env->t_map.end_line)
@@ -167,8 +138,8 @@ void    stock_sprites_pos(t_env *env)
             {
                 env->sprite_pos_x[nb] = j + 0.5;
                 env->sprite_pos_y[nb] = i + 0.5;
-                // printf ("env->sprite_pos_x[nb] = %f\n", env->sprite_pos_x[nb]);
-	            // printf ("env->sprite_pos_y[nb] = %f\n", env->sprite_pos_y[nb]);
+                // printf ("env->sprite_pos_x[%d] = %f\n", nb, env->sprite_pos_x[nb]);
+	            // printf ("env->sprite_pos_y[%d] = %f\n", nb, env->sprite_pos_y[nb]);
                 nb++;
             }
             j++;
@@ -194,6 +165,8 @@ void    make_tab_distance(t_env *env)
     {
         env->order[i] = i; //on commence a 0 donc i = 0,1,2,3,4 et pour l'ordre c'est pareil + pour es distnce c'est pareil aussi
         env->distance[i] = ((env->t_map.player_pos.x - env->sprite_pos_x[i]) * (env->t_map.player_pos.x - env->sprite_pos_x[i]) + (env->t_map.player_pos.y - env->sprite_pos_y[i]) * (env->t_map.player_pos.y - env->sprite_pos_y[i]));
+        // printf ("env->order[%d] = %d\n", i, env->order[i]);
+        // printf ("distance[%d] = %f\n", i, env->distance[i]);
         i++;
     }
     
@@ -208,7 +181,10 @@ void    sort_tab(t_env  *env)
     i = 0; 
     j = 0;
     temp = 0;
-    while (i < env->sprites.nb - 1) //&& j < env->sprites.nb)
+        // printf(" avant env->distance[env->order[0]] = %f\n", env->distance[0]);
+        // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
+
+    while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
     {
         j = i + 1;
         while (j < env->sprites.nb)
@@ -222,8 +198,6 @@ void    sort_tab(t_env  *env)
                 env->order[j] = temp;
                 i = -1;
                 j = 0;
-                
-                
             }
             j++;
         }
@@ -233,12 +207,15 @@ void    sort_tab(t_env  *env)
     }
     i = 0;
     // printf("env->order[%d] = %d\n", i, env->order[i]);
-    // printf("env->distance[%d] = %f\n", i, env->distance[i]);
+        // printf(" apres env->distance[env->order[0]] = %f\n", env->distance[0]);
+        // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
+
 }
 
 int add_sprites(t_env *env)
 {
     int i;
+    count_sprites(env);
     if (!(env->sprite_pos_x = (double *)malloc(sizeof(double) * env->sprites.nb)))
 	{
         return (MALLOC_FAILED);
@@ -248,19 +225,12 @@ int add_sprites(t_env *env)
         return (MALLOC_FAILED);
 	}
     
-    count_sprites(env);
+    
+    printf ("env->sprites.nb = %d\n", env->sprites.nb);
     stock_sprites_pos(env);
     make_tab_distance(env);
     sort_tab(env);
     i = 0;
-    
-    // while (i < env->sprites.nb)
-    // {
-    //     printf ("env->distance[env->order[%d]] = %f\n", i, env->distance[env->order[i]]);
-    //     i++;
-    // }
-
-    // i = 0;
     while (i < env->sprites.nb)
     {
         // calc_data_sprites(env, i);
@@ -270,7 +240,12 @@ int add_sprites(t_env *env)
         // printf("ICHI HEY\n");
         draw_sprites(env);
         // printf("ICHI HEY2 \n");
-        // printf("hello\n");
+        // printf("hello %d \n", i);
+        // printf("env->sprite_pos_x[0] = %f\n", env->sprite_pos_x[0]);
+        // printf("env->sprite_pos_y[0] = %f\n", env->sprite_pos_y[0]);
+        // printf("env->sprite_pos_x[1] = %f\n", env->sprite_pos_x[1]);
+        // printf("env->sprite_pos_y[1] = %f\n", env->sprite_pos_y[1]);
+        // printf("env->order[%d] = %d\n", i, env->order[i]);
         i++;
     }
     return(SUCCESS);

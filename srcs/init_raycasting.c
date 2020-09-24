@@ -112,40 +112,22 @@ int	init_sprites(t_env *env)
 }
 
 
-int init_raycasting(t_env *env) // je vais essayer sans malloc pour voir mais peut etre qu'il faut malloc
+int init_raycasting(t_env *env)
 {
 	int x;
 	x = 0;
-	env->ray.speed = 0.1; // Je vais le mettre dans le .h et c'est le même que la vitesse de rotation, peut être que je oeux les séparer
-	// env->ray.rotspeed = 0.1;
+	env->ray.speed = 0.1;
 	env->ray.map.x = (int)env->t_map.player_pos.x;
 	env->ray.map.y = (int)env->t_map.player_pos.y;
 	if (!(env->mlx_ptr = mlx_init()))
 		return (MLX_FAIL);
 	if (env->img == NULL)
-		env->img = new_image(env, NULL);
-	// if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
-    //     return (MLX_FAIL);
-	
-	if ((env->t_error = init_dir_plane(env)) != SUCCESS)
+		env->img = new_image(env, NULL);if ((env->t_error = init_dir_plane(env)) != SUCCESS)
 		return (env->t_error);
 	if ((env->t_error = init_textures(env)) != SUCCESS)
 		return (env->t_error);
 	// count_sprites(env);
 	if ((env->t_error = init_sprites(env)) != SUCCESS)
 		return (env->t_error);
-    
-
-	// if ((env->t_error = _sprites(env)) != SUCCESS)
-	// 	return (env->t_error);
-	// printf("OK ICHI HEY \n");
-	// if (!(*env->ray.buff = (double *)malloc(sizeof(double) * env->t_map.res.width)))
-	// 	return (MALLOC_FAILED); // on malloc ula largeur de l'écran, tableau qui selon moi contient chaque ligne de pixel (voir si on les malloc dejà quelque part)
-	// while (x < env->t_map.res.width)
-	// {
-	// 	if (!(env->ray.buff[x] = (double *)malloc(sizeof(double) * env->t_map.res.height)))
-	// 		return (MALLOC_FAILED);
-	// 	x++;
-	// }
 	return (SUCCESS);
 }

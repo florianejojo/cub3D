@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:35 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/18 14:06:38 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/24 14:27:55 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 		if (!(img->ptr = mlx_xpm_file_to_image(env->mlx_ptr, file, &env->tex_width, &env->tex_height)))
 			return (NULL);
 	}
-	if (!(img->addr = (int *)mlx_get_data_addr(img->ptr, &img->bits_pp, &img->line_length, &img->endian)))
+	if (!(img->addr = (unsigned int *)mlx_get_data_addr(img->ptr, &img->bits_pp, &img->line_length, &img->endian)))
 		return (NULL);
 	return (img);
 }

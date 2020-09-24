@@ -64,24 +64,43 @@ typedef enum s_error
 	ERROR_SAVE,
 } t_error;
 
+// typedef struct s_header
+// {
+// 	int			file_size;
+// 	short		reserved1;
+// 	short		reserved2;
+// 	int			pixel_data_offset;
+// 	int			header_size;
+// 	int			width;
+// 	int			height;
+// 	short		planes;
+// 	short		bbp;
+// 	int			compression;
+// 	int			image_size;
+// 	int			x_px_pm;
+// 	int			y_px_pm;
+// 	int			total_colors;
+// 	int			important_colors;
+// }			t_header;
+
 typedef struct s_header
 {
-	int			file_size;
-	short		reserved1;
-	short		reserved2;
-	int			pixel_data_offset;
-	int			header_size;
-	int			width;
-	int			height;
-	short		planes;
-	short		bbp;
-	int			compression;
-	int			image_size;
-	int			x_px_pm;
-	int			y_px_pm;
-	int			total_colors;
-	int			important_colors;
-}			t_header;
+int				file_size;
+	short			reserved1;
+	short			reserved2;
+	unsigned int	offset_bits;
+	unsigned int	size_header;
+	unsigned int	width;
+	unsigned int	height;
+	short int		planes;
+	short int		bbp;
+	unsigned int	compression;
+	unsigned int	image_size;
+	unsigned int	ppm_x;
+	unsigned int	ppm_y;
+	unsigned int	clr_total;
+	unsigned int	clr_important;
+	}			t_header;
 
 typedef struct s_save_bmp
 {
@@ -108,7 +127,7 @@ typedef struct s_colors
 typedef struct s_img
 {
 	void *ptr;
-	int *addr; /* string contenant tous les pixels de l'image */
+	unsigned int *addr; /* string contenant tous les pixels de l'image */
 	int bits_pp;
 	int line_length;
 	int endian;
@@ -196,7 +215,7 @@ typedef struct s_sprites
 	t_coordi	drawend;
 	int			width;
 	t_coordi	tex;
-	int			color;
+	unsigned int			color;
 }	t_sprites;
 
 typedef struct s_map // tout ce que je pars grâce au fichier

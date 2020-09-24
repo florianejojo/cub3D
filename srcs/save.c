@@ -1,91 +1,92 @@
 
 #include "../includes/cub3d.h"
 
-
-void    init_header_data(t_env *env)
+void	ft_define_ptr(t_env *env, t_header *ptr)
 {
-	// env->bmp.fd;
-	// env->bmp.padding; 
-	// env->bmp.file_size;
-	// env->bmp.reserved1;
-	// env->bmp.reserved2;
-	env->bmp.header.pixel_data_offset = 54;
-	env->bmp.header.header_size = 40;
-	env->bmp.header.width = env->t_map.res.width;
-	env->bmp.header.height = env->t_map.res.height;
-	env->bmp.header.planes = 1;
-	env->bmp.header.bbp = 24;
-	// env->bmp.compression;
-	// env->bmp.image_size;
-	// env->bmp.x_px_pm;
-	// env->bmp.y_px_pm;
-	// env->bmp.total_colors;
-	// env->bmp.important_colors;
-
-    // if ((env->bmp.padding = env->t_map.res.width % 4) != 0)
-    //    env->bmp.padding *= 4;
-    // env->bmp.header.file_size = env->bmp.header.pixel_data_offset + (env->bmp.header.bbp * env->bmp.header.height * (env->bmp.header.width + env->bmp.padding));
-    env->bmp.header.file_size = env->t_map.res.width * env->t_map.res.width * 4 + 54;
+	ptr->file_size = env->t_map.res.width * env->t_map.res.height * 4 + 54;
+	ptr->reserved1 = 0;
+	ptr->reserved2 = 0;
+	ptr->offset_bits = 54;
+	ptr->size_header = 40;
+	ptr->width = env->t_map.res.width;
+	ptr->height = env->t_map.res.height;
+	ptr->planes = 1;
+	ptr->bbp = 32;
+	ptr->compression = 0;
+	ptr->image_size = 0;
+	ptr->ppm_x = 0;
+	ptr->ppm_y = 0;
+	ptr->clr_total = 0;
+	ptr->clr_important = 0;
 }
 
-void    write_header(t_env *env)
-{
-    write(env->bmp.fd, "BM", 2);
-    write(env->bmp.fd, &env->bmp.header, 52);
-	// write(env->bmp.fd, &env->bmp.header.file_size, 4);
-	// write(env->bmp.fd,&env->bmp.header.reserved1, 2);
-	// write(env->bmp.fd,&env->bmp.header.reserved2, 2);
-	// write(env->bmp.fd,&env->bmp.header.pixel_data_offset, 4);
-	// write(env->bmp.fd,&env->bmp.header.header_size, 4);
-	// write(env->bmp.fd,&env->bmp.header.width, 4);
-	// write(env->bmp.fd,&env->bmp.header.height, 4);
-	// write(env->bmp.fd,&env->bmp.header.planes, 2);
-	// write(env->bmp.fd,&env->bmp.header.bbp, 2);
-	// write(env->bmp.fd,&env->bmp.header.compression, 4);
-	// write(env->bmp.fd,&env->bmp.header.image_size, 4);
-	// write(env->bmp.fd,&env->bmp.header.x_px_pm, 4);
-	// write(env->bmp.fd,&env->bmp.header.y_px_pm, 4);
-	// write(env->bmp.fd,&env->bmp.header.total_colors, 4);
-	// write(env->bmp.fd, &env->bmp.header.important_colors, 4);
-}
 
-void    write_colors(t_env *env)
-{
-    int						x;
-	int						y;
-    unsigned int            color;
 
-	y = env->bmp.header.height;
-    x = 0;
-    // ft_bzero(colors, 3);
-	while (y > 0)
+int	ft_tab_in_img(t_env *env, int fd)
+{
+	int				i;
+	int				x;
+	int				y;
+	unsigned int	*tab;
+
+	tab = malloc(sizeof(int) * (env->t_map.res.height * env->t_map.res.width));
+	// printf ("env->t_map.res.height * env->t_map.res.width = %d \n", env->t_map.res.height * env->t_map.res.width);
+	if (tab == NULL)
+		return (ERROR_SAVE);
+	y = env->t_map.res.height - 1;
+	i = 0;
+	while (i < (env->t_map.res.width * env->t_map.res.height))
 	{
-		x = 0;
-		while (x <= env->bmp.header.width)
+		x = -1;
+		while (++x < env->t_map.res.width)
 		{
-            // color = env->img->addr[(env->bmp.header.height - x) * env->bmp.header.width + y];
-            color = env->img->addr[(y * env->bmp.header.width + x)];
-            // printf("env->bmp.header.height - x * env->bmp.header.width + y]");
-            write(env->bmp.fd, &color, 4);
-            printf ("y = %d\n", y);
-            printf ("x = %d\n", x);
-			x++;
+			// tab[i++] = *(unsigned int *)(env->img->addr + y * env->img->line_length + x * env->img->bits_pp / 8);
+
+			// tab[i++] = env->img->addr[(y * env->bmp.header.width + x * env->img->bits_pp / 8)];
+			tab[i++] = env->img->addr[(y * env->t_map.res.width + x)];
+
 		}
 		y--;
 	}
+	
+	// print_tab(tab, (env->t_map.res.height * env->t_map.res.width));
+	// print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
+	if (write(fd, tab, env->t_map.res.width * env->t_map.res.height * 4) == -1)
+	{
+		free(tab);
+		return (ERROR_SAVE);
+	}
+	free(tab);
+	return(SUCCESS);
 }
 
-int put_image_to_bmp(t_env *env)
+void print_tab(unsigned int *tab, int size)
 {
-    if ((env->bmp.fd = open(SAVE_FILE, O_WRONLY | O_CREAT, RIGHTS)) < 0)
+	int i;
+	i = 0;
+	while (i < size)
+	{
+		printf("tab[%d] = %d\n", i, tab[i]);
+		i++;
+	}
+
+}
+
+int	put_image_to_bmp(t_env *env)
+{
+	int			fd;
+	t_header	ptr;
+
+	ft_define_ptr(env, &ptr);
+	fd = open(SAVE_FILE, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+	if (fd == -1)
 		return (FILE_NOT_OPENED);
-    // file_type_data(env);
-    // image_info_data(env);
-    init_header_data(env);
-    write_header(env);
-    write_colors(env);
-    close(env->bmp.fd);
-    return (SUCCESS);
+	write(fd, "BM", 2);
+	write(fd, &ptr, 52);
+	if (ft_tab_in_img(env, fd) != SUCCESS)
+		return (ERROR_SAVE);
+	close(fd);
+	return (SUCCESS);
 }
 
 int save_bmp(t_env *env)
@@ -95,11 +96,12 @@ int save_bmp(t_env *env)
     while (x < env->t_map.res.width)
     {
         calc_data_raycasting(env, x);
-        draw_line(env, env->line, env->ray.drawstart, env->ray.drawend);
-        env->zbuffer[env->line] = env->ray.perpwalldist;
+        draw_line(env, x, env->ray.drawstart, env->ray.drawend);
+        env->zbuffer[x] = env->ray.perpwalldist;
         x++;
     }
-    add_sprites(env);
+    // add_sprites(env);
+	print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
     put_image_to_bmp(env);
     // quit(env);
     return (SUCCESS);

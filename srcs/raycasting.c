@@ -2,6 +2,9 @@
 
 #include "../includes/cub3d.h"
 
+
+
+
 int quit(t_env *env)
 {
     free_all(env);
@@ -127,7 +130,7 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
     }
     while (y < drawend) //&& y < 10)
     {
-        env->ray.color= 0;
+        // env->ray.color= 0;
         // env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step;
         env->ray.tex.y = (int)env->ray.tex_pos & (TEXHEIGHT - 1);
         env->ray.tex_pos += env->ray.tex_step;
@@ -172,6 +175,7 @@ int go(t_env *env)
 	// printf("env->win_ptr = %p\n",env->win_ptr);
 	// printf("env->img.addr = %p\n",env->img->addr);
     add_sprites(env);
+    // print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
     
     // if (env->sprite_pos_x)
