@@ -6,24 +6,24 @@ int init_dir_plane(t_env *env) // voir si je traznsforme en void car là ca veut
 	if (env->t_map.player_dir == 'N')
 	{
 		env->ray.dir.y = -1;
-		env->ray.plane.x = -0.80; // pour l'angle de vue
+		env->ray.plane.x = 0.80; // pour l'angle de vue
 	}
 	else if (env->t_map.player_dir == 'S')
 	{
 		            
 
 		env->ray.dir.y = 1;
-		env->ray.plane.x = 0.80;
+		env->ray.plane.x = -0.80;
 	}
 	else if (env->t_map.player_dir == 'E')
 	{
 		env->ray.dir.x = 1;
-		env->ray.plane.y = -0.80;
+		env->ray.plane.y = 0.80;
 	}
 	else if (env->t_map.player_dir == 'W')
 	{
 		env->ray.dir.x = -1;   // et donc y = 0
-		env->ray.plane.y = 0.80; // et plane x = 0
+		env->ray.plane.y = -0.80; // et plane x = 0
 		// printf("env->ray.plane.x dans init = %ff\n", env->ray.plane.x);
 
 	}
@@ -122,12 +122,15 @@ int init_raycasting(t_env *env)
 	if (!(env->mlx_ptr = mlx_init()))
 		return (MLX_FAIL);
 	if (env->img == NULL)
-		env->img = new_image(env, NULL);if ((env->t_error = init_dir_plane(env)) != SUCCESS)
+		env->img = new_image(env, NULL);
+	if ((env->t_error = init_dir_plane(env)) != SUCCESS)
 		return (env->t_error);
 	if ((env->t_error = init_textures(env)) != SUCCESS)
 		return (env->t_error);
-	// count_sprites(env);
+	count_sprites(env);
 	if ((env->t_error = init_sprites(env)) != SUCCESS)
 		return (env->t_error);
+	// if (!(env->zbuffer = malloc(sizeof(double) * env->t_map.res.width)))
+	// 	return (MALLOC_FAILED);
 	return (SUCCESS);
 }

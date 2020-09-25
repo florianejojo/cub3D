@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:05:56 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/18 14:07:56 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:57:10 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    backward(t_env *env)
 		env->t_map.player_pos.y -= env->ray.dir.y * env->ray.speed;
 }
 
-void    rotate_right(t_env *env)
+void    rotate_left(t_env *env)
 {
 	env->ray.old_dir.x = env->ray.dir.x;
 	env->ray.dir.x = env->ray.dir.x * cos(- env->ray.speed) - env->ray.dir.y * sin(-env->ray.speed);
@@ -38,7 +38,7 @@ void    rotate_right(t_env *env)
     env->ray.plane.y = env->ray.old_plane.x * sin(-env->ray.speed) + env->ray.plane.y * cos(-env->ray.speed);
 }
 
-void    rotate_left(t_env *env)
+void    rotate_right(t_env *env)
 {
 	env->ray.old_dir.x = env->ray.dir.x;
 	env->ray.dir.x = env->ray.dir.x * cos(env->ray.speed) - env->ray.dir.y * sin(env->ray.speed);

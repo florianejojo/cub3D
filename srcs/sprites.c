@@ -1,4 +1,3 @@
-
 #include "../includes/cub3d.h"
 
 int    init_calc_sprites(t_env *env, int i) // calculs OK
@@ -8,12 +7,12 @@ int    init_calc_sprites(t_env *env, int i) // calculs OK
     env->sprites.x = env->sprite_pos_x[env->order[i]] - env->t_map.player_pos.x;
     env->sprites.y = env->sprite_pos_y[env->order[i]] - env->t_map.player_pos.y;
 
-    printf("env->sprites.x = %f\n", env->sprites.x);
-    printf("env->sprites.y = %f\n", env->sprites.y);
-    printf("env->sprites.inv_det = %f\n", env->sprites.inv_det);
-    printf("env->sprites.transform.x = %f\n", env->sprites.transform.x);
-    printf("env->sprites.transform.y = %f\n", env->sprites.transform.y);
-    printf("env->sprites.screen.x = %d\n", env->sprites.screen.x);
+    // printf("env->sprites.x = %f\n", env->sprites.x);
+    // printf("env->sprites.y = %f\n", env->sprites.y);
+    // printf("env->sprites.inv_det = %f\n", env->sprites.inv_det);
+    // printf("env->sprites.transform.x = %f\n", env->sprites.transform.x);
+    // printf("env->sprites.transform.y = %f\n", env->sprites.transform.y);
+    // printf("env->sprites.screen.x = %d\n", env->sprites.screen.x);
     // printf (" 2 \n");
     // printf("env->order[%d] = %p\n", i, env->order);
     env->sprites.inv_det = 1.0 / (env->ray.plane.x * env->ray.dir.y - env->ray.dir.x * env->ray.plane.y);
@@ -21,8 +20,8 @@ int    init_calc_sprites(t_env *env, int i) // calculs OK
     env->sprites.transform.y = env->sprites.inv_det * (-env->ray.plane.y * env->sprites.x + env->ray.plane.x * env->sprites.y); //this is actually the depth inside the screen, that what Z is in 3D
     env->sprites.screen.x = (int)((env->t_map.res.width / 2) * (1 + env->sprites.transform.x / env->sprites.transform.y));
     // printf (" 3 \n");
-    printf("-------env->sprite_pos_x[env->order[%d]] = %f\n", i, env->sprite_pos_x[env->order[i]]);
-    printf("-------env->sprite_pos_y[env->order[%d]] = %f\n", i, env->sprite_pos_y[env->order[i]]);
+    // printf("-------env->sprite_pos_x[env->order[%d]] = %f\n", i, env->sprite_pos_x[env->order[i]]);
+    // printf("-------env->sprite_pos_y[env->order[%d]] = %f\n", i, env->sprite_pos_y[env->order[i]]);
     return (SUCCESS);
     
     
@@ -172,6 +171,26 @@ void    make_tab_distance(t_env *env)
     
 }
 
+void    print_tab_int(int *tab, int size)
+{
+    int i = 0;
+    while (i < size)
+    {
+        printf("tab[%d] = %d\n", i, tab[i]);
+        i++;
+    }
+}
+
+void    print_tab_double(double *tab, int size)
+{
+    int i = 0;
+    while (i < size)
+    {
+        printf("tab[%d] = %f\n", i, tab[i]);
+        i++;
+    }
+}
+
 void    sort_tab(t_env  *env)
 {
     int i; 
@@ -183,7 +202,8 @@ void    sort_tab(t_env  *env)
     temp = 0;
         // printf(" avant env->distance[env->order[0]] = %f\n", env->distance[0]);
         // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
-
+    print_tab_int(env->order, env->sprites.nb);
+    print_tab_double(env->distance, env->sprites.nb);
     while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
     {
         j = i + 1;
@@ -196,8 +216,7 @@ void    sort_tab(t_env  *env)
                 temp = env->order[i];
                 env->order[i] = env->order[j];
                 env->order[j] = temp;
-                i = -1;
-                j = 0;
+                j = i + 1;
             }
             j++;
         }
@@ -205,7 +224,21 @@ void    sort_tab(t_env  *env)
 
         
     }
-    i = 0;
+
+    //  while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
+    // {
+    //     j = i + 1;
+    //     if  (((env->distance[i] < env->distance[j]) && (env->order[i] < env->order[j])) || ((env->distance[i] > env->distance[j]) && (env->order[i] > env->order[j])))
+    //     {
+    //         temp = env->order[i];
+    //         env->order[i] = env->order[j];
+    //         env->order[j] = temp;
+    //         i = -1;
+    //      }
+    //     i++;
+    // }
+    print_tab_int(env->order, env->sprites.nb);
+    // i = 0;
     // printf("env->order[%d] = %d\n", i, env->order[i]);
         // printf(" apres env->distance[env->order[0]] = %f\n", env->distance[0]);
         // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);

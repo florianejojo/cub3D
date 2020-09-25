@@ -200,36 +200,36 @@ typedef struct s_sprites
 {	
 	
 	
-	int			nb;
-	char		*str;
+	int				nb;
+	char			*str;
 	// double		*zbuffer; // de la tailel de la largeur de l'écran
 	// int			*order; // [numSprites]   arrays used to sort the sprites
 	// double 		*distance; // [numSprites]   arrays used to sort the sprites
-	double		x;
-	double		y;
-	double 		inv_det;
-	t_coordf	transform;
-	t_coordi	screen;
-	int			height;
-	t_coordi	drawstart;
-	t_coordi	drawend;
-	int			width;
-	t_coordi	tex;
-	unsigned int			color;
+	double			x;
+	double			y;
+	double 			inv_det;
+	t_coordf		transform;
+	t_coordi		screen;
+	int				height;
+	t_coordi		drawstart;
+	t_coordi		drawend;
+	int				width;
+	t_coordi		tex;
+	unsigned int	color;
 }	t_sprites;
 
-typedef struct s_map // tout ce que je pars grâce au fichier
+typedef struct	s_map // tout ce que je pars grâce au fichier
 {
-	char **map;
-	int nb_lines;
-	int nb_char;
-	t_res res;
-	int i;
-	int j;
-	int start_line;
-	int end_line;
-	char player_dir;
-	t_coordf player_pos; //je le remplis au moment du parsing de la Map + 0,5
+	char		**map;
+	int			nb_lines;
+	int			nb_char;
+	t_res		res;
+	int			i;
+	int			j;
+	int			start_line;
+	int			end_line;
+	char		player_dir;
+	t_coordf	player_pos; //je le remplis au moment du parsing de la Map + 0,5
 						 // int						pos_y;
 						 // int						error;
 } t_map;
@@ -260,11 +260,11 @@ typedef struct s_env // définie par "env"
 	t_img			*img_tex_EA;
 	t_img			*img_tex_S;
 	t_sprites		sprites;
-	double		*zbuffer; // de la tailel de la largeur de l'écran
-	int			*order; // [numSprites]   arrays used to sort the sprites
-	double 		*distance; // [numSprites]   arrays used to sort the sprites
-	double		*sprite_pos_x; // sprites
-	double 		*sprite_pos_y;
+	double			*zbuffer; // de la tailel de la largeur de l'écran
+	int				*order; // [numSprites]   arrays used to sort the sprites
+	double 			*distance; // [numSprites]   arrays used to sort the sprites
+	double			*sprite_pos_x; // sprites
+	double 			*sprite_pos_y;
 	int				tex_width;
 	int				tex_height;
 	t_mvt			mvt;

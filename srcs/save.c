@@ -60,17 +60,17 @@ int	ft_tab_in_img(t_env *env, int fd)
 	return(SUCCESS);
 }
 
-void print_tab(unsigned int *tab, int size)
-{
-	int i;
-	i = 0;
-	while (i < size)
-	{
-		printf("tab[%d] = %d\n", i, tab[i]);
-		i++;
-	}
+// void print_tab(unsigned int *tab, int size)
+// {
+// 	int i;
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		printf("tab[%d] = %d\n", i, tab[i]);
+// 		i++;
+// 	}
 
-}
+// }
 
 int	put_image_to_bmp(t_env *env)
 {
@@ -101,7 +101,7 @@ int save_bmp(t_env *env)
         x++;
     }
     // add_sprites(env);
-	print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
+	// print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
     put_image_to_bmp(env);
     // quit(env);
     return (SUCCESS);

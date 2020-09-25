@@ -174,6 +174,7 @@ int go(t_env *env)
     // printf("env->mlx_ptr = %p\n",env->mlx_ptr);
 	// printf("env->win_ptr = %p\n",env->win_ptr);
 	// printf("env->img.addr = %p\n",env->img->addr);
+    printf("add_sprites called\n");
     add_sprites(env);
     // print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin
