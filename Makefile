@@ -12,7 +12,7 @@
 
 NAME		=	Cub3d
 
-LIBFT_PATH	=	./libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
+LIBFT_PATH	=	libft #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
 
 CC			=	clang
 
@@ -32,15 +32,8 @@ SRCS		=	main.c \
 				srcs/sprites.c \
 				srcs/create_rgb.c \
 				srcs/save.c \
-				libft/ft_bzero.c \
-				libft/ft_charset.c \
-				libft/ft_putstr_fd.c \
-				libft/ft_strlen.c \
-				libft/ft_substr.c \
-				libft/ft_putchar_fd.c \
-				libft/ft_strncmp.c \
-				libft/ft_strdup.c \
-				
+
+LIBS		=	libft/libft.a -lmlx -framework OpenGL -framework AppKit
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -50,18 +43,21 @@ HEADER		=	includes/cub3d.h
 
 all			:	$(NAME)
 
-$(NAME) 	:	$(OBJS)
-				${CC} ${CFLAGS} -fsanitize=address -g3 -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME}
+$(NAME) 	:	$(OBJS) 
+				make -C $(LIBFT_PATH)
+				${CC} ${CFLAGS} -fsanitize=address -g3 -I ${HEADER} ${OBJS} $(LIBS) -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
-
 
 ${OBJS}		: 	%.o: %.c ${HEADER}
 				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
 
+
 clean		:	
+				make clean -C $(LIBFT_PATH) 
 				rm -rf $(OBJS)
 
 fclean		:	clean
+				make fclean -C $(LIBFT_PATH) 
 				rm -rf $(NAME)
 
 re			:	fclean all

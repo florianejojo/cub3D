@@ -28,6 +28,24 @@ void    backward(t_env *env)
 		env->t_map.player_pos.y -= env->ray.dir.y * env->ray.speed;
 }
 
+void	side(t_env *env)
+{
+	if (env->mvt.side_r == 1)
+	{
+		if (env->t_map.map[(int)(env->t_map.player_pos.y + env->ray.dir.x * env->ray.speed)][(int)(env->t_map.player_pos.x)] == '0')
+			env->t_map.player_pos.y -= -env->ray.dir.x * env->ray.speed;
+		if (env->t_map.map[(int)(env->t_map.player_pos.y)][(int)(env->t_map.player_pos.x + env->ray.dir.y * env->ray.speed)] == '0')
+			env->t_map.player_pos.x -= env->ray.dir.y * env->ray.speed;
+	}
+	if (env->mvt.side_l == 1)
+	{
+		if (env->t_map.map[(int)(env->t_map.player_pos.y + env->ray.dir.x * env->ray.speed)][(int)(env->t_map.player_pos.x)] == '0')
+			env->t_map.player_pos.y += -env->ray.dir.x * env->ray.speed;
+		if (env->t_map.map[(int)(env->t_map.player_pos.y)][(int)(env->t_map.player_pos.x + env->ray.dir.y * env->ray.speed)] == '0')
+			env->t_map.player_pos.x += env->ray.dir.y * env->ray.speed;
+	}
+}
+
 void    rotate_left(t_env *env)
 {
 	env->ray.old_dir.x = env->ray.dir.x;
@@ -48,6 +66,8 @@ void    rotate_right(t_env *env)
     env->ray.plane.y = env->ray.old_plane.x * sin(env->ray.speed) + env->ray.plane.y * cos(env->ray.speed);
 }
 
+
+
 void	moves(t_env *env)
 {
 	if (env->mvt.up == 1)
@@ -58,6 +78,9 @@ void	moves(t_env *env)
 		rotate_left(env);
 	if (env->mvt.rgt == 1)
 		rotate_right(env);
+	if (env->mvt.side_r == 1 || env->mvt.side_l == 1)
+		side(env);
+
 
 
 }

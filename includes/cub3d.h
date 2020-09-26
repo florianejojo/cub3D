@@ -236,10 +236,12 @@ typedef struct	s_map // tout ce que je pars grâce au fichier
 
 typedef struct s_mvt
 {
-	int up;
-	int dwn;
-	int lft;
-	int rgt;
+	int				up;
+	int				dwn;
+	int				lft;
+	int				rgt;
+	int				side_r;
+	int				side_l;
 } t_mvt;
 
 typedef struct s_env // définie par "env"

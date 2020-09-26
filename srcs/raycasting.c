@@ -33,14 +33,18 @@ int quit(t_env *env)
 
 int key_press(int key, t_env *env)
 {
-    if (key == KEY_UP)
+    if (key == KEY_UP || key == KEY_W)
         env->mvt.up = 1;
-    if (key == KEY_DOWN)
+    if (key == KEY_DOWN || key == KEY_S)
         env->mvt.dwn = 1;
     if (key == KEY_LEFT)
         env->mvt.lft = 1;
     if (key == KEY_RIGHT)
         env->mvt.rgt = 1;
+    if (key == KEY_A)
+        env->mvt.side_l = 1;
+    if (key == KEY_D)
+        env->mvt.side_r = 1;
     if (key == KEY_ESCAPE)
     {
         quit(env);
@@ -51,14 +55,27 @@ int key_press(int key, t_env *env)
 
 int key_release(int key, t_env *env)
 {
-    if (key == KEY_UP)
+    
+    // key = 0;
+    // env->mvt.up = 0;
+    // env->mvt.dwn = 0;
+    // env->mvt.lft = 0;
+    // env->mvt.rgt = 0;
+    // env->mvt.side_r = 0;
+    // env->mvt.side_l = 0;
+
+    if (key == KEY_UP || key == KEY_W)
         env->mvt.up = 0;
-    if (key == KEY_DOWN)
+    if (key == KEY_DOWN || key == KEY_S)
         env->mvt.dwn = 0;
     if (key == KEY_LEFT)
         env->mvt.lft = 0;
     if (key == KEY_RIGHT)
         env->mvt.rgt = 0;
+    if (key == KEY_A)
+        env->mvt.side_l = 0;
+    if (key == KEY_D)
+        env->mvt.side_r = 0;
     return (SUCCESS);
 }
 
@@ -88,7 +105,7 @@ void pick_color(t_env *env)
     
 // je veux trouver la couleur du pixel qui se trouve dans la chaine env->img_tex_WE->addr[]
     // printf(env->img_tex_WE->addr[env->ray.tex.y * env->img_tex_WE->line_length + env->ray.tex.x * env->img->bits_pp / 8];
-
+    env->ray.color = 0;
     if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '1')
     {
         if (env->ray.side == 0) // SOIT WEST SOIT EAST
@@ -113,7 +130,7 @@ void pick_color(t_env *env)
              {
 			    env->ray.color = env->img_tex_NO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
              }
-             env->ray.color = (env->ray.color >> 1) & 8355711; 
+            //  env->ray.color = (env->ray.color >> 1) & 8355711; 
 	    }
         // if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '2')
         //     env->ray.color = env->img_tex_S->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];

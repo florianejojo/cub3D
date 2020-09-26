@@ -159,7 +159,7 @@ void	calc_textures_data(t_env *env)
 	else
 		env->ray.wall.x = env->t_map.player_pos.x + env->ray.perpwalldist * env->ray.raydir.x;
 	env->ray.wall.x -= floor(env->ray.wall.x);
-	env->ray.tex.x = (int)(env->ray.wall.x * TEXWIDTH);
+	env->ray.tex.x = (int)(env->ray.wall.x * (double)(TEXWIDTH));
 	if ((env->ray.side == 0 && env->ray.raydir.x > 0) || (env->ray.side == 1 && env->ray.raydir.x < 0))
 		env->ray.tex.x = TEXWIDTH - env->ray.tex.x - 1;
     

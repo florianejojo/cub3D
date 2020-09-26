@@ -137,8 +137,8 @@ void    stock_sprites_pos(t_env *env)
             {
                 env->sprite_pos_x[nb] = j + 0.5;
                 env->sprite_pos_y[nb] = i + 0.5;
-                // printf ("env->sprite_pos_x[%d] = %f\n", nb, env->sprite_pos_x[nb]);
-	            // printf ("env->sprite_pos_y[%d] = %f\n", nb, env->sprite_pos_y[nb]);
+                printf ("le sprite = %d, a pour x = %f et y = %f\n", nb, env->sprite_pos_x[nb], env->sprite_pos_y[nb]);
+	            
                 nb++;
             }
             j++;
@@ -166,6 +166,10 @@ void    make_tab_distance(t_env *env)
         env->distance[i] = ((env->t_map.player_pos.x - env->sprite_pos_x[i]) * (env->t_map.player_pos.x - env->sprite_pos_x[i]) + (env->t_map.player_pos.y - env->sprite_pos_y[i]) * (env->t_map.player_pos.y - env->sprite_pos_y[i]));
         // printf ("env->order[%d] = %d\n", i, env->order[i]);
         // printf ("distance[%d] = %f\n", i, env->distance[i]);
+
+        printf ("--- le sprite = %d, a pour x = %f et y = %f\n", i, env->sprite_pos_x[i], env->sprite_pos_y[i]);
+        printf ("--- et pour distane =  %f\n", env->distance[i]);
+
         i++;
     }
     
@@ -191,57 +195,91 @@ void    print_tab_double(double *tab, int size)
     }
 }
 
-void    sort_tab(t_env  *env)
-{
-    int i; 
-    int j;
-    int temp;
+// void    sort_tab(t_env  *env)
+// {
+//     int i; 
+//     int j;
+//     int temp;
 
-    i = 0; 
-    j = 0;
-    temp = 0;
-        // printf(" avant env->distance[env->order[0]] = %f\n", env->distance[0]);
-        // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
-    print_tab_int(env->order, env->sprites.nb);
-    print_tab_double(env->distance, env->sprites.nb);
-    while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
-    {
-        j = i + 1;
-        while (j < env->sprites.nb)
-        {
-            // printf ("i = %d, j = %d\n", i, j);
-            if  (((env->distance[i] < env->distance[j]) && (env->order[i] < env->order[j])) || ((env->distance[i] > env->distance[j]) && (env->order[i] > env->order[j])))
-            {
+//     i = 0; 
+//     j = 0;
+//     temp = 0;
+//         // printf(" avant env->distance[env->order[0]] = %f\n", env->distance[0]);
+//         // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
+//     // print_tab_int(env->order, env->sprites.nb);
+//     // print_tab_double(env->distance, env->sprites.nb);
+//     while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
+//     {
+//         j = i + 1;
+//         while (j < env->sprites.nb)
+//         {
+//             // printf ("i = %d, j = %d\n", i, j);
+//             if  (((env->distance[i] < env->distance[j]) && (env->order[i] < env->order[j])) || ((env->distance[i] > env->distance[j]) && (env->order[i] > env->order[j])))
+//             {
                 
-                temp = env->order[i];
-                env->order[i] = env->order[j];
-                env->order[j] = temp;
-                j = i + 1;
-            }
-            j++;
-        }
-        i++;
+//                 temp = env->order[i];
+//                 env->order[i] = env->order[j];
+//                 env->order[j] = temp;
+
+//                 i = 0;
+//                 j = i + 1;
+//             }
+//             j++;
+//         }
+//         i++;
 
         
-    }
+//     }
 
-    //  while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
-    // {
-    //     j = i + 1;
-    //     if  (((env->distance[i] < env->distance[j]) && (env->order[i] < env->order[j])) || ((env->distance[i] > env->distance[j]) && (env->order[i] > env->order[j])))
-    //     {
-    //         temp = env->order[i];
-    //         env->order[i] = env->order[j];
-    //         env->order[j] = temp;
-    //         i = -1;
-    //      }
-    //     i++;
-    // }
+//     //  while (i < env->sprites.nb - 1) //&& j < env->sprites.nb) // 0 < 1
+//     // {
+//     //     j = i + 1;
+//     //     if  (((env->distance[i] < env->distance[j]) && (env->order[i] < env->order[j])) || ((env->distance[i] > env->distance[j]) && (env->order[i] > env->order[j])))
+//     //     {
+//     //         temp = env->order[i];
+//     //         env->order[i] = env->order[j];
+//     //         env->order[j] = temp;
+//     //         i = -1;
+//     //      }
+//     //     i++;
+//     // }
+//     printf("le sprite = 0 va etre affiché en positon = %d\n", env->order[0]);
+//     printf("le sprite = 1 va etre affiché en positon = %d\n", env->order[1]);
+//     printf("le sprite = 2 va etre affiché en positon = %d\n", env->order[2]);
+//     printf("le sprite = 3 va etre affiché en positon = %d\n", env->order[3]);
+//     printf("le sprite = 4 va etre affiché en positon = %d\n", env->order[4]);
+//     print_tab_int(env->order, env->sprites.nb);
+//     // i = 0;
+//     // printf("env->order[%d] = %d\n", i, env->order[i]);
+//         // printf(" apres env->distance[env->order[0]] = %f\n", env->distance[0]);
+//         // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
+
+// }
+
+void    sort_tab(t_env  *env)
+{
+	int		i;
+	int		temp;
+	double	temp2;
+
+	i = 0;
+	while (i < env->sprites.nb - 1)
+	{
+		if (env->distance[i] < env->distance[i + 1])
+		{
+			temp2 = env->distance[i + 1];
+			env->distance[i + 1] = env->distance[i];
+			env->distance[i] = temp2;
+			temp = env->order[i + 1];
+			env->order[i + 1] = env->order[i];
+			env->order[i] = temp;
+			i = 0;
+		}
+		else
+			i++;
+	}
     print_tab_int(env->order, env->sprites.nb);
-    // i = 0;
-    // printf("env->order[%d] = %d\n", i, env->order[i]);
-        // printf(" apres env->distance[env->order[0]] = %f\n", env->distance[0]);
-        // printf(" avant env->distance[env->order[1]] = %f\n", env->distance[1]);
+    print_tab_double(env->distance, env->sprites.nb);
 
 }
 
