@@ -132,7 +132,7 @@ void pick_color(t_env *env)
 			    env->ray.color = env->img_tex_NO->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];
                 // env->ray.color = env->img_tex_NO->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
              }
-            //  env->ray.color = (env->ray.color >> 1) & 8355711; 
+             env->ray.color = (env->ray.color >> 1) & 8355711; 
 	    }
         // if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '2')
         //     env->ray.color = env->img_tex_S->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];

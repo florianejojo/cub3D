@@ -222,6 +222,8 @@ typedef struct		s_env
 {
 	t_textures_path t_textures_path;
 	t_map			t_map;
+	int				sizex;
+	int				sizey;
 	t_colors		t_colors;
 	t_check			t_check;
 	t_error			t_error;
@@ -272,6 +274,12 @@ int		is_wsp(int i, int j, t_env *env);
 int		init_raycasting(t_env *env);
 int		raycasting(t_env *env);
 void	moves(t_env *env);
+void	init_vectors(t_env *env, int x);
+void	calc_step(t_env *env);
+// void	perform_dda(t_env *env);
+// void	calc_perpwalldist(t_env *env);
+void	calc_textures_data(t_env *env);
+void	calc_draw_infos(t_env *env);
 int		calc_data_raycasting(t_env *env, int x);
 void	init_vectors(t_env *env, int x);
 void	calc_step(t_env *env);
@@ -291,5 +299,6 @@ int		create_rgb(int r, int g, int b);
 void	draw_line(t_env *env, int x, int drawstart, int drawend);
 int		save_bmp(t_env *env);
 int		quit(t_env *env);
+
 
 #endif

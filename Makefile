@@ -29,6 +29,7 @@ SRCS		=	main.c \
 				srcs/init_raycasting.c \
 				srcs/raycasting.c \
 				srcs/raycasting_utils.c \
+				srcs/calc_data_raycasting_2.c \
 				srcs/calc_data_raycasting.c \
 				srcs/moves.c \
 				srcs/sprites.c \
@@ -37,7 +38,7 @@ SRCS		=	main.c \
 
 LIBS		=	libft/libft.a -lmlx -framework OpenGL -framework AppKit
 
-OBJS		=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
+OBJS		=	$(SRCS:.c=.o)
 
 CFLAGS		=	-Wall -Wextra -Werror
 
@@ -45,15 +46,12 @@ HEADER		=	includes/cub3d.h
 
 all			:	$(NAME)
 
-$(NAME) 	:	$(OBJS_PATH) $(OBJS) 
+$(NAME) 	:	$(OBJS) 
 				make -C $(LIBFT_PATH)
 				${CC} ${CFLAGS} -fsanitize=address -g3 -I ${HEADER} ${OBJS} $(LIBS) -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
-$(OBJS_PATH):
-				mkdir -p $(OBJS_PATH)/srcs
-
-${OBJS_PATH}%.o: %.c ${HEADER}
+%.o			:	%.c ${HEADER}
 				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
 
 
