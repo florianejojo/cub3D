@@ -147,7 +147,7 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
         my_mlx_pixel_put(env, x, y, create_rgb(env->t_colors.rgb_C.r, env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
         y++;
     }
-    while (y < drawend) //&& y < 10)
+    while (y <= drawend) //&& y < 10)
     {
         // env->ray.color= 0;
         // env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step;
@@ -180,7 +180,7 @@ int go(t_env *env)
 	// // printf("ichi hey 11");
     moves(env);
     env->line = 0;
-    while (env->line <= env->t_map.res.width) // calc_data_raycasting
+    while (env->line < env->t_map.res.width) // calc_data_raycasting
     {
         // printf("x = %d\n", env->line);
         calc_data_raycasting(env, env->line);
