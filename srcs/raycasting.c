@@ -3,8 +3,6 @@
 #include "../includes/cub3d.h"
 
 
-
-
 int quit(t_env *env)
 {
     free_all(env);
@@ -113,11 +111,13 @@ void pick_color(t_env *env)
 		    if (env->ray.step.x < 0) // WEST
             {
                 env->ray.color = env->img_tex_WE->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+                // env->ray.color = env->img_tex_WE->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
                 // printf ("env->ray.color = %d\n", env->ray.color);
             }
 		    else                                //EAST
             {
 			    env->ray.color = env->img_tex_EA->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+                // env->ray.color = env->img_tex_EA->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
             }
 	    }
 	    else // NORD OU SUD
@@ -125,10 +125,12 @@ void pick_color(t_env *env)
 		    if (env->ray.step.y > 0) // SUD
              {
 			    env->ray.color = env->img_tex_SO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+                // env->ray.color = env->img_tex_SO->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
              }
 		    else
              {
 			    env->ray.color = env->img_tex_NO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+                // env->ray.color = env->img_tex_NO->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
              }
             //  env->ray.color = (env->ray.color >> 1) & 8355711; 
 	    }
@@ -178,7 +180,7 @@ int go(t_env *env)
 	// // printf("ichi hey 11");
     moves(env);
     env->line = 0;
-    while (env->line < env->t_map.res.width) // calc_data_raycasting
+    while (env->line <= env->t_map.res.width) // calc_data_raycasting
     {
         // printf("x = %d\n", env->line);
         calc_data_raycasting(env, env->line);
