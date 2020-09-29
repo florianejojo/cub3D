@@ -1,13 +1,13 @@
  
-C   255, 25, 255
-      NO    ./pics/barrel.xpm
- SO ./pics/greenlight.xpm
-    WE      ./pics/purplestone.xpm    
-  EA ./pics/redbrick.xpm
+C   255     , 25 , 255  
+      NO    ./pics/pillar.xpm   
+ SO ./pics/barrel.xpm   
+    WE      ./pics/purplestone.xpm          
+  EA ./pics/mossy.xpm      
 
 
-      S ./pics/barrel.xpm
-F  0   ,255,   0
+      S ./pics/barrel.xpm     
+F  0   ,255,   0  
 
 R 600 800
 

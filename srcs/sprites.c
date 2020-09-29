@@ -62,7 +62,7 @@ void draw_sprites(t_env *env)
 
     while (stripe < env->sprites.drawend.x)
     {
-        env->sprites.tex.x = (int)(256 * (stripe - (-env->sprites.width / 2 + env->sprites.screen.x)) * TEXWIDTH / env->sprites.width) / 256;
+        env->sprites.tex.x = (int)(256 * (stripe - (-env->sprites.width / 2 + env->sprites.screen.x)) * env->tex_width / env->sprites.width) / 256;
         //the conditions in the if are:
         //1) it's in front of camera plane so you don't see things behind you
         //2) it's on the screen (left)
@@ -75,8 +75,8 @@ void draw_sprites(t_env *env)
             while (y < env->sprites.drawend.y) //for every pixel of the current stripe
             {
                 d = (y) * 256 - env->t_map.res.height * 128 + env->sprites.height * 128; //256 and 128 factors to avoid floats
-                env->sprites.tex.y = ((d * TEXHEIGHT) / env->sprites.height) / 256;
-                env->sprites.color = env->img_tex_S->addr[TEXWIDTH * env->sprites.tex.y + env->sprites.tex.x]; //get current color from the texture
+                env->sprites.tex.y = ((d * env->tex_height) / env->sprites.height) / 256;
+                env->sprites.color = env->img_tex_S->addr[env->tex_width * env->sprites.tex.y + env->sprites.tex.x]; //get current color from the texture
                 if ((env->sprites.color & 0x00FFFFFF) != 0)
                 {
                     // buffer[y][stripe] = color; 
@@ -137,7 +137,7 @@ void    stock_sprites_pos(t_env *env)
             {
                 env->sprite_pos_x[nb] = j + 0.5;
                 env->sprite_pos_y[nb] = i + 0.5;
-                printf ("le sprite = %d, a pour x = %f et y = %f\n", nb, env->sprite_pos_x[nb], env->sprite_pos_y[nb]);
+                // printf ("le sprite = %d, a pour x = %f et y = %f\n", nb, env->sprite_pos_x[nb], env->sprite_pos_y[nb]);
 	            
                 nb++;
             }
@@ -167,33 +167,33 @@ void    make_tab_distance(t_env *env)
         // printf ("env->order[%d] = %d\n", i, env->order[i]);
         // printf ("distance[%d] = %f\n", i, env->distance[i]);
 
-        printf ("--- le sprite = %d, a pour x = %f et y = %f\n", i, env->sprite_pos_x[i], env->sprite_pos_y[i]);
-        printf ("--- et pour distane =  %f\n", env->distance[i]);
+        // printf ("--- le sprite = %d, a pour x = %f et y = %f\n", i, env->sprite_pos_x[i], env->sprite_pos_y[i]);
+        // printf ("--- et pour distane =  %f\n", env->distance[i]);
 
         i++;
     }
     
 }
 
-void    print_tab_int(int *tab, int size)
-{
-    int i = 0;
-    while (i < size)
-    {
-        printf("tab[%d] = %d\n", i, tab[i]);
-        i++;
-    }
-}
+// void    print_tab_int(int *tab, int size)
+// {
+//     int i = 0;
+//     while (i < size)
+//     {
+//         // printf("tab[%d] = %d\n", i, tab[i]);
+//         i++;
+//     }
+// }
 
-void    print_tab_double(double *tab, int size)
-{
-    int i = 0;
-    while (i < size)
-    {
-        printf("tab[%d] = %f\n", i, tab[i]);
-        i++;
-    }
-}
+// void    print_tab_double(double *tab, int size)
+// {
+//     int i = 0;
+//     while (i < size)
+//     {
+//         // printf("tab[%d] = %f\n", i, tab[i]);
+//         i++;
+//     }
+// }
 
 // void    sort_tab(t_env  *env)
 // {
@@ -278,8 +278,8 @@ void    sort_tab(t_env  *env)
 		else
 			i++;
 	}
-    print_tab_int(env->order, env->sprites.nb);
-    print_tab_double(env->distance, env->sprites.nb);
+    // print_tab_int(env->order, env->sprites.nb);
+    // print_tab_double(env->distance, env->sprites.nb);
 
 }
 
@@ -297,7 +297,7 @@ int add_sprites(t_env *env)
 	}
     
     
-    printf ("env->sprites.nb = %d\n", env->sprites.nb);
+    // printf ("env->sprites.nb = %d\n", env->sprites.nb);
     stock_sprites_pos(env);
     make_tab_distance(env);
     sort_tab(env);

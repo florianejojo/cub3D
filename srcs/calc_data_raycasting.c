@@ -159,12 +159,13 @@ void	calc_textures_data(t_env *env)
 	else
 		env->ray.wall.x = env->t_map.player_pos.x + env->ray.perpwalldist * env->ray.raydir.x;
 	env->ray.wall.x -= floor(env->ray.wall.x);
-	env->ray.tex.x = (int)(env->ray.wall.x * (double)(TEXWIDTH));
-	if ((env->ray.side == 0 && env->ray.raydir.x > 0) || (env->ray.side == 1 && env->ray.raydir.x < 0))
-		env->ray.tex.x = TEXWIDTH - env->ray.tex.x - 1;
+	env->ray.tex.x = (int)(env->ray.wall.x * (double)(env->tex_width));
+	if ((env->ray.side <= 0 && env->ray.raydir.x > 0) || (env->ray.side > 1 && env->ray.raydir.y < 0)) // cetait les deux ray dir x
+		env->ray.tex.x = env->tex_width - env->ray.tex.x - 1;
     
-	env->ray.tex_step = 1.0 * TEXHEIGHT / env->ray.lineheight; // How much to increase the texture coordinate per screen pixel
+	env->ray.tex_step = 1.0 * env->tex_height / env->ray.lineheight; // How much to increase the texture coordinate per screen pixel
 	env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step; // Starting texture coordinate
+    
 ;
     // printf ("env->ray.tex_step = %f\n", env->ray.tex_step);
     // printf ("env->ray.tex_pos = %f\n", env->ray.tex_pos);

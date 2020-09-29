@@ -74,6 +74,8 @@ int init_dir_plane(t_env *env) // voir si je traznsforme en void car là ca veut
 
 int	init_textures(t_env *env) // on créer les img avec les données dedans 
 {
+	env->tex_height = 0;
+	env->tex_width = 0;
 	if ((env->img_tex_NO = new_image(env, env->t_textures_path.NO)) == NULL)
 		return (WRONG_TEX);
 	// printf ("ichi ------------- nv->img_tex_NO->addr = '%s'\n", env->img_tex_NO->addr);

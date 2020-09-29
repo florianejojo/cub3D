@@ -110,13 +110,13 @@ void pick_color(t_env *env)
 	    {
 		    if (env->ray.step.x < 0) // WEST
             {
-                env->ray.color = env->img_tex_WE->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+                env->ray.color = env->img_tex_WE->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];
                 // env->ray.color = env->img_tex_WE->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
                 // printf ("env->ray.color = %d\n", env->ray.color);
             }
 		    else                                //EAST
             {
-			    env->ray.color = env->img_tex_EA->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+			    env->ray.color = env->img_tex_EA->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];
                 // env->ray.color = env->img_tex_EA->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
             }
 	    }
@@ -124,18 +124,18 @@ void pick_color(t_env *env)
 	    {
 		    if (env->ray.step.y > 0) // SUD
              {
-			    env->ray.color = env->img_tex_SO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+			    env->ray.color = env->img_tex_SO->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];
                 // env->ray.color = env->img_tex_SO->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
              }
 		    else
              {
-			    env->ray.color = env->img_tex_NO->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+			    env->ray.color = env->img_tex_NO->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];
                 // env->ray.color = env->img_tex_NO->addr[(env->ray.tex.y + env->ray.tex.x * TEXWIDTH)];
              }
             //  env->ray.color = (env->ray.color >> 1) & 8355711; 
 	    }
         // if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] && env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '2')
-        //     env->ray.color = env->img_tex_S->addr[(TEXHEIGHT * env->ray.tex.y + env->ray.tex.x)];
+        //     env->ray.color = env->img_tex_S->addr[(env->tex_height * env->ray.tex.y + env->ray.tex.x)];
         
     }
 }
@@ -151,7 +151,7 @@ void draw_line(t_env *env, int x, int drawstart, int drawend)
     {
         // env->ray.color= 0;
         // env->ray.tex_pos = (env->ray.drawstart - env->t_map.res.height / 2 + env->ray.lineheight / 2) * env->ray.tex_step;
-        env->ray.tex.y = (int)env->ray.tex_pos & (TEXHEIGHT - 1);
+        env->ray.tex.y = (int)env->ray.tex_pos & (env->tex_height - 1);
         env->ray.tex_pos += env->ray.tex_step;
         // printf("env->ray.tex.y = %d, env->ray.tex.x = %d\n",env->ray.tex.y, env->ray.tex.x);
         pick_color(env);
@@ -193,7 +193,7 @@ int go(t_env *env)
     // printf("env->mlx_ptr = %p\n",env->mlx_ptr);
 	// printf("env->win_ptr = %p\n",env->win_ptr);
 	// printf("env->img.addr = %p\n",env->img->addr);
-    printf("add_sprites called\n");
+    // printf("add_sprites called\n");
     add_sprites(env);
     // print_tab(env->img->addr, (env->t_map.res.height * env->t_map.res.width));
     mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0); // a la toute fin

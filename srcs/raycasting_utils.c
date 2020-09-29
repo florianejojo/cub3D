@@ -6,21 +6,19 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:35 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/25 16:57:16 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/29 13:35:30 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../includes/cub3d.h"
 
-void		set_in_char(unsigned char *start, int value)
-{
-	start[0] = (unsigned char)(value);
-	start[1] = (unsigned char)(value >> 8);
-	start[2] = (unsigned char)(value >> 16);
-	start[3] = (unsigned char)(value >> 24);
-}
+// void		set_in_char(unsigned char *start, int value)
+// {
+// 	start[0] = (unsigned char)(value);
+// 	start[1] = (unsigned char)(value >> 8);
+// 	start[2] = (unsigned char)(value >> 16);
+// 	start[3] = (unsigned char)(value >> 24);
+// }
 
 // t_img *new_image(t_env *env) //int width, int height)
 // {
@@ -35,7 +33,7 @@ void		set_in_char(unsigned char *start, int value)
 // 	return (img);
 // }
 
-t_img *new_image(t_env *env, char *file) //int width, int height)
+t_img	*new_image(t_env *env, char *file) //int width, int height)
 {
 	t_img *img;
 
@@ -50,6 +48,8 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 	{
 		if (!(img->ptr = mlx_xpm_file_to_image(env->mlx_ptr, file, &env->tex_width, &env->tex_height)))
 			return (NULL);
+		if (env->tex_width != env->tex_height)
+			env->tex_height = env->tex_width;
 	}
 	if (!(img->addr = (unsigned int *)mlx_get_data_addr(img->ptr, &img->bits_pp, &img->line_length, &img->endian)))
 		return (NULL);
@@ -72,7 +72,7 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 	// 	return (img_tex);
 	// }
 
-	void free_img(t_img *img, t_env *env)
+	void	free_img(t_img *img, t_env *env)
 	{
 		if (img)
 		{
@@ -81,7 +81,7 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 		}
 	}
 
-	void free_textures(t_env *env)
+	void	free_textures(t_env *env)
 	{
 		if (env->img_tex_NO)
 			free_img(env->img_tex_NO, env);
@@ -95,7 +95,7 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 			free_img(env->img_tex_S, env);
 	}
 
-	void free_all(t_env * env)
+	void	free_all(t_env * env)
 	{
 		free_textures(env);
 		if (env->t_map.map)
@@ -112,5 +112,4 @@ t_img *new_image(t_env *env, char *file) //int width, int height)
 			free(env->sprite_pos_y);	
 		if (env)
 			free(env);
-		// return (SUCCESS);
 	}
