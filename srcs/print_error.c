@@ -6,20 +6,43 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:29 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 11:24:24 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 18:10:20 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../includes/cub3d.h"
+
+int		print_error_2(int error)
+{
+	if (error == ERROR_RES)
+		ft_putstr_fd("Error\n Invalid resolution \n", 1);
+	else if (error == INVALID_TEXTURES)
+		ft_putstr_fd("Error\n Invalid textures\n", 1);
+	else if (error == ERROR_COLORS)
+		ft_putstr_fd("Error\n Wrong Colors\n", 1);
+	else if (error == ERROR_START_END)
+		ft_putstr_fd("Error\n map not found\n", 1);
+	else if (error == MLX_FAIL)
+		ft_putstr_fd("Error\n mlx pb\n", 1);
+	else if (error == IMG_FAIL)
+		ft_putstr_fd("Error\n img pb\n", 1);
+	else if (error == WRONG_TEX)
+		ft_putstr_fd("Error\n wrong tex\n", 1);
+	else if (error == ERROR_SPRITES)
+		ft_putstr_fd("Error\n Sprites\n", 1);
+	else if (error == ERROR_SAVE)
+		ft_putstr_fd("Error\n File not saved\n", 1);
+	else if (error == WRONG_ARGS)
+	{
+		ft_putstr_fd("Error\n Wrong number of arguments\n", 1);
+		ft_putstr_fd(" Or wrong spelling for flag --save\n", 1);
+	}
+	return (1);
+}
 
 int		print_error(int error)
 {
-
-	if (error == SUCCESS) // à enlever à la fin
-        ft_putstr_fd("SUCCESS\n", 1);
-  	else if (error == INVALID_ELEMENTS)
+	if (error == INVALID_ELEMENTS)
 		ft_putstr_fd("Error\n Invalid elements\n", 1);
 	else if (error == LINE_NOT_CLOSED)
 		ft_putstr_fd("Error\n Line not closed\n", 1);
@@ -37,28 +60,7 @@ int		print_error(int error)
 		ft_putstr_fd("Error\n Two or more player positions detected\n", 1);
 	else if (error == MALLOC_FAILED)
 		ft_putstr_fd("Error\n Malloc failed\n", 1);
-	else if (error == ERROR_RES)
-		ft_putstr_fd("Error\n Resolution\n", 1);
-	else if (error == INVALID_TEXTURES)
-		ft_putstr_fd("Error\n Textures\n", 1);
-	else if (error == ERROR_PARSING)
-		ft_putstr_fd("Error\n Parsing\n", 1);
-	else if (error == ERROR_COLORS)
-		ft_putstr_fd("Error\n Colors\n", 1);
-	else if (error == ERROR_START_END)
-		ft_putstr_fd("Error\n start or end lines not found\n", 1);
-	else if (error == MLX_FAIL)
-		ft_putstr_fd("Error\n mlx pb\n", 1);
-	else if (error == IMG_FAIL)
-		ft_putstr_fd("Error\n img pb\n", 1);
-	else if (error == WRONG_TEX)
-		ft_putstr_fd("Error\n wrong tex\n", 1);
-	else if (error == ERROR_SPRITES)
-		ft_putstr_fd("Error\n Sprites\n", 1);
-	else if (error == ERROR_SAVE)
-		ft_putstr_fd("Error\n File not saved\n", 1);
-	else if (error == WRONG_ARGS)
-		ft_putstr_fd("Error\n Wrong number of arguments or wrong spelling for flag \"--save\"\n", 1);
-	
+	else
+		print_error_2(error);
 	return (1);
 }

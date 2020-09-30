@@ -1,5 +1,5 @@
  
-	C   255     , 25 , 255	
+	C   25     , 25 , 255	
       NO    ./pics/pillar.xpm	
 	 SO ./pics/barrel.xpm	
     WE      ./pics/purplestone.xpm		 	         
@@ -7,7 +7,7 @@
 
 
       S ./pics/barrel.xpm	     
-	F  0   ,255,   0  
+	F  255   ,255,   0  
 
 		R 600 800	
 

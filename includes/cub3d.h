@@ -54,7 +54,6 @@ typedef enum		s_error
 	ERROR_RES,
 	ERROR_COLORS,
 	INVALID_TEXTURES,
-	ERROR_PARSING,
 	ERROR_START_END,
 	MLX_FAIL,
 	CALC_RAY_FAIL,
@@ -252,6 +251,7 @@ typedef struct		s_env
 	int 			save;
 	int				i;
 	int				j;
+	int				l;
 
 }					t_env;
 
@@ -277,12 +277,16 @@ int 	line_closed(int i, char *line, t_env *env);
 int		check_char(int i, int j, t_env *env);
 int		is_wsp(int i, int j, t_env *env);
 int		init_raycasting(t_env *env);
+void	pick_color(t_env *env);
+void	draw_line(t_env *env, int x, int drawstart, int drawend);
 int		raycasting(t_env *env);
 void	moves(t_env *env);
 void	init_vectors(t_env *env, int x);
 void	calc_step(t_env *env);
 // void	perform_dda(t_env *env);
 // void	calc_perpwalldist(t_env *env);
+int		quit(t_env *env);
+void	calc_size_screen_sprites(t_env *env);
 void	calc_textures_data(t_env *env);
 void	calc_draw_infos(t_env *env);
 int		calc_data_raycasting(t_env *env, int x);
@@ -292,6 +296,9 @@ void	perform_DDA(t_env *env);
 void	calc_perpwalldist(t_env *env);
 void	calc_draw_infos(t_env *env);
 t_img	*new_image(t_env *env, char *file);
+void	init_calc_sprites(t_env *env, int i);
+
+void	draw_sprites(t_env *env);
 int		add_sprites(t_env *env);
 void	my_mlx_pixel_put(t_env *env, int x, int y, int color);
 void    count_sprites(t_env *env);
@@ -303,7 +310,5 @@ int		get_b(int rgb);
 int		create_rgb(int r, int g, int b);
 void	draw_line(t_env *env, int x, int drawstart, int drawend);
 int		save_bmp(t_env *env);
-int		quit(t_env *env);
-
 
 #endif

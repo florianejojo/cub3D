@@ -6,28 +6,11 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 10:56:24 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 11:59:12 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:17:13 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int		quit(t_env *env)
-{
-	free_all(env);
-	if (env->win_ptr)
-		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-	if (env->img)
-	{
-		mlx_destroy_image(env->mlx_ptr, env->img->ptr);
-		free(env->img);
-	}
-	env->img = NULL;
-	if (env->mlx_ptr)
-		free(env->mlx_ptr);
-	exit(1);
-	return (SUCCESS);
-}
 
 int		key_press(int key, t_env *env)
 {
@@ -65,67 +48,7 @@ int		key_release(int key, t_env *env)
 	return (SUCCESS);
 }
 
-void	my_mlx_pixel_put(t_env *env, int x, int y, int color)
-{
-	env->img->addr[(y * env->t_map.res.width + x)] = color;
-}
-
-void	pick_color(t_env *env)
-{
-	env->ray.color = 0;
-	if (env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x]
-		&& env->t_map.map[(int)env->ray.map.y][(int)env->ray.map.x] == '1')
-	{
-		if (env->ray.side == 0)
-		{
-			if (env->ray.step.x < 0)
-				env->ray.color = env->img_tex_WE->addr[(env->tex_height
-					* env->ray.tex.y + env->ray.tex.x)];
-			else
-				env->ray.color = env->img_tex_EA->addr[(env->tex_height
-					* env->ray.tex.y + env->ray.tex.x)];
-		}
-		else
-		{
-			if (env->ray.step.y > 0)
-				env->ray.color = env->img_tex_SO->addr[(env->tex_height
-					* env->ray.tex.y + env->ray.tex.x)];
-			else
-				env->ray.color = env->img_tex_NO->addr[(env->tex_height
-					* env->ray.tex.y + env->ray.tex.x)];
-			env->ray.color = (env->ray.color >> 1) & 8355711;
-		}
-	}
-}
-
-void	draw_line(t_env *env, int x, int drawstart, int drawend)
-{
-	int y;
-	
-	y = 0;
-	while (y < drawstart)
-	{
-		my_mlx_pixel_put(env, x, y, create_rgb(env->t_colors.rgb_C.r,
-			env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
-		y++;
-	}
-	while (y <= drawend)
-	{
-		env->ray.tex.y = (int)env->ray.tex_pos & (env->tex_height - 1);
-		env->ray.tex_pos += env->ray.tex_step;
-		pick_color(env);
-		my_mlx_pixel_put(env, x, y, env->ray.color);
-		y++;
-	}
-	while (y < env->t_map.res.height)
-	{
-		my_mlx_pixel_put(env, x, y, create_rgb(env->t_colors.rgb_F.r,
-			env->t_colors.rgb_F.g, env->t_colors.rgb_F.b));
-		y++;
-	}
-}
-
-int		go(t_env *env)
+int		main_loop(t_env *env)
 {
 	if (env->img)
 	{
@@ -133,7 +56,7 @@ int		go(t_env *env)
 		env->img = NULL;
 	}
 	if (!(env->img = new_image(env, NULL)))
-		return(IMG_FAIL);
+		return (IMG_FAIL);
 	moves(env);
 	env->line = 0;
 	while (env->line < env->t_map.res.width)
@@ -148,16 +71,15 @@ int		go(t_env *env)
 	return (SUCCESS);
 }
 
-
-
 int		raycasting(t_env *env)
 {
-	if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width, env->t_map.res.height, "Cub3D")))
+	if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width,
+		env->t_map.res.height, "Cub3D")))
 		return (MLX_FAIL);
 	mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
 	mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
 	mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
-	if ((env->error = mlx_loop_hook(env->mlx_ptr, go, env)) != SUCCESS)
+	if ((env->error = mlx_loop_hook(env->mlx_ptr, main_loop, env)) != SUCCESS)
 		return (env->error);
 	mlx_loop(env->mlx_ptr);
 	return (SUCCESS);

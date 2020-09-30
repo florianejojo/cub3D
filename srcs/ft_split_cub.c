@@ -6,10 +6,9 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:05:40 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/18 14:08:06 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 18:09:21 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/cub3d.h"
 
@@ -66,7 +65,7 @@ char		**ft_split_cub(t_env *env, char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	nb_words = ft_count_words((char*)s, c);
-    env->t_map.nb_lines = nb_words;
+	env->t_map.nb_lines = nb_words;
 	if (!(s2 = (char **)malloc(sizeof(char*) * (nb_words + 2))))
 		return (NULL);
 	s2[nb_words] = 0;

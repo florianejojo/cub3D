@@ -26,14 +26,16 @@ SRCS		=	srcs/cub3d.c \
 				srcs/pars_map2.c \
 				srcs/ft_split_cub.c \
 				srcs/init_raycasting.c \
+				srcs/pick_color_and_draw.c \
 				srcs/raycasting.c \
 				srcs/raycasting_utils.c \
 				srcs/calc_data_raycasting_2.c \
 				srcs/calc_data_raycasting.c \
 				srcs/moves.c \
-				srcs/sprites.c \
-				srcs/create_rgb.c \
+				srcs/add_sprites.c \
+				srcs/add_sprites2.c \
 				srcs/save.c \
+				srcs/quit_and_free.c \
 
 LIBS		=	libft/libft.a -lmlx -framework OpenGL -framework AppKit
 
@@ -45,7 +47,7 @@ HEADER		=	includes/cub3d.h
 
 all			:	$(NAME)
 
-$(NAME) 	:	$(OBJS) 
+$(NAME) 	:	$(OBJS)
 				make -C $(LIBFT_PATH)
 				${CC} ${CFLAGS} -fsanitize=address -g3 -fno-omit-frame-pointer -I ${HEADER} ${OBJS} $(LIBS) -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
