@@ -6,19 +6,11 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:35 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/29 13:35:30 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:02:02 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-// void		set_in_char(unsigned char *start, int value)
-// {
-// 	start[0] = (unsigned char)(value);
-// 	start[1] = (unsigned char)(value >> 8);
-// 	start[2] = (unsigned char)(value >> 16);
-// 	start[3] = (unsigned char)(value >> 24);
-// }
 
 // t_img *new_image(t_env *env) //int width, int height)
 // {

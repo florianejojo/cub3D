@@ -6,14 +6,11 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 18:09:21 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/29 18:53:25 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:05:34 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	calc_textures_data(t_env *env);
-void	calc_draw_infos(t_env *env);
 
 void	init_vectors(t_env *env, int x)
 {
@@ -89,6 +86,8 @@ void	calc_perpwalldist(t_env *env)
 		env->ray.perpwalldist = fabs((env->ray.map.y - env->t_map.player_pos.y
 			+ (1 - env->ray.step.y) / 2) / env->ray.raydir.y);
 }
+
+
 
 int		calc_data_raycasting(t_env *env, int x)
 {

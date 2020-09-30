@@ -125,13 +125,13 @@ int init_raycasting(t_env *env)
 		return (MLX_FAIL);
 	if (env->img == NULL)
 		env->img = new_image(env, NULL);
-	if ((env->t_error = init_dir_plane(env)) != SUCCESS)
-		return (env->t_error);
-	if ((env->t_error = init_textures(env)) != SUCCESS)
-		return (env->t_error);
+	if ((env->error = init_dir_plane(env)) != SUCCESS)
+		return (env->error);
+	if ((env->error = init_textures(env)) != SUCCESS)
+		return (env->error);
 	count_sprites(env);
-	if ((env->t_error = init_sprites(env)) != SUCCESS)
-		return (env->t_error);
+	if ((env->error = init_sprites(env)) != SUCCESS)
+		return (env->error);
 	// if (!(env->zbuffer = malloc(sizeof(double) * env->t_map.res.width)))
 	// 	return (MALLOC_FAILED);
 	return (SUCCESS);

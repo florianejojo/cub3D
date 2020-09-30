@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                         :+:      :+:    :+:   */
+/*   treat_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:05:43 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/18 14:08:04 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:59:12 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,19 @@ int make_map(char *file, t_env *env)
     return (SUCCESS);
 }
 
-int     init_map(char *file, t_env *env)
+int     treat_file(char *file, t_env *env)
 {
-    int error;
-
-    error = SUCCESS;
-    
-    if ((error = check_file(file)) != SUCCESS) // fait
-        return (error);
-    else if ((error = make_map(file, env)) != SUCCESS) // fait
-        return (error);
-    else if ((error = check_map(env)) != SUCCESS) // fait 
+    if ((env->error = check_file(file)) != SUCCESS) // fait
+        return (env->error);
+    else if ((env->error = make_map(file, env)) != SUCCESS) // fait
+        return (env->error);
+    else if ((env->error = check_map(env)) != SUCCESS) // fait 
     {
-        return (error);
+        return (env->error);
     }
-    else if ((error = pars_map(env)) != SUCCESS)
+    else if ((env->error = pars_map(env)) != SUCCESS)
     {
-        return (error);
+        return (env->error);
     }
     return (SUCCESS);
 }

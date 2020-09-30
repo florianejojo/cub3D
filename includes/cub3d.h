@@ -226,7 +226,7 @@ typedef struct		s_env
 	int				sizey;
 	t_colors		t_colors;
 	t_check			t_check;
-	t_error			t_error;
+	t_error			error;
 	int				error_type;
 	t_ray			ray;
 	void			*mlx_ptr;
@@ -268,7 +268,7 @@ int		print_error(int error);
 int		skip_wsp(int i, int j, t_env *env);
 int		find_wall_up(t_env *env, int i, int j);
 int		find_wall_down(t_env *env, int i, int j);
-int		init_map(char *file, t_env *env);
+int		treat_file(char *file, t_env *env);
 int 	line_closed(char *line);
 int		is_wsp(int i, int j, t_env *env);
 int		init_raycasting(t_env *env);

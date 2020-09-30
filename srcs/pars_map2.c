@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:24 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/18 14:07:52 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:58:48 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int pars_textures(t_env *env, int i, int j) // on est sur j = N S W E --> et S =
 //   else
 //   {
 //     // printf ("PB ICI\n");
-//     env->t_error = INVALID_ELEMENTS;
+//     env->error = INVALID_ELEMENTS;
 //   }
 // }
 
@@ -192,5 +192,5 @@ int pars_colors(t_env *env, int i, int j) // ici j est sur F ou C
   //     }
 
   // if (env->t_colors.rgb_F.r > 255 || env->t_colors.rgb_F.g > 255 || env->t_colors.rgb_F.b > 255 || env->t_colors.rgb_C.r > 255 || env->t_colors.rgb_C.g > 255 || env->t_colors.rgb_C.b > 255)
-  //   env->t_error = ERROR_INVALID_ELEMENTS;
+  //   env->error = ERROR_INVALID_ELEMENTS;
 // }

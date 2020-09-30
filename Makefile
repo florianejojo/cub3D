@@ -12,17 +12,15 @@
 
 NAME		=	Cub3d
 
-LIBFT_PATH	=	libft #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
-
-OBJS_PATH	=	objs/
+LIBFT_PATH	=	libft
 
 CC			=	clang
 
-SRCS		=	main.c \
+SRCS		=	srcs/cub3d.c \
 				srcs/check_map.c \
 				srcs/print_error.c \
-				srcs/init_map.c \
-				srcs/init_map_utils.c \
+				srcs/treat_file.c \
+				srcs/treat_file_utils.c \
 				srcs/pars_map.c \
 				srcs/pars_map2.c \
 				srcs/ft_split_cub.c \
@@ -48,10 +46,10 @@ all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS) 
 				make -C $(LIBFT_PATH)
-				${CC} ${CFLAGS} -fsanitize=address -g3 -I ${HEADER} ${OBJS} $(LIBS) -o ${NAME}
+				${CC} ${CFLAGS} -fsanitize=address -g3 -fno-omit-frame-pointer -I ${HEADER} ${OBJS} $(LIBS) -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
-%.o			:	%.c ${HEADER}
+$(OBJS)		:	%.o:%.c ${HEADER}
 				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
 
 

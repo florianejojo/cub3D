@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:17 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/29 15:46:41 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:58:48 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 //         j++;
 //     return (SUCCESS);
 //     // if (env->t_map.map[i][j] != '\0' || env->t_map.res.width <= 0 || env->t_map.res.height <= 0)
-//     //     env->t_error = ERROR_INVALID_ELEMENTS;
+//     //     env->error = ERROR_INVALID_ELEMENTS;
 // }
 
 int pars_resolution(t_env *env, int i, int j)
@@ -59,7 +59,7 @@ int pars_resolution(t_env *env, int i, int j)
     // mlx_get_screen_size(env->mlx_ptr, env->sizex, env->sizey);
     return (SUCCESS);
     // if (env->t_map.map[i][j] != '\0' || env->t_map.res.width <= 0 || env->t_map.res.height <= 0)
-    //     env->t_error = ERROR_INVALID_ELEMENTS;
+    //     env->error = ERROR_INVALID_ELEMENTS;
 }
 
 int pars_map(t_env *env) // modif avec wsp

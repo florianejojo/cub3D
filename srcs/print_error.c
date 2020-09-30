@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:29 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/25 16:57:12 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 11:24:24 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,8 @@ int		print_error(int error)
 		ft_putstr_fd("Error\n Sprites\n", 1);
 	else if (error == ERROR_SAVE)
 		ft_putstr_fd("Error\n File not saved\n", 1);
+	else if (error == WRONG_ARGS)
+		ft_putstr_fd("Error\n Wrong number of arguments or wrong spelling for flag \"--save\"\n", 1);
+	
 	return (1);
 }
