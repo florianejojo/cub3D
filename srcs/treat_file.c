@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   treat_file.c                                         :+:      :+:    :+:   */
+/*   treat_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:05:43 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 11:59:12 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:25:37 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/cub3d.h"
 
 int		check_file(char *file)
 {
-	int len;
+	int		len;
 
 	len = ft_strlen(file) - 1;
 	if (file[len] != 'b')
@@ -29,75 +28,43 @@ int		check_file(char *file)
 	return (SUCCESS);
 }
 
-// int make_map(char *file, t_env *env)
-// {
-//     int fd;
-//     int ret;
-//     char buf[10];
-//     char *str;
-//     int i;
-//     i = 0;
-
-//     if ((fd = open(file, O_RDONLY)) < 0)
-//         return(FILE_NOT_OPENED);
-//     while ((ret = read(fd, buf, 1)) > 0)
-//         env->t_map.nb_char++;
-//     if (!(str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1))))
-//         return (MALLOC_FAILED);
-//     close(fd);
-//     if ((fd = open(file, O_RDONLY)) < 0)
-//         return (FILE_NOT_OPENED);
-//     while ((ret = read(fd, buf, 1)) > 0)
-//         str[i++] = buf[0];
-//     str[i] = '\0';
-//     env->t_map.map = ft_split(str, '\n');
-//     close(fd);
-//     free(str); 
-//     return (SUCCESS);
-// }
-
-int make_map(char *file, t_env *env)
+int		make_map(char *file, t_env *env)
 {
-    int fd;
-    int ret;
-    char buf[10];
-    char *str;
-    int i;
-    i = 0;
+	int		fd;
+	int		ret;
+	char	buf[2];
+	char	*str;
+	int		i;
 
-    if ((fd = open(file, O_RDONLY)) < 0)
-        return(FILE_NOT_OPENED);
-    while ((ret = read(fd, buf, 1)) > 0)
-        env->t_map.nb_char++;
-    if (!(str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1))))
-        return (MALLOC_FAILED);
-    close(fd);
-    if ((fd = open(file, O_RDONLY)) < 0)
-        return (FILE_NOT_OPENED);
-    while ((ret = read(fd, buf, 1)) > 0)
-        str[i++] = buf[0];
-    str[i] = '\0';
-    env->t_map.map = ft_split_cub(env, str, '\n');
-    close(fd);
-    // printf ("str = %p\n", str);
-    free(str);
-    // printf ("env->t_map.nb_lines = %d\n", env->t_map.nb_lines);
-    return (SUCCESS);
+	i = 0;
+	if ((fd = open(file, O_RDONLY)) < 0)
+		return (FILE_NOT_OPENED);
+	while ((ret = read(fd, buf, 1)) > 0)
+		env->t_map.nb_char++;
+	if (!(str = (char *)malloc(sizeof(char) * (env->t_map.nb_char + 1))))
+		return (MALLOC_FAILED);
+	close(fd);
+	if ((fd = open(file, O_RDONLY)) < 0)
+		return (FILE_NOT_OPENED);
+	while ((ret = read(fd, buf, 1)) > 0)
+		str[i++] = buf[0];
+	str[i] = '\0';
+	env->t_map.map = ft_split_cub(env, str, '\n');
+	close(fd);
+	if (str)
+		free(str);
+	return (SUCCESS);
 }
 
-int     treat_file(char *file, t_env *env)
+int		treat_file(char *file, t_env *env)
 {
-    if ((env->error = check_file(file)) != SUCCESS) // fait
-        return (env->error);
-    else if ((env->error = make_map(file, env)) != SUCCESS) // fait
-        return (env->error);
-    else if ((env->error = check_map(env)) != SUCCESS) // fait 
-    {
-        return (env->error);
-    }
-    else if ((env->error = pars_map(env)) != SUCCESS)
-    {
-        return (env->error);
-    }
-    return (SUCCESS);
+	if ((env->error = check_file(file)) != SUCCESS)
+		return (env->error);
+	else if ((env->error = make_map(file, env)) != SUCCESS)
+		return (env->error);
+	else if ((env->error = check_map(env)) != SUCCESS)
+		return (env->error);
+	else if ((env->error = pars_map(env)) != SUCCESS)
+		return (env->error);
+	return (SUCCESS);
 }
