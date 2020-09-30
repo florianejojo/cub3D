@@ -1,6 +1,5 @@
 #ifndef CUB3D_H
 #define CUB3D_H
-//https://github.com/hbrulin/Cub3D/blob/master/cub.h exemple de structure
 
 #include <fcntl.h>
 #include <stdlib.h>
@@ -14,16 +13,7 @@
 #include "mlx.h"
 #include <math.h>
 
-// # define TEXWIDTH 64
-// # define TEXHEIGHT 64
 # define SAVE_FILE "screenshot.bmp"
-# define RIGHTS 0644
-# define BPP 24
-# define BM_FILE_HEADER_SIZE 14
-# define BM_INFO_HEADER_SIZE 40
-# define PIXEL_DATA_OFFSET 54 
-
-
 
 typedef struct		s_check
 {
@@ -34,8 +24,6 @@ typedef struct		s_check
 	short			F;
 	short			C;
 }					t_check;
-
-
 
 typedef enum		s_error
 {
@@ -283,8 +271,6 @@ int		raycasting(t_env *env);
 void	moves(t_env *env);
 void	init_vectors(t_env *env, int x);
 void	calc_step(t_env *env);
-// void	perform_dda(t_env *env);
-// void	calc_perpwalldist(t_env *env);
 int		quit(t_env *env);
 void	calc_size_screen_sprites(t_env *env);
 void	calc_textures_data(t_env *env);
