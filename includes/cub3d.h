@@ -250,6 +250,8 @@ typedef struct		s_env
 	int				line;
 	t_save_bmp 		bmp;
 	int 			save;
+	int				i;
+	int				j;
 
 }					t_env;
 
@@ -270,7 +272,9 @@ int		skip_wsp_revers(int i, int j, t_env *env);
 int		find_wall_up(t_env *env, int i, int j);
 int		find_wall_down(t_env *env, int i, int j);
 int		treat_file(char *file, t_env *env);
-int 	line_closed(char *line, t_env *env);
+int		elems(int i, int j, t_env *env);
+int 	line_closed(int i, char *line, t_env *env);
+int		check_char(int i, int j, t_env *env);
 int		is_wsp(int i, int j, t_env *env);
 int		init_raycasting(t_env *env);
 int		raycasting(t_env *env);

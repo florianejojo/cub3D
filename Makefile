@@ -18,6 +18,7 @@ CC			=	clang
 
 SRCS		=	srcs/cub3d.c \
 				srcs/check_map.c \
+				srcs/check_map2.c \
 				srcs/print_error.c \
 				srcs/treat_file.c \
 				srcs/treat_file_utils.c \
