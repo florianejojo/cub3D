@@ -10,9 +10,22 @@
 #                                                                              #
 # **************************************************************************** #
 
+
+LINUX		= no
+
+ifeq ($(LINUX), yes)
+	MLX_FLAGS	= -lXext -lX11 -lm -lbsd
+	MLX_PATH	= ./minilibx-linux/
+	
+else 
+	MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit
+	MLX_PATH	= ./minilibx_opengl_20191021/
+endif
+
+
 NAME		=	cub3D
 
-LIBFT_PATH	=	./libft/
+LIBFT_PATH	=	./libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
 
 CC			=	clang
 
@@ -37,33 +50,22 @@ SRCS		=	./srcs/cub3d.c \
 				./srcs/save.c \
 				./srcs/quit_and_free.c \
 
-LIBFT		=	./libft/libft.a
-
-LINUX		= yes
-
-ifeq ($(LINUX), yes)
-	MLX_FLAGS = -lXext -lX11 -lm -lbsd
-	MLX_PATH =	./minilibx-linux/
-else 
-	MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
-endif
-
 OBJS		=	$(SRCS:.c=.o)
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-HEADERS		=	includes/cub3d.h libft/libft.h
+HEADER		=	includes/cub3d.h
 
 all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS)
 				make -C $(LIBFT_PATH)
-				$(CC) $(CFLAGS) -fsanitize=address -g3 -I $(OBJS) $(LIBFT)  -o $(NAME)
+				${CC} -fsanitize=address -g3 ${CFLAGS} -I ${HEADER} ${OBJS} -lmlx -framework OpenGL -framework AppKit ./libft/libft.a -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
-$(OBJS)		:	%.o:%.c $(HEADERS)
-				$(CC) $(CFLAGS) -I $(HEADERS) -c $< -o $@
 
+%.o			:	%.c ${HEADER}
+				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
 
 clean		:	
 				make clean -C $(LIBFT_PATH) 
