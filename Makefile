@@ -12,52 +12,57 @@
 
 NAME		=	cub3D
 
-LIBFT_PATH	=	libft
+LIBFT_PATH	=	./libft/
 
 CC			=	clang
 
-SRCS		=	srcs/cub3d.c \
-				srcs/check_map.c \
-				srcs/check_map2.c \
-				srcs/print_error.c \
-				srcs/treat_file.c \
-				srcs/treat_file_utils.c \
-				srcs/pars_map.c \
-				srcs/pars_map2.c \
-				srcs/ft_split_cub.c \
-				srcs/init_raycasting.c \
-				srcs/pick_color_and_draw.c \
-				srcs/raycasting.c \
-				srcs/raycasting_utils.c \
-				srcs/calc_data_raycasting_2.c \
-				srcs/calc_data_raycasting.c \
-				srcs/moves.c \
-				srcs/add_sprites.c \
-				srcs/add_sprites2.c \
-				srcs/save.c \
-				srcs/quit_and_free.c \
+SRCS		=	./srcs/cub3d.c \
+				./srcs/check_map.c \
+				./srcs/check_map2.c \
+				./srcs/print_error.c \
+				./srcs/treat_file.c \
+				./srcs/treat_file_utils.c \
+				./srcs/pars_map.c \
+				./srcs/pars_map2.c \
+				./srcs/ft_split_cub.c \
+				./srcs/init_raycasting.c \
+				./srcs/pick_color_and_draw.c \
+				./srcs/raycasting.c \
+				./srcs/raycasting_utils.c \
+				./srcs/calc_data_raycasting_2.c \
+				./srcs/calc_data_raycasting.c \
+				./srcs/moves.c \
+				./srcs/add_sprites.c \
+				./srcs/add_sprites2.c \
+				./srcs/save.c \
+				./srcs/quit_and_free.c \
 
-LIBFT		=	libft/libft.a
+LIBFT		=	./libft/libft.a
 
-MLX_MAC		=	-lmlx -framework OpenGL -framework AppKit
+LINUX		= yes
 
-MLX_LINUX	=	-lmlx -lXext -lX11 -lm -lbsd
+ifeq ($(LINUX), yes)
+	MLX_FLAGS = -lXext -lX11 -lm -lbsd
+	MLX_PATH =	./minilibx-linux/
+else 
+	MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
+endif
 
 OBJS		=	$(SRCS:.c=.o)
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-HEADER		=	includes/cub3d.h
+HEADERS		=	includes/cub3d.h libft/libft.h
 
 all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS)
 				make -C $(LIBFT_PATH)
-				${CC} ${CFLAGS} -fsanitize=address -g3 -I ${HEADER} ${OBJS} $(LIBFT) $(MLX_MAC) -o ${NAME}
+				$(CC) $(CFLAGS) -fsanitize=address -g3 -I $(OBJS) $(LIBFT)  -o $(NAME)
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
-$(OBJS)		:	%.o:%.c ${HEADER}
-				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
+$(OBJS)		:	%.o:%.c $(HEADERS)
+				$(CC) $(CFLAGS) -I $(HEADERS) -c $< -o $@
 
 
 clean		:	
