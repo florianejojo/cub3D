@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:05:56 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 18:19:15 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/01 12:05:42 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	side(t_env *env)
 			env->t_map.player_pos.y -= -env->ray.dir.x * env->ray.speed;
 		if (env->t_map.map[(int)(env->t_map.player_pos.y)]
 		[(int)(env->t_map.player_pos.x
-		+ env->ray.dir.y * env->ray.speed)] == '0')
+		- env->ray.dir.y * env->ray.speed)] == '0')
 			env->t_map.player_pos.x -= env->ray.dir.y * env->ray.speed;
 	}
 	if (env->mvt.side_l == 1)
 	{
-		if (env->t_map.map[(int)(env->t_map.player_pos.y + env->ray.dir.x
+		if (env->t_map.map[(int)(env->t_map.player_pos.y - env->ray.dir.x
 		* env->ray.speed)][(int)(env->t_map.player_pos.x)] == '0')
 			env->t_map.player_pos.y += -env->ray.dir.x * env->ray.speed;
 		if (env->t_map.map[(int)(env->t_map.player_pos.y)]

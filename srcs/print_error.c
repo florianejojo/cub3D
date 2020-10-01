@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:29 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 18:10:20 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/01 12:27:32 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ int		print_error_2(int error)
 {
 	if (error == ERROR_RES)
 		ft_putstr_fd("Error\n Invalid resolution \n", 1);
-	else if (error == INVALID_TEXTURES)
-		ft_putstr_fd("Error\n Invalid textures\n", 1);
+	else if (error == WRONG_TEX)
+	{
+		ft_putstr_fd("Error\n Invalid path for textures\n", 1);
+		ft_putstr_fd(" Or 1 or more texture element is missing\n", 1);
+	}
 	else if (error == ERROR_COLORS)
 		ft_putstr_fd("Error\n Wrong Colors\n", 1);
 	else if (error == ERROR_START_END)
@@ -26,8 +29,6 @@ int		print_error_2(int error)
 		ft_putstr_fd("Error\n mlx pb\n", 1);
 	else if (error == IMG_FAIL)
 		ft_putstr_fd("Error\n img pb\n", 1);
-	else if (error == WRONG_TEX)
-		ft_putstr_fd("Error\n wrong tex\n", 1);
 	else if (error == ERROR_SPRITES)
 		ft_putstr_fd("Error\n Sprites\n", 1);
 	else if (error == ERROR_SAVE)

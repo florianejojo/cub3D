@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:24 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 16:42:23 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/01 12:25:30 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		check_textures(t_env *env)
 	if (env->t_textures_path.NO == NULL || env->t_textures_path.SO == NULL
 		|| env->t_textures_path.WE == NULL || env->t_textures_path.EA == NULL
 		|| env->t_textures_path.S == NULL)
-		return (INVALID_TEXTURES);
+		return (WRONG_TEX);
 	return (SUCCESS);
 }
 

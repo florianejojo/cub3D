@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	Cub3d
+NAME		=	cub3D
 
 LIBFT_PATH	=	libft
 
@@ -37,7 +37,11 @@ SRCS		=	srcs/cub3d.c \
 				srcs/save.c \
 				srcs/quit_and_free.c \
 
-LIBS		=	libft/libft.a -lmlx -framework OpenGL -framework AppKit
+LIBFT		=	libft/libft.a
+
+MLX_MAC		=	-lmlx -framework OpenGL -framework AppKit
+
+MLX_LINUX	=	-lmlx -lXext -lX11 -lm -lbsd
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -49,7 +53,7 @@ all			:	$(NAME)
 
 $(NAME) 	:	$(OBJS)
 				make -C $(LIBFT_PATH)
-				${CC} ${CFLAGS} -fsanitize=address -g3 -fno-omit-frame-pointer -I ${HEADER} ${OBJS} $(LIBS) -o ${NAME}
+				${CC} ${CFLAGS} -fsanitize=address -g3 -I ${HEADER} ${OBJS} $(LIBFT) $(MLX_MAC) -o ${NAME}
 				printf "\033[32m$@ is ready ! \n\033[0m"
 
 $(OBJS)		:	%.o:%.c ${HEADER}
@@ -61,7 +65,7 @@ clean		:
 				rm -rf $(OBJS)
 
 fclean		:	clean
-				make fclean -C $(LIBFT_PATH) 
+				make fclean -C $(LIBFT_PATH)
 				rm -rf $(NAME)
 
 re			:	fclean all

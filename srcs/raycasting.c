@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 10:56:24 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 17:17:13 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/01 11:14:07 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		key_press(int key, t_env *env)
 {
-	if (key == KEY_UP || key == KEY_W)
+	if (key == KEY_W)
 		env->mvt.up = 1;
-	if (key == KEY_DOWN || key == KEY_S)
+	if (key == KEY_S)
 		env->mvt.dwn = 1;
 	if (key == KEY_LEFT)
 		env->mvt.lft = 1;
@@ -33,9 +33,9 @@ int		key_press(int key, t_env *env)
 
 int		key_release(int key, t_env *env)
 {
-	if (key == KEY_UP || key == KEY_W)
+	if (key == KEY_W)
 		env->mvt.up = 0;
-	if (key == KEY_DOWN || key == KEY_S)
+	if (key == KEY_S)
 		env->mvt.dwn = 0;
 	if (key == KEY_LEFT)
 		env->mvt.lft = 0;
@@ -57,6 +57,7 @@ int		main_loop(t_env *env)
 	}
 	if (!(env->img = new_image(env, NULL)))
 		return (IMG_FAIL);
+	
 	moves(env);
 	env->line = 0;
 	while (env->line < env->t_map.res.width)
@@ -76,6 +77,7 @@ int		raycasting(t_env *env)
 	if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width,
 		env->t_map.res.height, "Cub3D")))
 		return (MLX_FAIL);
+	ft_bzero(&env->mvt, sizeof(t_mvt));
 	mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
 	mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
 	mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);

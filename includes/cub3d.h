@@ -1,17 +1,18 @@
-#ifndef CUB3D_H
-#define CUB3D_H
+# ifndef CUB3D_H
+# define CUB3D_H
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h> //read
-#include <stdio.h>	//printf
-#include "../minilibx_mms_20200219/mlx.h"
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h> //read
+# include <stdio.h>	//printf
+# include "../minilibx_mms_20200219/mlx.h"
 
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 
-#include "keycode.h"
-#include "mlx.h"
-#include <math.h>
+# include "keycode.h"
+# include "keycode_linux.h"
+# include "mlx.h"
+# include <math.h>
 
 # define SAVE_FILE "screenshot.bmp"
 
@@ -41,12 +42,11 @@ typedef enum		s_error
 	TO_MANY_PLAYER_POS,
 	ERROR_RES,
 	ERROR_COLORS,
-	INVALID_TEXTURES,
+	WRONG_TEX,
 	ERROR_START_END,
 	MLX_FAIL,
 	CALC_RAY_FAIL,
 	IMG_FAIL,
-	WRONG_TEX,
 	ERROR_SPRITES,
 	ERROR_SAVE,
 }					t_error;

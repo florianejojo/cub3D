@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 17:32:59 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 17:54:22 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/01 12:10:21 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	draw_sprites(t_env *env)
 
 	d = 0;
 	stripe = env->sprites.drawstart.x;
-	while (stripe < env->sprites.drawend.x)
+	while (stripe <= env->sprites.drawend.x)
 	{
 		env->sprites.tex.x = (int)(256 * (stripe - (-env->sprites.width
 		/ 2 + env->sprites.screen.x)) * env->tex_width
@@ -102,7 +102,7 @@ void	draw_sprites(t_env *env)
 			&& env->sprites.transform.y < env->zbuffer[stripe])
 		{
 			y = env->sprites.drawstart.y;
-			while (y < env->sprites.drawend.y)
+			while (y <= env->sprites.drawend.y)
 				draw_sprites_2(env, y++, d, stripe);
 		}
 		stripe++;
