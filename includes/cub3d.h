@@ -11,7 +11,7 @@
 
 # include "keycode.h"
 # include "keycode_linux.h"
-# include "mlx.h"
+// # include "mlx.h"
 # include <math.h>
 
 # define SAVE_FILE "screenshot.bmp"
