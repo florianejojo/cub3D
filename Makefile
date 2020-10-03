@@ -61,13 +61,13 @@ all			:	$(NAME)
 $(NAME) 	:	$(OBJS)
 				make -C $(MLX_PATH)
 				make -C $(LIBFT_PATH)
-				${CC} -fsanitize=address -g3 ${CFLAGS} -I ${HEADER} $(MLX_FLAGS) $(MLX_PATH)*.a ./libft/libft.a $^ -o $@
+				${CC} -fsanitize=address -g3 ${CFLAGS} $(MLX_FLAGS) $(MLX_PATH)*.a ./libft/libft.a $^ -o $@
 				printf "\033[32m$@ is ready ! \n\033[0m"
 				#cp $(MLX_PATH)*.a /usr/local/lib/
-				
+
 
 $(OBJS)		:	%.o:%.c ${HEADER}
-				${CC} ${CFLAGS} -I ${HEADER} -c $< -o $@
+				${CC} ${CFLAGS} -c $< -o $@
 
 clean		:	
 				make clean -C $(LIBFT_PATH) 
