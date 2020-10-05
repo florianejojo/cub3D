@@ -32,24 +32,25 @@ int		main(int argc, char **argv)
 	int		i;
 
 	i = 0;
-	env = malloc(sizeof(t_env));
+	if(!(env = malloc(sizeof(t_env))))
+		return (print_error(MALLOC_FAILED, env));
 	ft_bzero(env, sizeof(t_env));
 	if ((argc != 2 && argc > 3))
-		return (print_error(WRONG_ARGS));
+		return (print_error(WRONG_ARGS, env));
 	if ((env->error = treat_file(argv[1], env)) != SUCCESS)
-		return (print_error(env->error));
+		return (print_error(env->error, env));
 	if ((env->error = init_raycasting(env)) != SUCCESS)
-		return (print_error(env->error));
+		return (print_error(env->error, env));
 	if (argc == 3 && (env->error = check_flag_save(argv[2], env)) != SUCCESS)
-		return (print_error(env->error));
+		return (print_error(env->error, env));
 	if (env->save == 1)
 	{
 		if ((env->error = save_bmp(env)) == SUCCESS)
 			return (SUCCESS);
 		else
-			return (print_error(env->error));
+			return (print_error(env->error, env));
 	}
 	else if ((env->error = raycasting(env)) != SUCCESS)
-		return (print_error(env->error));
+		return (print_error(env->error, env));
 	return (1);
 }

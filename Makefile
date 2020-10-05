@@ -14,18 +14,20 @@
 LINUX		= no
 
 ifeq ($(LINUX), yes)
-	MLX_FLAGS	= -lXext -lX11 -lm -lbsd
-	MLX_PATH	= ./minilibx-linux/
+MLX_FLAGS	= -lXext -lX11 -lm -lbsd
+MLX_PATH	= ./minilibx-linux/
 	
 else 
-	MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit
-	MLX_PATH	= ./minilibx_opengl_20191021/
+MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit
+MLX_PATH	= ./minilibx_opengl_20191021/
 endif
 
 
 NAME		=	cub3D
 
 LIBFT_PATH	=	./libft/ #dans cub3d la libft doit être dans un dossier à la racine donc juste ./libft
+
+HEADER		=	./includes
 
 CC			=	clang
 
@@ -61,7 +63,7 @@ all			:	$(NAME)
 $(NAME) 	:	$(OBJS)
 				make -C $(MLX_PATH)
 				make -C $(LIBFT_PATH)
-				${CC} -fsanitize=address -g3 ${CFLAGS} $(MLX_FLAGS) $(MLX_PATH)*.a ./libft/libft.a $^ -o $@
+				${CC} ${CFLAGS} -I $(INCLUDES) $^ $(MLX_FLAGS) $(MLX_PATH)*.a ./libft/libft.a -o $@
 				printf "\033[32m$@ is ready ! \n\033[0m"
 				#cp $(MLX_PATH)*.a /usr/local/lib/
 

@@ -1,12 +1,12 @@
  
 	C   25     , 25 , 255	
       NO    ./pics/pillar.xpm	
-	 SO ./pics/barrel.xpm	
-    WE      ./pics/purplestone.xpm		 	         
-  EA ./pics/mossy.xpm	      
+	 SO ./pics/panthOBF.xpm	
+    WE      ./pics/gribou1.xpm		 	         
+  EA ./pics/vint1.xpm	      
 
 
-      S ./pics/barrel.xpm	     
+      S ./pics/oeil13.xpm	     
 	F  255   ,255,   0  
 
 		R 1000 1000	

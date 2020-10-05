@@ -254,7 +254,7 @@ void	parsing();
 int		pars_map(t_env *env);
 int		check_map(t_env *env);
 void	check_first_line(t_env *env);
-int		print_error(int error);
+int		print_error(int error, t_env *env);
 int		skip_wsp(int i, int j, t_env *env);
 int		skip_wsp_revers(int i, int j, t_env *env);
 int		find_wall_up(t_env *env, int i, int j);

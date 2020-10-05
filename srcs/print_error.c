@@ -41,7 +41,7 @@ int		print_error_2(int error)
 	return (1);
 }
 
-int		print_error(int error)
+int		print_error(int error, t_env *env)
 {
 	if (error == INVALID_ELEMENTS)
 		ft_putstr_fd("Error\n Invalid elements\n", 1);
@@ -63,5 +63,6 @@ int		print_error(int error)
 		ft_putstr_fd("Error\n Malloc failed\n", 1);
 	else
 		print_error_2(error);
+	quit(env);
 	return (1);
 }
