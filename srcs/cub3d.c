@@ -52,5 +52,6 @@ int		main(int argc, char **argv)
 	}
 	else if ((env->error = raycasting(env)) != SUCCESS)
 		return (print_error(env->error, env));
+	quit(env);
 	return (1);
 }

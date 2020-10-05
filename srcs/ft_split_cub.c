@@ -52,7 +52,6 @@ static char	**ft_cpy(char **s2, char *s, char c, int nb_words)
 			i++;
 			j = 0;
 		}
-		s2[x] = ft_substr(s, (i - j), j);
 	}
 	return (s2);
 }

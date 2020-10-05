@@ -38,8 +38,7 @@ int		tab_in_img(t_env *env, int fd)
 	int				y;
 	unsigned int	*tab;
 
-	tab = malloc(sizeof(int) * (env->t_map.res.height * env->t_map.res.width));
-	if (tab == NULL)
+	if (!(tab = malloc(sizeof(int) * (env->t_map.res.height * env->t_map.res.width))))
 		return (ERROR_SAVE);
 	y = env->t_map.res.height - 1;
 	i = 0;
@@ -55,7 +54,8 @@ int		tab_in_img(t_env *env, int fd)
 		free(tab);
 		return (ERROR_SAVE);
 	}
-	free(tab);
+	if (tab)
+		free(tab);
 	return (SUCCESS);
 }
 
