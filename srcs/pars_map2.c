@@ -12,6 +12,12 @@
 
 #include "../includes/cub3d.h"
 
+void		set_res_max(t_env *env)
+{
+	env->res_max.height = 4000;
+	env->res_max.width = 4000;
+}
+
 int		check_textures(t_env *env)
 {
 	if (env->t_textures_path.NO == NULL || env->t_textures_path.SO == NULL

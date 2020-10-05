@@ -209,6 +209,7 @@ typedef struct		s_env
 {
 	t_textures_path t_textures_path;
 	t_map			t_map;
+	t_res			res_max;
 	int				sizex;
 	int				sizey;
 	t_colors		t_colors;
@@ -248,6 +249,7 @@ int		make_map(char *file, t_env *env);
 void	make_tab(char *file, t_env *env);
 int		check_textures(t_env *env);
 int		pars_textures(t_env *env, int i, int j);
+void	set_res_max(t_env *env);
 int		pars_resolution(t_env *env, int i, int j);
 int		pars_colors(t_env *env, int i, int j);
 void	parsing();

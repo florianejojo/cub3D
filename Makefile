@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 
-LINUX		= yes
+LINUX		= no
 
 ifeq ($(LINUX), yes)
 MLX_FLAGS	= -lXext -lX11 -lm -lbsd
