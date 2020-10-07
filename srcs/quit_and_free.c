@@ -17,6 +17,7 @@ void	free_img(t_img *img, t_env *env)
 	if (img)
 	{
 		mlx_destroy_image(env->mlx_ptr, img->ptr);
+		// free(img->addr);
 		free(img);
 	}
 }

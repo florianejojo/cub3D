@@ -83,6 +83,8 @@ int		init_raycasting(t_env *env)
 		return (MLX_FAIL);
 	// if (env->img == NULL)
 	// 	env->img = new_image(env, NULL);
+	if (!(env->img = (t_img *)malloc(sizeof(t_img))))
+		return (IMG_FAIL);
 	if ((env->error = init_dir_plane(env)) != SUCCESS)
 		return (env->error);
 	if ((env->error = init_textures(env)) != SUCCESS)
