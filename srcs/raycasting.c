@@ -81,8 +81,7 @@ int		raycasting(t_env *env)
 	mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
 	mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
 	mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
-	if ((env->error = mlx_loop_hook(env->mlx_ptr, main_loop, env)) != SUCCESS)
-		return (env->error);
+	mlx_loop_hook(env->mlx_ptr, main_loop, env);
 	mlx_loop(env->mlx_ptr);
 	return (SUCCESS);
 }
