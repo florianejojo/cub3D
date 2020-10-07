@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-int		print_error_2(int error)
+void		print_error_2(int error)
 {
 	if (error == ERROR_RES)
 		ft_putstr_fd("Error\n Invalid resolution \n", 1);
@@ -38,7 +38,6 @@ int		print_error_2(int error)
 		ft_putstr_fd("Error\n Wrong number of arguments\n", 1);
 		ft_putstr_fd(" Or wrong spelling for flag --save\n", 1);
 	}
-	return (1);
 }
 
 int		print_error(int error, t_env *env)
@@ -64,5 +63,5 @@ int		print_error(int error, t_env *env)
 	else
 		print_error_2(error);
 	quit(env);
-	return (1);
+	return (0);
 }

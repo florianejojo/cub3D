@@ -3,16 +3,14 @@
 
 # include <fcntl.h>
 # include <stdlib.h>
-# include <unistd.h> //read
-# include <stdio.h>	//printf
-# include "../minilibx_mms_20200219/mlx.h"
-
+# include <unistd.h>
+# include <stdio.h>
+# include <math.h>
+# include "../minilibx-linux/mlx.h"
+# include "../minilibx_opengl_20191021/mlx.h"
 # include "../libft/libft.h"
-
 # include "keycode.h"
 # include "keycode_linux.h"
-// # include "mlx.h"
-# include <math.h>
 
 # define SAVE_FILE "screenshot.bmp"
 

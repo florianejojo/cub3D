@@ -21,8 +21,6 @@ void	free_img(t_img *img, t_env *env)
 	}
 }
 
-
-
 void	free_textures(t_env *env)
 {
 	if (env->img_tex_NO)
@@ -35,7 +33,6 @@ void	free_textures(t_env *env)
 		free_img(env->img_tex_EA, env);
 	if (env->img_tex_S)
 		free_img(env->img_tex_S, env);
-	
 }
 
 void	free_dtab(t_env *env, char **tab)
@@ -68,10 +65,12 @@ void	free_tabs(t_env *env)
 }
 void	free_all(t_env *env)
 {
-	free_textures(env);
-	free_dtab(env, env->t_map.map);
-	
-	free_tabs(env);
+	if (env)
+		free_textures(env);
+	if (env->t_map.map)
+		free_dtab(env, env->t_map.map);
+	if (env)
+		free_tabs(env);
 	if (env->zbuffer)
 		free(env->zbuffer);
 	if (env->order)
@@ -86,7 +85,9 @@ void	free_all(t_env *env)
 
 int		quit(t_env *env)
 {
+	
 	free_all(env);
+	
 	if (env->win_ptr)
 	{
 		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
