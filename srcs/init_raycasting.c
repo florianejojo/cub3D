@@ -39,8 +39,6 @@ int		init_dir_plane(t_env *env)
 
 int		init_textures(t_env *env)
 {
-	env->tex_height = 0;
-	env->tex_width = 0;
 	if ((env->img_tex_NO = new_image(env, env->t_textures_path.NO)) == NULL)
 		return (WRONG_TEX);
 	if ((env->img_tex_SO = new_image(env, env->t_textures_path.SO)) == NULL)
@@ -63,10 +61,10 @@ int		init_sprites(t_env *env)
 	if (!(env->distance = (double *)malloc(sizeof(double) * env->sprites.nb)))
 		return (MALLOC_FAILED);
 	if (!(env->sprite_pos_x = (double *)malloc(sizeof(double)
-	* env->sprites.nb)))
+		* env->sprites.nb)))
 		return (MALLOC_FAILED);
 	if (!(env->sprite_pos_y = (double *)malloc(sizeof(double)
-	* env->sprites.nb)))
+		* env->sprites.nb)))
 		return (MALLOC_FAILED);
 	return (SUCCESS);
 }

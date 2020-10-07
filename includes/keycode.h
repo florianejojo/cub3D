@@ -11,13 +11,21 @@
 
  # ifdef __linux__
 
-# define KEY_ESCAPE 1
-# define KEY_LEFT 105
-# define KEY_RIGHT 106
-# define KEY_S 31
-# define KEY_W 17
-# define KEY_A 30
-# define KEY_D 32
+// # define KEY_ESCAPE 1
+// # define KEY_LEFT 105
+// # define KEY_RIGHT 106
+// # define KEY_S 31
+// # define KEY_W 17
+// # define KEY_A 30
+// # define KEY_D 32
+
+#  define KEY_ESCAPE 65307
+#  define KEY_LEFT 113
+#  define KEY_RIGHT 100
+#  define KEY_S 115
+#  define KEY_W 122
+#  define KEY_A 65361
+#  define KEY_D 6536
 
 # else
 # define KEY_ESCAPE 53
