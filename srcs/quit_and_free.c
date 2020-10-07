@@ -83,6 +83,14 @@ void	free_all(t_env *env)
 		free(env->sprite_pos_y);
 }
 
+void	free_sprites(t_env *env)
+{
+	if (env->sprite_pos_x)
+		free(env->sprite_pos_x);
+	if (env->sprite_pos_y)
+		free(env->sprite_pos_y); 
+}
+
 int		quit(t_env *env)
 {
 	

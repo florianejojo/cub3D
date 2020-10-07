@@ -82,12 +82,6 @@ int		add_sprites(t_env *env)
 {
 	int i;
 
-	if (!(env->sprite_pos_x = (double *)malloc(sizeof(double)
-	* env->sprites.nb)))
-		return (MALLOC_FAILED);
-	if (!(env->sprite_pos_y = (double *)malloc(sizeof(double)
-	* env->sprites.nb)))
-		return (MALLOC_FAILED);
 	stock_sprites_pos(env);
 	make_tab_distance(env);
 	sort_tab(env);
@@ -99,5 +93,6 @@ int		add_sprites(t_env *env)
 		draw_sprites(env);
 		i++;
 	}
+	
 	return (SUCCESS);
 }

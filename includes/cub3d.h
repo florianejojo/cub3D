@@ -283,7 +283,7 @@ void	calc_perpwalldist(t_env *env);
 void	calc_draw_infos(t_env *env);
 t_img	*new_image(t_env *env, char *file);
 void	init_calc_sprites(t_env *env, int i);
-
+void	free_sprites(t_env *env);
 void	draw_sprites(t_env *env);
 int		add_sprites(t_env *env);
 void	my_mlx_pixel_put(t_env *env, int x, int y, int color);

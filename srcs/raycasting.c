@@ -68,6 +68,7 @@ int		main_loop(t_env *env)
 		env->line++;
 	}
 	add_sprites(env);
+	// free_sprites(env);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0);
 	return (SUCCESS);
 }

@@ -62,6 +62,12 @@ int		init_sprites(t_env *env)
 		return (MALLOC_FAILED);
 	if (!(env->distance = (double *)malloc(sizeof(double) * env->sprites.nb)))
 		return (MALLOC_FAILED);
+	if (!(env->sprite_pos_x = (double *)malloc(sizeof(double)
+	* env->sprites.nb)))
+		return (MALLOC_FAILED);
+	if (!(env->sprite_pos_y = (double *)malloc(sizeof(double)
+	* env->sprites.nb)))
+		return (MALLOC_FAILED);
 	return (SUCCESS);
 }
 
