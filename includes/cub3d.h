@@ -10,7 +10,7 @@
 # include "../minilibx_opengl_20191021/mlx.h"
 # include "../libft/libft.h"
 # include "keycode.h"
-# include "keycode_linux.h"
+//# include "keycode_linux.h"
 
 # define SAVE_FILE "screenshot.bmp"
 

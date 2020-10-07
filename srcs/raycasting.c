@@ -58,12 +58,12 @@ int		main_loop(t_env *env)
 	// 	free(env->img);
 	// if (!(env->img = new_image(env, NULL)))
 	// 	return (IMG_FAIL);
-	if (!(env->img->ptr = mlx_new_image(env->mlx_ptr,
-			env->t_map.res.width, env->t_map.res.height)))
-			return (MLX_FAIL);
-	if (!(env->img->addr = (unsigned int *)mlx_get_data_addr(env->img->ptr,
-		&env->img->bits_pp, &env->img->line_length, &env->img->endian)))
-		return (MLX_FAIL);
+	// if (!(env->img->ptr = mlx_new_image(env->mlx_ptr,
+	// 		env->t_map.res.width, env->t_map.res.height)))
+	// 		return (MLX_FAIL);
+	// if (!(env->img->addr = (unsigned int *)mlx_get_data_addr(env->img->ptr,
+	// 	&env->img->bits_pp, &env->img->line_length, &env->img->endian)))
+	// 	return (MLX_FAIL);
 	
 	moves(env);
 	env->line = 0;
@@ -77,6 +77,10 @@ int		main_loop(t_env *env)
 	add_sprites(env);
 	// free_sprites(env);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0);
+	//  if (env->img->ptr)
+	// {
+	// 	free(env->img->ptr);
+	// }
 	return (SUCCESS);
 }
 

@@ -18,20 +18,20 @@ t_img	*new_image(t_env *env, char *file)
 
 	if (!(img = (t_img *)malloc(sizeof(t_img))))
 		return (NULL);
-	if (!file)
-	{
-		if (!(img->ptr = mlx_new_image(env->mlx_ptr,
-			env->t_map.res.width, env->t_map.res.height)))
-			return (NULL);
-	}
-	else
-	{
+	// if (!file)
+	// {
+	// 	if (!(img->ptr = mlx_new_image(env->mlx_ptr,
+	// 		env->t_map.res.width, env->t_map.res.height)))
+	// 		return (NULL);
+	// }
+	// else
+	// {
 		if (!(img->ptr = mlx_xpm_file_to_image(env->mlx_ptr, file,
 			&env->tex_width, &env->tex_height)))
 			return (NULL);
 		if (env->tex_width != env->tex_height)
 			env->tex_height = env->tex_width;
-	}
+	// }
 	if (!(img->addr = (unsigned int *)mlx_get_data_addr(img->ptr,
 		&img->bits_pp, &img->line_length, &img->endian)))
 		return (NULL);

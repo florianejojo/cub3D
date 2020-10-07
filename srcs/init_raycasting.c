@@ -85,6 +85,12 @@ int		init_raycasting(t_env *env)
 	// 	env->img = new_image(env, NULL);
 	if (!(env->img = (t_img *)malloc(sizeof(t_img))))
 		return (IMG_FAIL);
+	if (!(env->img->ptr = mlx_new_image(env->mlx_ptr,
+			env->t_map.res.width, env->t_map.res.height)))
+			return (MLX_FAIL);
+	if (!(env->img->addr = (unsigned int *)mlx_get_data_addr(env->img->ptr,
+		&env->img->bits_pp, &env->img->line_length, &env->img->endian)))
+		return (MLX_FAIL);
 	if ((env->error = init_dir_plane(env)) != SUCCESS)
 		return (env->error);
 	if ((env->error = init_textures(env)) != SUCCESS)
