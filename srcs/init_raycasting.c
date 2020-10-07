@@ -81,8 +81,6 @@ int		init_raycasting(t_env *env)
 	env->ray.map.y = (int)env->t_map.player_pos.y;
 	if (!(env->mlx_ptr = mlx_init()))
 		return (MLX_FAIL);
-	// if (env->img == NULL)
-	// 	env->img = new_image(env, NULL);
 	if (!(env->img = (t_img *)malloc(sizeof(t_img))))
 		return (IMG_FAIL);
 	if (!(env->img->ptr = mlx_new_image(env->mlx_ptr,

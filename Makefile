@@ -65,7 +65,7 @@ all			:	$(NAME)
 $(NAME) 	:	$(OBJS)
 				make -C $(MLX_PATH)
 				make -C $(LIBFT_PATH)
-				${CC} ${CFLAGS} -I $(INCLUDES) $^ $(MLX_FLAGS) ./minilibx-linux/libmlx.a  ./libft/libft.a  -o $@ 
+				${CC} ${CFLAGS} -I $(INCLUDES) $^ $(MLX_FLAGS) -o $@ ./minilibx-linux/libmlx.a  ./libft/libft.a
 				printf "\033[32m$@ is ready ! \n\033[0m"
 				#cp $(MLX_PATH)*.a /usr/local/lib/
 
