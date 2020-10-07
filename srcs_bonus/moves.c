@@ -18,20 +18,20 @@ void	forward_backward(t_env *env)
 	{
 		if (env->t_map.map[(int)env->t_map.player_pos.y]
 		[(int)(env->t_map.player_pos.x + env->ray.dir.x
-		* env->ray.speed)] != '1')
+		* env->ray.speed)] == '0')
 			env->t_map.player_pos.x += env->ray.dir.x * env->ray.speed;
 		if (env->t_map.map[(int)(env->t_map.player_pos.y + env->ray.dir.y
-		* env->ray.speed)][(int)env->t_map.player_pos.x] != '1')
+		* env->ray.speed)][(int)env->t_map.player_pos.x] == '0')
 			env->t_map.player_pos.y += env->ray.dir.y * env->ray.speed;
 	}
 	else if (env->mvt.dwn == 1)
 	{
 		if (env->t_map.map[(int)env->t_map.player_pos.y]
 		[(int)(env->t_map.player_pos.x - env->ray.dir.x
-		* env->ray.speed)] != '1')
+		* env->ray.speed)] == '0')
 			env->t_map.player_pos.x -= env->ray.dir.x * env->ray.speed;
 		if (env->t_map.map[(int)(env->t_map.player_pos.y - env->ray.dir.y
-		* env->ray.speed)][(int)env->t_map.player_pos.x] != '1')
+		* env->ray.speed)][(int)env->t_map.player_pos.x] == '0')
 			env->t_map.player_pos.y -= env->ray.dir.y * env->ray.speed;
 	}
 }
@@ -41,21 +41,21 @@ void	side(t_env *env)
 	if (env->mvt.side_r == 1)
 	{
 		if (env->t_map.map[(int)(env->t_map.player_pos.y + env->ray.dir.x
-		* env->ray.speed)][(int)(env->t_map.player_pos.x)] != '1')
+		* env->ray.speed)][(int)(env->t_map.player_pos.x)] == '0')
 			env->t_map.player_pos.y -= -env->ray.dir.x * env->ray.speed;
 		if (env->t_map.map[(int)(env->t_map.player_pos.y)]
 		[(int)(env->t_map.player_pos.x
-		- env->ray.dir.y * env->ray.speed)] != '1')
+		- env->ray.dir.y * env->ray.speed)] == '0')
 			env->t_map.player_pos.x -= env->ray.dir.y * env->ray.speed;
 	}
 	else if (env->mvt.side_l == 1)
 	{
 		if (env->t_map.map[(int)(env->t_map.player_pos.y - env->ray.dir.x
-		* env->ray.speed)][(int)(env->t_map.player_pos.x)] != '1')
+		* env->ray.speed)][(int)(env->t_map.player_pos.x)] == '0')
 			env->t_map.player_pos.y += -env->ray.dir.x * env->ray.speed;
 		if (env->t_map.map[(int)(env->t_map.player_pos.y)]
 		[(int)(env->t_map.player_pos.x
-		+ env->ray.dir.y * env->ray.speed)] != '1')
+		+ env->ray.dir.y * env->ray.speed)] == '0')
 			env->t_map.player_pos.x += env->ray.dir.y * env->ray.speed;
 	}
 }
