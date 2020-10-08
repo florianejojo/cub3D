@@ -17,22 +17,22 @@ int		init_dir_plane(t_env *env)
 	if (env->t_map.player_dir == 'N')
 	{
 		env->ray.dir.y = -1;
-		env->ray.plane.x = 0.80;
+		env->ray.plane.x = PLANE;
 	}
 	else if (env->t_map.player_dir == 'S')
 	{
 		env->ray.dir.y = 1;
-		env->ray.plane.x = -0.80;
+		env->ray.plane.x = -PLANE;
 	}
 	else if (env->t_map.player_dir == 'E')
 	{
 		env->ray.dir.x = 1;
-		env->ray.plane.y = 0.80;
+		env->ray.plane.y = PLANE;
 	}
 	else if (env->t_map.player_dir == 'W')
 	{
 		env->ray.dir.x = -1;
-		env->ray.plane.y = -0.80;
+		env->ray.plane.y = -PLANE;
 	}
 	return (SUCCESS);
 }

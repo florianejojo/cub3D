@@ -14,6 +14,7 @@
 
 # define SAVE_FILE "screenshot.bmp"
 # define RAYSPEED 0.05
+# define PLANE 0.5
 
 typedef struct		s_check
 {

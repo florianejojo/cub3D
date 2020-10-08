@@ -35,7 +35,7 @@ int   draw_floor_and_ceiling(t_env *env)
     y = 0;
     x = 0;
 
-    while (y <= env->t_map.res.height)
+    while (y < env->t_map.res.height)
     {
         calc_horiz_line(env, y);
        

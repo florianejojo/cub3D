@@ -66,6 +66,8 @@ int		main_loop(t_env *env)
 
 int		raycasting(t_env *env)
 {
+	int ret;
+	ret = 0;
 	if (!(env->win_ptr = mlx_new_window(env->mlx_ptr, env->t_map.res.width,
 		env->t_map.res.height, "Cub3D")))
 		return (MLX_FAIL);

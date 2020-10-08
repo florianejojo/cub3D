@@ -20,12 +20,12 @@
 // # define KEY_D 32
 
 #  define KEY_ESCAPE 65307
-#  define KEY_LEFT 113
-#  define KEY_RIGHT 100
+#  define KEY_A 113
+#  define KEY_D 100
 #  define KEY_S 115
 #  define KEY_W 122
-#  define KEY_A 65361
-#  define KEY_D 6536
+#  define KEY_LEFT 65361
+#  define KEY_RIGHT 65363
 
 # else
 # define KEY_ESCAPE 53

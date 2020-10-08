@@ -12,7 +12,8 @@
 # include "keycode.h"
 
 # define SAVE_FILE "screenshot.bmp"
-# define RAYSPEED 0.1
+# define RAYSPEED 0.05
+# define PLANE 0.8
 # define FLOOR_TEXTURE_PATH "pics/losanges.xpm"
 # define CEILING_TEXTURE_PATH "pics/uni_orange.xpm"
 

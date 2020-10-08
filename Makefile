@@ -91,7 +91,7 @@ all				:	$(NAME)
 $(NAME) 		:	$(OBJS)
 					make -C $(MLX_PATH)
 					make -C $(LIBFT_PATH)
-					${CC} ${CFLAGS} -I $(INCLUDES) $^ $(MLX_FLAGS) -o $@ ./minilibx_opengl_20191021/libmlx.a  ./libft/libft.a
+					${CC} ${CFLAGS} -fsanitize=address -g3 -I $(INCLUDES) $^ $(MLX_FLAGS) -o $@ ./minilibx_opengl_20191021/libmlx.a  ./libft/libft.a
 					printf "cub3D is ready ! \n\033[0m"
 
 
