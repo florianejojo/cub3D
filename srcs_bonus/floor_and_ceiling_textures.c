@@ -39,7 +39,7 @@ int   draw_floor_and_ceiling(t_env *env)
     {
         calc_horiz_line(env, y);
        
-      while (x <= env->t_map.res.width)
+      while (x < env->t_map.res.width)
       {
         calc_pix(env);
         env->bonus.color = env->bonus.floor_img->addr[env->tex_width * env->bonus.t.y + env->bonus.t.x];
