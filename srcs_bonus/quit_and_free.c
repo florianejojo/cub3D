@@ -33,10 +33,10 @@ void	free_textures(t_env *env)
 		free_struct_img(env->img_tex_EA, env);
 	if (env->img_tex_S)
 		free_struct_img(env->img_tex_S, env);
-	// if (env->bonus.ceiling_img)
-	// 	free_struct_img(env->bonus.ceiling_img, env);
-	// if (env->bonus.floor_img)
-	// 	free_struct_img(env->bonus.ceiling_img, env);
+	// if (env->bonus->ceiling_img)
+	// 	free_struct_img(env->bonus->ceiling_img, env);
+	// if (env->bonus->floor_img)
+	// 	free_struct_img(env->bonus->ceiling_img, env);
 }
 
 void	free_dtab(t_env *env, char **tab)

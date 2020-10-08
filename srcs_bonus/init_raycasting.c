@@ -49,9 +49,9 @@ int		init_textures(t_env *env)
 		return (WRONG_TEX);
 	if ((env->img_tex_S = new_image(env, env->t_textures_path.S)) == NULL)
 		return (WRONG_TEX);
-	if ((env->bonus.ceiling_img = new_image(env, CEILING_TEXTURE_PATH)) == NULL)
+	if ((env->bonus->ceiling_img = new_image(env, CEILING_TEXTURE_PATH)) == NULL)
 		return (WRONG_TEX);
-	if ((env->bonus.floor_img = new_image(env, FLOOR_TEXTURE_PATH)) == NULL)
+	if ((env->bonus->floor_img = new_image(env, FLOOR_TEXTURE_PATH)) == NULL)
 		return (WRONG_TEX);
 	return (SUCCESS);
 }
@@ -85,6 +85,8 @@ int		init_raycasting(t_env *env)
 		return (MLX_FAIL);
 	if (!(env->img = (t_img *)malloc(sizeof(t_img))))
 		return (IMG_FAIL);
+	if (!(env->bonus = (t_bonus *)malloc(sizeof(t_bonus))))
+		return (MALLOC_FAILED);
 	if (!(env->img->ptr = mlx_new_image(env->mlx_ptr,
 			env->t_map.res.width, env->t_map.res.height)))
 			return (MLX_FAIL);

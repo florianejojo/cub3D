@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 
-LINUX			= no
+LINUX			= yes
 
 ifeq ($(LINUX), yes)
 MLX_FLAGS		= -lXext -lX11 -lm -lbsd
@@ -91,7 +91,7 @@ all				:	$(NAME)
 $(NAME) 		:	$(OBJS)
 					make -C $(MLX_PATH)
 					make -C $(LIBFT_PATH)
-					${CC} ${CFLAGS} -fsanitize=address -g3 -I $(INCLUDES) $^ $(MLX_FLAGS) -o $@ ./minilibx_opengl_20191021/libmlx.a  ./libft/libft.a
+					${CC} ${CFLAGS} -fsanitize=address -g3 -I $(INCLUDES) $^ $(MLX_FLAGS) -o $@ ./minilibx-linux/libmlx.a  ./libft/libft.a
 					printf "cub3D is ready ! \n\033[0m"
 
 
@@ -101,7 +101,7 @@ $(OBJS)			:	%.o:%.c ${HEADER}
 $(OBJS_BONUS)	:	%.o:%.c ${HEADER_BONUS}
 					${CC} ${CFLAGS} -c $< -o $@
 
-bonus			:	$(OBJS_BONUS)
+bonus			:	fclean $(OBJS_BONUS) 
 					make -C $(MLX_PATH)
 					make -C $(LIBFT_PATH)
 					${CC} ${CFLAGS} -fsanitize=address -g3 -I $(INCLUDES_BONUS) $(OBJS_BONUS) $(MLX_FLAGS) -o $(NAME) ./minilibx-linux/libmlx.a  ./libft/libft.a

@@ -257,7 +257,7 @@ typedef struct		s_env
 	int				i;
 	int				j;
 	int				l;
-	t_bonus			bonus;
+	t_bonus			*bonus;
 
 }					t_env;
 
