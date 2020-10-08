@@ -33,7 +33,7 @@ int		main(int argc, char **argv)
 
 	i = 0;
 	if(!(env = malloc(sizeof(t_env))))
-		return (print_error(MALLOC_FAILED, env));
+		return (0);
 	ft_bzero(env, sizeof(t_env));
 	if ((argc != 2 && argc != 3))
 		return (print_error(WRONG_ARGS, env));

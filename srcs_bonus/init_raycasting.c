@@ -39,6 +39,8 @@ int		init_dir_plane(t_env *env)
 
 int		init_textures(t_env *env)
 {
+	env->bonus->ceiling_textures_path = ft_strdup(CEILING_TEXTURE_PATH);
+	env->bonus->floor_textures_path = ft_strdup(FLOOR_TEXTURE_PATH);
 	if ((env->img_tex_NO = new_image(env, env->t_textures_path.NO)) == NULL)
 		return (WRONG_TEX);
 	if ((env->img_tex_SO = new_image(env, env->t_textures_path.SO)) == NULL)
@@ -49,10 +51,11 @@ int		init_textures(t_env *env)
 		return (WRONG_TEX);
 	if ((env->img_tex_S = new_image(env, env->t_textures_path.S)) == NULL)
 		return (WRONG_TEX);
-	if ((env->bonus->ceiling_img = new_image(env, CEILING_TEXTURE_PATH)) == NULL)
+	if ((env->bonus->ceiling_img = new_image(env, env->bonus->ceiling_textures_path)) == NULL)
 		return (WRONG_TEX);
-	if ((env->bonus->floor_img = new_image(env, FLOOR_TEXTURE_PATH)) == NULL)
+	if ((env->bonus->floor_img = new_image(env, env->bonus->floor_textures_path)) == NULL)
 		return (WRONG_TEX);
+	
 	return (SUCCESS);
 }
 

@@ -217,6 +217,8 @@ typedef struct		s_bonus
 	t_coordi		t;
 	t_img			*ceiling_img;
 	t_img			*floor_img;
+	char			*ceiling_textures_path;
+	char			*floor_textures_path;
 	unsigned int	color;		
 
 }					t_bonus;
