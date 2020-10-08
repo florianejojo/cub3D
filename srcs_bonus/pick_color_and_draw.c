@@ -61,6 +61,7 @@ void	draw_line(t_env *env, int x, int drawstart, int drawend)
 	// 	// 	env->t_colors.rgb_C.g, env->t_colors.rgb_C.b));
 	// 	y++;
 	// }
+	// printf("ici\n");
 	while (y <= drawend)
 	{
 		env->ray.tex.y = (int)env->ray.tex_pos & (env->tex_height - 1);

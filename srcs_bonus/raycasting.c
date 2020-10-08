@@ -50,25 +50,24 @@ int		key_release(int key, t_env *env)
 
 int		main_loop(t_env *env)
 {
+	// if (env->img->ptr)
+	// 	mlx_destroy_image(env->mlx_ptr, env->img->ptr);
+	if (!(env->img->ptr = mlx_new_image(env->mlx_ptr,
+			env->t_map.res.width, env->t_map.res.height)))
+			return (MLX_FAIL);
+	if (!(env->img->addr = (unsigned int *)mlx_get_data_addr(env->img->ptr,
+		&env->img->bits_pp, &env->img->line_length, &env->img->endian)))
+		return (MLX_FAIL);
 	moves(env);
+	if ((env->error = draw_floor_and_ceiling(env)) != SUCCESS)
+		return (env->error);
 	env->line = 0;
-	while (env->line < env->t_map.res.width)
+	while (env->line <= env->t_map.res.width)
 	{
 		calc_data_raycasting(env, env->line);
-		
-		if ((env->error = draw_floor_and_ceiling(env)) == SUCCESS)
-		{
-		
-			draw_line(env, env->line, env->ray.drawstart, env->ray.drawend); // a modifier, doit juste écrire au niveau du mur
-			env->zbuffer[env->line] = env->ray.perpwalldist;
-			env->line++;
-		}
-		else
-		{
-				return (env->error);
-		}
-		
-		
+		draw_line(env, env->line, env->ray.drawstart, env->ray.drawend);
+		env->zbuffer[env->line] = env->ray.perpwalldist;
+		env->line++;
 	}
 	add_sprites(env);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img->ptr, 0, 0);
@@ -84,6 +83,8 @@ int		raycasting(t_env *env)
 	mlx_hook(env->win_ptr, 17, STRUCTURENOTIFYMASK, quit, env);
 	mlx_hook(env->win_ptr, KEYPRESS, KEYPRESSMASK, key_press, env);
 	mlx_hook(env->win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, env);
+	if (main_loop (env) != SUCCESS)
+		return (ERROR_COLORS);
 	mlx_loop_hook(env->mlx_ptr, main_loop, env);
 	mlx_loop(env->mlx_ptr);
 	return (SUCCESS);

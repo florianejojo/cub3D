@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d.h"
 
 int		init_dir_plane(t_env *env)
 {
@@ -49,6 +49,10 @@ int		init_textures(t_env *env)
 		return (WRONG_TEX);
 	if ((env->img_tex_S = new_image(env, env->t_textures_path.S)) == NULL)
 		return (WRONG_TEX);
+	if ((env->bonus.ceiling_img = new_image(env, CEILING_TEXTURE_PATH)) == NULL)
+		return (WRONG_TEX);
+	if ((env->bonus.floor_img = new_image(env, FLOOR_TEXTURE_PATH)) == NULL)
+		return (WRONG_TEX);
 	return (SUCCESS);
 }
 
@@ -74,7 +78,7 @@ int		init_raycasting(t_env *env)
 	int		x;
 
 	x = 0;
-	env->ray.speed = 0.1;
+	env->ray.speed = RAYSPEED;
 	env->ray.map.x = (int)env->t_map.player_pos.x;
 	env->ray.map.y = (int)env->t_map.player_pos.y;
 	if (!(env->mlx_ptr = mlx_init()))
@@ -94,5 +98,6 @@ int		init_raycasting(t_env *env)
 	count_sprites(env);
 	if ((env->error = init_sprites(env)) != SUCCESS)
 		return (env->error);
+
 	return (SUCCESS);
 }

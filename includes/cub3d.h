@@ -13,6 +13,7 @@
 //# include "keycode_linux.h"
 
 # define SAVE_FILE "screenshot.bmp"
+# define RAYSPEED 0.05
 
 typedef struct		s_check
 {

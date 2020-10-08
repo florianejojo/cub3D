@@ -74,7 +74,7 @@ int		init_raycasting(t_env *env)
 	int		x;
 
 	x = 0;
-	env->ray.speed = 0.1;
+	env->ray.speed = RAYSPEED;
 	env->ray.map.x = (int)env->t_map.player_pos.x;
 	env->ray.map.y = (int)env->t_map.player_pos.y;
 	if (!(env->mlx_ptr = mlx_init()))

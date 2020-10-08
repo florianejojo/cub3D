@@ -104,7 +104,7 @@ $(OBJS_BONUS)	:	%.o:%.c ${HEADER_BONUS}
 bonus			:	$(OBJS_BONUS)
 					make -C $(MLX_PATH)
 					make -C $(LIBFT_PATH)
-					${CC} ${CFLAGS} -I $(INCLUDES_BONUS) $(OBJS_BONUS) $(MLX_FLAGS) -o $(NAME) ./minilibx-linux/libmlx.a  ./libft/libft.a
+					${CC} ${CFLAGS} -fsanitize=address -g3 -I $(INCLUDES_BONUS) $(OBJS_BONUS) $(MLX_FLAGS) -o $(NAME) ./minilibx-linux/libmlx.a  ./libft/libft.a
 					printf "Bonus is ready ! \n\033[0m"	
 
 clean			:	

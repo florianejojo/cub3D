@@ -12,8 +12,9 @@
 # include "keycode.h"
 
 # define SAVE_FILE "screenshot.bmp"
-# define FLOOR_TEXTURE_PATH "../pics/panthOBF.xpm"
-# define CEILING_TEXTURE_PATH "../pics/gribou1.xpm"
+# define RAYSPEED 0.1
+# define FLOOR_TEXTURE_PATH "pics/losanges.xpm"
+# define CEILING_TEXTURE_PATH "pics/uni_orange.xpm"
 
 typedef struct		s_check
 {

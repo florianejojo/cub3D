@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_bonus/cub3d.h"
 
-void	free_img(t_img *img, t_env *env)
+void	free_struct_img(t_img *img, t_env *env)
 {
 	if (img)
 	{
@@ -24,15 +24,19 @@ void	free_img(t_img *img, t_env *env)
 void	free_textures(t_env *env)
 {
 	if (env->img_tex_NO)
-		free_img(env->img_tex_NO, env);
+		free_struct_img(env->img_tex_NO, env);
 	if (env->img_tex_SO)
-		free_img(env->img_tex_SO, env);
+		free_struct_img(env->img_tex_SO, env);
 	if (env->img_tex_WE)
-		free_img(env->img_tex_WE, env);
+		free_struct_img(env->img_tex_WE, env);
 	if (env->img_tex_EA)
-		free_img(env->img_tex_EA, env);
+		free_struct_img(env->img_tex_EA, env);
 	if (env->img_tex_S)
-		free_img(env->img_tex_S, env);
+		free_struct_img(env->img_tex_S, env);
+	// if (env->bonus.ceiling_img)
+	// 	free_struct_img(env->bonus.ceiling_img, env);
+	// if (env->bonus.floor_img)
+	// 	free_struct_img(env->bonus.ceiling_img, env);
 }
 
 void	free_dtab(t_env *env, char **tab)
@@ -96,11 +100,11 @@ int		quit(t_env *env)
 	free_all(env);
 	if (env->win_ptr)
 		mlx_destroy_window(env->mlx_ptr, env->win_ptr);
-	if (env->img)
-	{
-		mlx_destroy_image(env->mlx_ptr, env->img->ptr);
-		free(env->img);
-	}
+	// if (env->img)
+	// {
+	// 	mlx_destroy_image(env->mlx_ptr, env->img->ptr);
+	// 	free(env->img);
+	// }
 	if (env->mlx_ptr)
 		free(env->mlx_ptr);
 	if (env)
