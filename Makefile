@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 
-LINUX			= no
+LINUX			= yes
 
 ifeq ($(LINUX), yes)
 MLX_FLAGS		= -lXext -lX11 -lm -lbsd
@@ -27,6 +27,7 @@ LIBFT_PATH		=	./libft/
 
 CC				=	clang
 
+<<<<<<< HEAD
 SRCS			=	./srcs/cub3d.c \
 					./srcs/check_map.c \
 					./srcs/check_map2.c \
@@ -48,6 +49,12 @@ SRCS			=	./srcs/cub3d.c \
 					./srcs/save.c \
 					./srcs/quit_and_free.c \
 					./srcs/quit_and_free2.c \
+=======
+SRCS			=	./srcs/cub3d.c ./srcs/check_map.c ./srcs/check_map2.c ./srcs/print_error.c ./srcs/treat_file.c \
+					./srcs/treat_file_utils.c ./srcs/pars_map.c ./srcs/pars_map2.c ./srcs/ft_split_cub.c ./srcs/init_raycasting.c \
+					./srcs/pick_color_and_draw.c ./srcs/raycasting.c ./srcs/raycasting_utils.c ./srcs/calc_data_raycasting_2.c ./srcs/calc_data_raycasting.c \
+					./srcs/moves.c ./srcs/add_sprites.c ./srcs/add_sprites2.c ./srcs/save.c ./srcs/quit_and_free.c ./srcs/quit_and_free2.c \
+>>>>>>> 77a639549cad8b8e3784d45e81af541961d4c6b7
 
 SRCS_BONUS	=		./srcs_bonus/cub3d.c \
 					./srcs_bonus/check_map.c \

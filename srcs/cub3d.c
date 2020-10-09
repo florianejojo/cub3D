@@ -43,9 +43,17 @@ int		main(int argc, char **argv)
 		return (print_error(env->error, env));
 	if (argc == 3 && (env->error = check_flag_save(argv[2], env)) != SUCCESS)
 		return (print_error(env->error, env));
+<<<<<<< HEAD
 	if (env->save == 1 && ((env->error = save_bmp(env)) != SUCCESS))
 		return (print_error(env->error, env));
 	else if ((env->error = raycasting(env)) != SUCCESS)
+=======
+	if (env->save == 1 && (env->error = save_bmp(env)) == SUCCESS)
+		return (SUCCESS);
+	else
+		return (print_error(env->error, env));
+	if ((env->error = raycasting(env)) != SUCCESS)
+>>>>>>> 77a639549cad8b8e3784d45e81af541961d4c6b7
 		return (print_error(env->error, env));
 	quit(env);
 	return (1);
