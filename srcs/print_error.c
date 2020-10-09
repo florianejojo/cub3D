@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void		print_error_2(int error)
+void	print_error_2(int error)
 {
 	if (error == ERROR_RES)
 		ft_putstr_fd("Error\n Invalid resolution \n", 1);

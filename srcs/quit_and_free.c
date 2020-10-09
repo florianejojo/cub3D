@@ -6,20 +6,11 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 17:10:50 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 17:20:47 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:45:25 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	free_img(t_img *img, t_env *env)
-{
-	if (img)
-	{
-		mlx_destroy_image(env->mlx_ptr, img->ptr);
-		free(img);
-	}
-}
 
 void	free_textures(t_env *env)
 {
@@ -63,6 +54,7 @@ void	free_tabs(t_env *env)
 	if (env->t_map.map)
 		free(env->t_map.map);
 }
+
 void	free_all(t_env *env)
 {
 	if (env)
@@ -81,14 +73,6 @@ void	free_all(t_env *env)
 		free(env->sprite_pos_x);
 	if (env->sprite_pos_y)
 		free(env->sprite_pos_y);
-}
-
-void	free_sprites(t_env *env)
-{
-	if (env->sprite_pos_x)
-		free(env->sprite_pos_x);
-	if (env->sprite_pos_y)
-		free(env->sprite_pos_y); 
 }
 
 int		quit(t_env *env)
