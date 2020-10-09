@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 18:21:28 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 18:22:10 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:48:15 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int		tab_in_img(t_env *env, int fd)
 	int				y;
 	unsigned int	*tab;
 
-	if (!(tab = malloc(sizeof(int) * (env->t_map.res.height * env->t_map.res.width))))
+	if (!(tab = malloc(sizeof(int) *
+		(env->t_map.res.height * env->t_map.res.width))))
 		return (ERROR_SAVE);
 	y = env->t_map.res.height - 1;
 	i = 0;

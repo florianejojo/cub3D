@@ -93,6 +93,5 @@ int		add_sprites(t_env *env)
 		draw_sprites(env);
 		i++;
 	}
-	
 	return (SUCCESS);
 }

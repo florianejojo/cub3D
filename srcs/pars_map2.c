@@ -6,13 +6,13 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 14:06:24 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/10/01 12:25:30 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:45:39 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void		set_res_max(t_env *env)
+void	set_res_max(t_env *env)
 {
 	env->res_max.height = 4000;
 	env->res_max.width = 4000;

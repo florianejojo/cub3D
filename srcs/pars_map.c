@@ -12,28 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-// int		pars_resolution(t_env *env, int i, int j)
-// {
-// 	j = skip_wsp(i, j + 1, env);
-// 	while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
-// 	{
-// 		env->t_map.res.width = env->t_map.res.width * 10
-// 			+ env->t_map.map[i][j] - 48;
-// 		j++;
-// 	}
-// 	j = skip_wsp(i, j, env);
-// 	while (env->t_map.map[i][j] >= '0' && env->t_map.map[i][j] <= '9')
-// 	{
-// 		env->t_map.res.height = env->t_map.res.height * 10
-// 			+ env->t_map.map[i][j] - 48;
-// 		j++;
-// 	}
-// 	j = skip_wsp(i, j, env);
-// 	if (env->t_map.res.width == 0 || env->t_map.res.height == 0)
-// 		return (ERROR_RES);
-// 	return (SUCCESS);
-// }
-
 int		pars_resolution(t_env *env, int i, int j)
 {
 	j = skip_wsp(i, j + 1, env);

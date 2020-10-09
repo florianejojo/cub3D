@@ -1,4 +1,16 @@
-# ifndef CUB3D_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/09 16:57:37 by flolefeb          #+#    #+#             */
+/*   Updated: 2020/10/09 16:58:33 by flolefeb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_H
 # define CUB3D_H
 
 # include <fcntl.h>
@@ -10,7 +22,6 @@
 # include "../minilibx_opengl_20191021/mlx.h"
 # include "../libft/libft.h"
 # include "keycode.h"
-//# include "keycode_linux.h"
 
 # define SAVE_FILE "screenshot.bmp"
 # define RAYSPEED 0.05
@@ -140,10 +151,6 @@ typedef struct		s_ray
 	t_coordi		tex;
 	double			tex_step;
 	double			tex_pos;
-	
-
-
-
 } 					t_ray;
 
 typedef struct		s_res
@@ -298,5 +305,6 @@ int		get_b(int rgb);
 int		create_rgb(int r, int g, int b);
 void	draw_line(t_env *env, int x, int drawstart, int drawend);
 int		save_bmp(t_env *env);
+void	free_img(t_img *img, t_env *env);
 
 #endif
