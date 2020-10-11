@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 16:57:37 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/10/09 16:58:33 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/10 16:20:00 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "keycode.h"
 
 # define SAVE_FILE "screenshot.bmp"
-# define RAYSPEED 0.05
+# define RAYSPEED 0.1
 # define PLANE 0.5
 
 typedef struct		s_check

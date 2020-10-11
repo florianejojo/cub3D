@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:27:18 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 17:46:48 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/12 01:13:05 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int		init_dir_plane(t_env *env)
 
 int		init_textures(t_env *env)
 {
-	env->bonus->ceiling_textures_path = ft_strdup(CEILING_TEXTURE_PATH);
-	env->bonus->floor_textures_path = ft_strdup(FLOOR_TEXTURE_PATH);
+	env->bonus->ceiling_textures_path = ft_substr(CEILING_TEXTURE_PATH, 0, ft_strlen(CEILING_TEXTURE_PATH));
+	env->bonus->floor_textures_path = ft_substr(FLOOR_TEXTURE_PATH, 0, ft_strlen(FLOOR_TEXTURE_PATH));
 	if ((env->img_tex_NO = new_image(env, env->t_textures_path.NO)) == NULL)
 		return (WRONG_TEX);
 	if ((env->img_tex_SO = new_image(env, env->t_textures_path.SO)) == NULL)

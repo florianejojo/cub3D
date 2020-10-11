@@ -6,7 +6,7 @@
 /*   By: flolefeb <flolefeb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 11:08:37 by flolefeb          #+#    #+#             */
-/*   Updated: 2020/09/30 12:05:27 by flolefeb         ###   ########.fr       */
+/*   Updated: 2020/10/12 01:14:27 by flolefeb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ int		main(int argc, char **argv)
 		return (print_error(env->error, env));
 	
 	quit(env);
+	if (env)
+		free(env);
 	return (1);
 }
